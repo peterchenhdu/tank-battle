@@ -1,5 +1,6 @@
 package com.cp.tankGameObject;
 
+import com.cp.common.constants.ParameterConstant;
 import com.cp.tankGamePanel.TankGamePanel;
 
 /**
@@ -86,7 +87,7 @@ public class Bullet implements Runnable{
 				this.setX(this.getX()+this.getSpeed());
 				break;
 			}
-			if(x<5||x>TankGamePanel.WIDTH-5||y<5||y>TankGamePanel.HEIGHT-5){				//判断子弹是否碰到边界
+			if(x<5||x>ParameterConstant.PANEL_WIDTH-5||y<5||y>ParameterConstant.PANEL_HEIGHT-5){				//判断子弹是否碰到边界
 				this.isLive=false;					//子弹死亡
 				break;
 			}

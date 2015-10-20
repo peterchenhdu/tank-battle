@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
 
+import com.cp.common.constants.ParameterConstant;
 import com.cp.tankGameMap.Map;
 import com.cp.tankGamePanel.TankGamePanel;
 /**
@@ -124,7 +125,7 @@ public class EnemyTank extends Tank implements Runnable{
 					if(this.getMyTankLocation()==EnemyTank.SOUTH){
 						this.enemyGoSouth();
 					}
-					if(this.getY()>=TankGamePanel.HEIGHT-20||this.isOverlapNo()==true){
+					if(this.getY()>=ParameterConstant.PANEL_HEIGHT-20||this.isOverlapNo()==true){
 						this.setDirect(this.getRandomDirect(Tank.NORTH, Tank.WEST, Tank.EAST));
 						break;
 					}
@@ -178,7 +179,7 @@ public class EnemyTank extends Tank implements Runnable{
 					if(this.getMyTankLocation()==EnemyTank.EAST){
 						this.enemyGoEast();
 					}
-					if(this.getX()>=TankGamePanel.WIDTH-20||this.getY()<=20||this.isOverlapNo()==true){
+					if(this.getX()>=ParameterConstant.PANEL_WIDTH-20||this.getY()<=20||this.isOverlapNo()==true){
 						this.setDirect(this.getRandomDirect(Tank.NORTH, Tank.SOUTH, Tank.WEST));
 						break;
 					}

@@ -7,12 +7,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Vector;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import org.apache.log4j.Logger;
+
+import com.cp.common.constants.CommonUtils;
+import com.cp.common.constants.ParameterConstant;
 import com.cp.tankGameControl.TankGameControl;
+import com.cp.tankGameMain.GameStart;
 import com.cp.tankGameMap.Map;
 import com.cp.tankGameMap.Map2;
 import com.cp.tankGameMap.Map3;
@@ -21,6 +24,7 @@ import com.cp.tankGameMap.Map5;
 import com.cp.tankGameMap.Map1;
 import com.cp.tankGameObject.Bomb;
 import com.cp.tankGameObject.EnemyTank;
+import com.cp.tankGameObject.GameStartAnimation;
 import com.cp.tankGameObject.MyTank;
 import com.cp.tankGameObject.Tank;
 import com.cp.tankGameObject.TankGameImages;
@@ -33,19 +37,23 @@ import com.cp.tankGameObject.TankGamePen;
  *
  */
 public class TankGamePanel extends JPanel implements KeyListener,Runnable,ActionListener{
-	private static final long serialVersionUID = 1L;
+	
 	/**
-	 * 游戏面板的宽度
+	 * 
 	 */
-	public final static int WIDTH=600;
-	/**
-	 * 游戏面板的高度
-	 */
-	public final static int HEIGHT=600;
+	private static final long serialVersionUID = 3298807243669570537L;
+
+	private static Logger logger = Logger.getLogger(GameStart.class);
+
 	/**
 	 * 是否已经开始
 	 */
 	private boolean isStart	=	false;
+	/**
+	 * 是否暂停
+	 */
+	
+	private boolean isStop=false; 
 	/**
 	 * 是否按了向上的方向键
 	 */
@@ -66,6 +74,12 @@ public class TankGamePanel extends JPanel implements KeyListener,Runnable,Action
 	 * 游戏关卡
 	 */
 	private int 	level=1;
+	
+	/**
+	 * 游戏失败或成功时的图片的y坐标
+	 */
+	private int levelEndImgY = 600;
+	
 	/**
 	 * 我的坦克容量
 	 */
@@ -87,31 +101,38 @@ public class TankGamePanel extends JPanel implements KeyListener,Runnable,Action
 	 */
 	private Map  map;
 	/**
-	 * 游戏开始的那个欢迎图片标签
-	 */
-	private JLabel 			startImage;
-	/**
 	 * 坦克游戏控制对象
 	 */
 	private TankGameControl	tgc;
+	
+
+	
 	/**
-	 * 游戏失败或成功时的图片的y坐标
+	 * Animation Thread when start the game
 	 */
-	private int dy=600;
-	/**
-	 * 是否暂停
-	 */
-	private boolean isStop=false; 
 	private Thread thread;
-	private int k=0;
-	private int ky=600;
-	private int kx=0;
+
+	/**
+	 * animation object when game start
+	 */
+	private GameStartAnimation gsa;
+	
 	/**
 	 * 构造方法
 	 */
 	public TankGamePanel() {	
-		this.initGame();
-		thread=new Thread(this);
+		enemys = new Vector<EnemyTank>();
+		myTanks = new Vector<MyTank>();
+		bombs = new Vector<Bomb>();
+		pen = new TankGamePen();
+		tgc = new TankGameControl();
+		gsa = new GameStartAnimation();
+		
+		//init the game name image location
+		gsa.setGameNameX(ParameterConstant.PANEL_ORIGIN_X);
+		gsa.setGameNameY(ParameterConstant.PANEL_HEIGHT);
+		//start an thread to refresh and control this panel
+		thread = new Thread(this);
 		thread.start();
 	}
 	/*
@@ -122,7 +143,7 @@ public class TankGamePanel extends JPanel implements KeyListener,Runnable,Action
 		super.paint(g);
 		if(this.isStart==true){
 			g.setColor(Color.black);
-			g.fillRect(0, 0, WIDTH, HEIGHT);	
+			g.fillRect(0, 0, ParameterConstant.PANEL_WIDTH, ParameterConstant.PANEL_HEIGHT);	
 			g.fillRect(280, 600, 40, 40);
 			pen.drawMap(g, map,this);
 			pen.drawMyTank(g, myTanks,this);			//画出我的坦克（包括子弹）
@@ -131,13 +152,13 @@ public class TankGamePanel extends JPanel implements KeyListener,Runnable,Action
 			pen.drawRight(g, this);
 		
 			if(this.tgc.getMyTankNum()==0){				//如果我的坦克数量为0
-				g.drawImage(TankGameImages.gameOver,250, dy, 100, 100, this);
+				g.drawImage(TankGameImages.gameOver,ParameterConstant.LEVEL_END_IMG_LOC_Y, levelEndImgY, 100, 100, this);
 			}
 			
 			if(this.tgc.getEnemyTankNum()==0){			//如果敌人坦克的数量为0
-				g.drawImage(TankGameImages.gameWin,250, dy, 100, 100, this);
+				g.drawImage(TankGameImages.gameWin,ParameterConstant.LEVEL_END_IMG_LOC_Y, levelEndImgY, 100, 100, this);
 			}
-			if(dy==250){
+			if(levelEndImgY==ParameterConstant.LEVEL_END_IMG_LOC_Y){
 				g.fillRect(0, 0, 800, 600);
 				g.setColor(Color.BLUE);
 				if(this.tgc.getMyTankNum()==0){
@@ -153,15 +174,11 @@ public class TankGamePanel extends JPanel implements KeyListener,Runnable,Action
 				g.drawString("我的炮弹剩余总数量:"+this.tgc.getMyBulletNum(), 300, 360);
 			}
 		}else{
+			//draw the bg image
 			g.drawImage(TankGameImages.startImage, 0, 0, 800, 700, this);
-			g.drawImage(TankGameImages.font, 0, ky,  this);
-			if(k==0){
-				g.drawImage(TankGameImages.yct_smile1, kx, 45,  this);
-				k=1;
-			}else{
-				g.drawImage(TankGameImages.yct_smile2, kx, 45,  this);
-				k=0;
-			}
+			//draw the moving font image
+			g.drawImage(TankGameImages.font, 0, gsa.getGameNameY(),  this);
+
 		}
 	}
 	@Override
@@ -221,86 +238,72 @@ public class TankGamePanel extends JPanel implements KeyListener,Runnable,Action
 	public void keyTyped(KeyEvent e) {
 
 	}
+
 	@Override
 	public void run() {
-			//每隔30毫秒重画
-			while(true){
-				try {
-					Thread.sleep(30);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+		//loop
+		while (true) {
+			//repaint  
+			CommonUtils.cuSleep(ParameterConstant.MSECS_PER_FRAME);
+
+			if (this.isStart == true) {
+				
+				//move the levelEndImg to middle
+				if ((this.tgc.getMyTankNum() == 0 || this.tgc.getEnemyTankNum() == 0) && levelEndImgY > ParameterConstant.LEVEL_END_IMG_LOC_Y) {
+					levelEndImgY = levelEndImgY - ParameterConstant.COMMON_IMG_SPEED;
 				}
-				if(this.isStart==true){
-				if((this.tgc.getMyTankNum()==0||this.tgc.getEnemyTankNum()==0)&&dy>250){
-					dy=dy-2;
-				}
-				if(dy==250){
+				
+				//if the levelimage is in the middle
+				if (levelEndImgY <= ParameterConstant.LEVEL_END_IMG_LOC_Y) {
+					//paint the level end image
 					this.repaint();
-					try {
-						Thread.sleep(4000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					
+					CommonUtils.cuSleep(ParameterConstant.NEXT_LEVEL_WAITING_TIME);
+
+					
+					if (this.level == 5) {
+						this.level = 0;
 					}
-					if(this.level==5){
-						this.level=0;
-					}
-					if(this.tgc.getMyTankNum()>=1&&this.level<=4){
+					if (this.tgc.getMyTankNum() >= 1 && this.level <= 4) {
 						this.level++;
-						dy=600;
+						levelEndImgY = ParameterConstant.PANEL_ORIGIN_Y;
 						this.nextGame();
 					}
 				}
-				if(this.isStop==false&&dy==600){
-				tgc.cleanAndCreat(myTanks, enemys,map,bombs);					//从容器中移除死亡的对象
-				tgc.judge(myTanks, enemys,map, bombs);							//判断子弹是否击中坦克
-				tgc.judgeOverlap(myTanks, enemys,map);							//判断坦克间是否出现重叠
-				this.myTankEvent(myTanks);
-
+				
+				//game is working
+				if (this.isStop == false && levelEndImgY == ParameterConstant.PANEL_WIDTH) {
+					tgc.cleanAndCreat(myTanks, enemys, map, bombs); // 从容器中移除死亡的对象
+					tgc.judge(myTanks, enemys, map, bombs);         // 判断子弹是否击中坦克
+					tgc.judgeOverlap(myTanks, enemys, map);         // 判断坦克间是否出现重叠
+					this.myTankEvent(myTanks);
 				}
-				}else{
-					if(ky==21&&kx<=654) kx=kx+2;
-					this.fontMove();
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-				}
-				this.repaint();
+			} else {
+				this.gameStartAnimation();
 			}
+			this.repaint();
+		}
 	}
 
 	/**
-	 * 我的坦克事件，观察我按了什么键
-	 * @param myTanks	我的坦克容量
+	 * deal the key event user input
+	 * @param myTanks	
 	 */
-	public void myTankEvent(Vector<MyTank> myTanks){
-		for(int i=0;i<myTanks.size();i++){
-			MyTank myTank=myTanks.get(i);
-			if(up==true&&myTank.isOverlapNo()==false&&myTank.isOverlapYes()==false){
+	public void myTankEvent(Vector<MyTank> myTanks) {
+		for (int i = 0; i < myTanks.size(); i++) {
+			MyTank myTank = myTanks.get(i);
+			if (up == true && myTank.isOverlapNo() == false && myTank.isOverlapYes() == false) {
 				myTank.goNorth();
-			}else if(down==true&&myTank.isOverlapNo()==false&&myTank.isOverlapYes()==false){
+			} else if (down == true && myTank.isOverlapNo() == false && myTank.isOverlapYes() == false) {
 				myTank.goSouth();
-			}else if(left==true&&myTank.isOverlapNo()==false&&myTank.isOverlapYes()==false){
+			} else if (left == true && myTank.isOverlapNo() == false && myTank.isOverlapYes() == false) {
 				myTank.goWest();
-			}else if(right==true&&myTank.isOverlapNo()==false&&myTank.isOverlapYes()==false){
+			} else if (right == true && myTank.isOverlapNo() == false && myTank.isOverlapYes() == false) {
 				myTank.goEast();
 			}
 		}
 	}
-	/**
-	 * 游戏初始化
-	 */
-	public void initGame(){
-		enemys=new Vector<EnemyTank>();
-		myTanks=new Vector<MyTank>();
-		bombs=new Vector<Bomb>();
-		pen=new TankGamePen();
-		tgc=new TankGameControl();				//创建一个坦克游戏控制对象
-	}
+
 	/**
 	 * 下一关
 	 */
@@ -337,7 +340,7 @@ public class TankGamePanel extends JPanel implements KeyListener,Runnable,Action
 		bombs=new Vector<Bomb>();
 		pen=new TankGamePen();
 		tgc=new TankGameControl();				//创建一个坦克游戏控制对象
-		dy=600;
+		levelEndImgY=600;
 		if(level==1){					//游戏关卡
 			map=new Map1();
 		}else if(level==2){
@@ -604,54 +607,42 @@ public class TankGamePanel extends JPanel implements KeyListener,Runnable,Action
 	public void setLevel(int level) {
 		this.level = level;
 	}
+	
 	/**
-	 * 游戏没开始时的欢迎图片上的字体移动
+	 * animation when start the game
+	 * 
+	 * 
 	 */
-	public void fontMove(){
-		if(ky>0&&ky!=21) ky=ky-8;		//当字体刚出来时，向上移动
-		if(ky==0){						//当字体移到顶端时，以7的速度向下移动5步
-			for(int i=0;i<5;i++){
-				ky=ky+7;
-				this.repaint();
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			for(int i=0;i<4;i++){		//以6的速度向上移动4步
-				ky=ky-6;
-				this.repaint();
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			for(int i=0;i<3;i++){		//以5的速度向下移动
-				ky=ky+5;
-				this.repaint();
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			for(int i=0;i<2;i++){	//以4的速度向上移动
-				ky=ky-4;
-				this.repaint();
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			ky=ky+3;			//最后，字体的图片停留在（0，21）的地方
+	public void gameStartAnimation() {
+		if(true == gsa.isAnimationEnd()){
+			return;
 		}
+			
+		while(gsa.getGameNameY() >= 0){
+			gsa.setGameNameY(gsa.getGameNameY() - ParameterConstant.GAME_NAME_MOVE_SPEED);
+			CommonUtils.repaintPerMsec(this, ParameterConstant.MSECS_PER_FRAME);
+		}
+		for (int i = 0; i < 5; i++) {
+			gsa.setGameNameY(gsa.getGameNameY() + 7);
+			CommonUtils.repaintPerMsec(this, ParameterConstant.HUNDRED_MSEC);
+		}
+		for (int i = 0; i < 4; i++) {    
+			gsa.setGameNameY(gsa.getGameNameY() - 6);
+			CommonUtils.repaintPerMsec(this, ParameterConstant.HUNDRED_MSEC);
+		}
+		for (int i = 0; i < 3; i++) { 
+			gsa.setGameNameY(gsa.getGameNameY() + 5);
+			CommonUtils.repaintPerMsec(this, ParameterConstant.HUNDRED_MSEC);
+		}
+		for (int i = 0; i < 2; i++) { 
+			gsa.setGameNameY(gsa.getGameNameY() - 4);
+			CommonUtils.repaintPerMsec(this, ParameterConstant.HUNDRED_MSEC);
+		}
+		gsa.setGameNameY(gsa.getGameNameY() + 3);
+		CommonUtils.repaintPerMsec(this, ParameterConstant.HUNDRED_MSEC);
+		
+		gsa.setAnimationEnd(true);
+		
 	}
 }
 

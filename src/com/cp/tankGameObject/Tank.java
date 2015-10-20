@@ -2,6 +2,7 @@ package com.cp.tankGameObject;
 import java.awt.Color;
 import java.util.Vector;
 
+import com.cp.common.constants.ParameterConstant;
 import com.cp.tankGamePanel.TankGamePanel;
 /**
  * 坦克类，继承自东西类
@@ -98,7 +99,7 @@ public class Tank extends Stuff{
 	 */
 	public void goSouth(){  
 		this.setDirect(SOUTH);
-		if(this.getY()<TankGamePanel.HEIGHT-20){
+		if(this.getY()<ParameterConstant.PANEL_HEIGHT-20){
 			this.setY(this.getY()+this.speed);
 		}else{
 			this.setFrontInfomation(Stuff.IRON);			//碰到边界就相当于碰到铁块
@@ -109,7 +110,7 @@ public class Tank extends Stuff{
 	 */
 	public void goWest(){  
 		this.setDirect(WEST);
-		if(this.getX()>20&&this.getY()<=TankGamePanel.HEIGHT-20){
+		if(this.getX()>20&&this.getY()<=ParameterConstant.PANEL_HEIGHT-20){
 			this.setX(this.getX()-this.speed);
 		}else{
 			this.setFrontInfomation(Stuff.IRON);
@@ -120,7 +121,7 @@ public class Tank extends Stuff{
 	 */
 	public void goEast(){  
 		this.setDirect(EAST);
-		if(this.getX()<TankGamePanel.WIDTH-20&&this.getY()<=TankGamePanel.HEIGHT-20){
+		if(this.getX()<ParameterConstant.PANEL_WIDTH-20&&this.getY()<=ParameterConstant.PANEL_HEIGHT-20){
 			this.setX(this.getX()+this.speed);
 		}else{
 			this.setFrontInfomation(Stuff.IRON);

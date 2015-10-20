@@ -1,13 +1,16 @@
 package com.cp.tankGameMain;
 
 import java.awt.Dimension;
-
 import java.awt.Toolkit;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import org.apache.log4j.Logger;
+
+import com.cp.common.constants.ParameterConstant;
 import com.cp.tankGamePanel.TankGamePanel;
 
 
@@ -23,6 +26,7 @@ import com.cp.tankGamePanel.TankGamePanel;
  */
 public class GameStart extends JFrame{
 	private static final long serialVersionUID = 1L;
+	private static Logger logger = Logger.getLogger(GameStart.class);
 	/**
 	 * 菜单条
 	 */
@@ -73,7 +77,7 @@ public class GameStart extends JFrame{
 	 */
 	public GameStart() {
 		dim 		= 		Toolkit.getDefaultToolkit().getScreenSize(); 
-		tankGamePanel=new TankGamePanel();
+		tankGamePanel = new TankGamePanel();
 		jMenuBar	=new 	JMenuBar();
 		game		=new 	JMenu("游戏/Game");
 		gameStart	=new 	JMenuItem("开始游戏");
@@ -135,7 +139,7 @@ public class GameStart extends JFrame{
 		help.add(aboutGame);
 		
 		this.add(tankGamePanel);
-		this.setSize(800,700);
+		this.setSize(ParameterConstant.WINDOW_WIDTH, ParameterConstant.WINDOW_HEIGHT);
 		this.setTitle("MyTankGame");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
@@ -145,7 +149,9 @@ public class GameStart extends JFrame{
 		this.setLocation(((int)dim.getWidth()-this.getWidth())/2,((int)dim.getHeight()-this.getHeight())/2);
 	}
 	public static void main(String args[]){  
+		logger.info("start game.");		
 		new GameStart();
+		
 	}
 
 }
