@@ -32,5 +32,5 @@ clean package<br/>
 tankbattle is released under the MIT license.
 
 ## Others
-See the blog:<br/>
+四五年前的博客，写得好烂...<br/>
 http://pichenhdu.iteye.com/blog/903096
