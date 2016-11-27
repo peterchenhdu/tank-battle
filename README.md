@@ -1,4 +1,4 @@
-# 坦克大战游戏 Java版 -tankbattle
+# 坦克大战游戏 Java版 -tank battle game, write by java.
 ---
 
 [![build status][travis-image]][travis-url]
