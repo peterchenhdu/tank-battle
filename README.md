@@ -15,13 +15,17 @@ clean package<br/>
 
 
 ## 效果图
-![][start-image]
-![l1]['https://github.com/peterchenhdu/tankbattle/blob/master/doc/imgs/level1.jpg']
-![l2][https://github.com/peterchenhdu/tankbattle/blob/master/doc/imgs/level2.jpg]
-![l3][https://github.com/peterchenhdu/tankbattle/blob/master/doc/imgs/level3.jpg]
-![l4][https://github.com/peterchenhdu/tankbattle/blob/master/doc/imgs/level4.jpg]
+![start][start-image]
+![l1][l1-image]
+![l2][l2-image]
+![l3][l3-image]
+![l4][l4-image]
 
 [start-image]: https://github.com/peterchenhdu/tankbattle/blob/master/doc/imgs/start.jpg
+[l1-image]: https://github.com/peterchenhdu/tankbattle/blob/master/doc/imgs/level1.jpg
+[l2-image]: https://github.com/peterchenhdu/tankbattle/blob/master/doc/imgs/level2.jpg
+[l3-image]: https://github.com/peterchenhdu/tankbattle/blob/master/doc/imgs/level3.jpg
+[l4-image]: https://github.com/peterchenhdu/tankbattle/blob/master/doc/imgs/level4.jpg
 
 ## License
 
