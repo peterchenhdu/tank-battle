@@ -3,8 +3,8 @@
 
 [![build status][travis-image]][travis-url]
 
-[travis-image]: https://travis-ci.org/peterchenhdu/pl-checkbox.svg?branch=master
-[travis-url]: https://travis-ci.org/peterchenhdu/pl-checkbox
+[travis-image]: https://travis-ci.org/peterchenhdu/tankbattle.svg?branch=master
+[travis-url]: https://travis-ci.org/peterchenhdu/tankbattle
 
 
 
@@ -33,6 +33,6 @@ tankbattle is released under the MIT license.
 
 ## Others
 四五年前的博客，写得好烂...<br/>
-http://pichenhdu.iteye.com/blog/903096
+http://pichenhdu.iteye.com/blog/903096<br/>
 最近又写了一篇，还是好烂。。。。。。。有空好好优化下代码，写下。<br/>
-http://www.cnblogs.com/chenpi/p/6106151.html
+http://www.cnblogs.com/chenpi/p/6106151.html<br/>
