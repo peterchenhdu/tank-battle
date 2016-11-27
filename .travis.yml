@@ -1,0 +1,12 @@
+language: java
+sudo: false
+
+notifications:
+  email:
+- 928651551@qq.com
+
+jdk:
+  - oraclejdk8
+  - oraclejdk7
+  - openjdk7
+  - openjdk6
