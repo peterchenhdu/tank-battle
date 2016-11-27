@@ -1,4 +1,4 @@
-package cn.edu.hdu.pichen.game.tank.model;
+package cn.edu.hdu.tankbattle.model;
 
 /**
  * 爆炸对象，是一个正方形

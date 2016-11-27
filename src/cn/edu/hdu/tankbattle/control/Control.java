@@ -1,27 +1,28 @@
-package cn.edu.hdu.pichen.game.tank.control;
+package cn.edu.hdu.tankbattle.control;
 
 import java.util.Vector;
 
-import cn.edu.hdu.pichen.game.tank.model.Bomb;
-import cn.edu.hdu.pichen.game.tank.model.Brick;
-import cn.edu.hdu.pichen.game.tank.model.Bullet;
-import cn.edu.hdu.pichen.game.tank.model.EnemyTank;
-import cn.edu.hdu.pichen.game.tank.model.Iron;
-import cn.edu.hdu.pichen.game.tank.model.MyTank;
-import cn.edu.hdu.pichen.game.tank.model.GameResource;
-import cn.edu.hdu.pichen.game.tank.model.Stuff;
-import cn.edu.hdu.pichen.game.tank.model.Tank;
-import cn.edu.hdu.pichen.game.tank.model.Water;
-import cn.edu.hdu.pichen.game.tank.model.map.Map;
-import cn.edu.hdu.pichen.game.tank.model.map.Map1;
-import cn.edu.hdu.pichen.game.tank.model.map.Map2;
-import cn.edu.hdu.pichen.game.tank.model.map.Map3;
-import cn.edu.hdu.pichen.game.tank.model.map.Map4;
-import cn.edu.hdu.pichen.game.tank.model.map.Map5;
-import cn.edu.hdu.pichen.game.tank.view.GamePanel;
+import cn.edu.hdu.tankbattle.model.Bomb;
+import cn.edu.hdu.tankbattle.model.Brick;
+import cn.edu.hdu.tankbattle.model.Bullet;
+import cn.edu.hdu.tankbattle.model.EnemyTank;
+import cn.edu.hdu.tankbattle.model.GameResource;
+import cn.edu.hdu.tankbattle.model.Iron;
+import cn.edu.hdu.tankbattle.model.MyTank;
+import cn.edu.hdu.tankbattle.model.Stuff;
+import cn.edu.hdu.tankbattle.model.Tank;
+import cn.edu.hdu.tankbattle.model.Water;
+import cn.edu.hdu.tankbattle.model.map.Map;
+import cn.edu.hdu.tankbattle.model.map.Map1;
+import cn.edu.hdu.tankbattle.model.map.Map2;
+import cn.edu.hdu.tankbattle.model.map.Map3;
+import cn.edu.hdu.tankbattle.model.map.Map4;
+import cn.edu.hdu.tankbattle.model.map.Map5;
+import cn.edu.hdu.tankbattle.view.GamePanel;
 
 /**
  * 游戏控制类
+ * 
  * @author 1052067939
  * @version 1.0
  * @since JavaSe-1.6
@@ -113,7 +114,8 @@ public class Control {
 	 *            爆炸容器
 	 * @return 无
 	 */
-	public void judge(Vector<MyTank> myTanks, Vector<EnemyTank> enemys, Map map, Vector<Bomb> bombs) {
+	public void judge(Vector<MyTank> myTanks, Vector<EnemyTank> enemys,
+			Map map, Vector<Bomb> bombs) {
 		if (this.myTankNum == 0) { // 游戏结束时
 			for (int i = 0; i < enemys.size(); i++) {
 				EnemyTank enemyTank = enemys.get(i);
@@ -133,20 +135,25 @@ public class Control {
 
 				for (int k = 0; k < enemyTank.getBullets().size(); k++) {
 					Bullet eb = enemyTank.getBullets().get(k); // 从敌人的子弹容器中取出一颗子弹
-					if (Math.abs(eb.getX() - myTank.getX()) <= 20 && Math.abs(eb.getY() - myTank.getY()) <= 20) { // 判断是否击中我的坦克
+					if (Math.abs(eb.getX() - myTank.getX()) <= 20
+							&& Math.abs(eb.getY() - myTank.getY()) <= 20) { // 判断是否击中我的坦克
 						this.afterShotTank(eb, myTank, bombs); // 击中我的坦克以后
 					}
 					for (int l = 0; l < map.getBricks().size(); l++) { // 取出每个砖块对象与子弹比较
 						Brick brick = map.getBricks().get(l);
-						if (Math.abs(eb.getX() - brick.getX()) <= brick.getWidth() / 2
-								&& Math.abs(eb.getY() - brick.getY()) <= brick.getWidth() / 2) {// 子弹击中砖块
+						if (Math.abs(eb.getX() - brick.getX()) <= brick
+								.getWidth() / 2
+								&& Math.abs(eb.getY() - brick.getY()) <= brick
+										.getWidth() / 2) {// 子弹击中砖块
 							this.afterShotStuff(eb, brick, bombs, enemyTank);// 击中事物
 						}
 					}
 					for (int l = 0; l < map.getIrons().size(); l++) { // 取出没个铁块对象与子弹比较
 						Iron iron = map.getIrons().get(l);
-						if (Math.abs(eb.getX() - iron.getX()) <= iron.getWidth() / 2
-								&& Math.abs(eb.getY() - iron.getY()) <= iron.getWidth() / 2) {// 子弹击中铁块
+						if (Math.abs(eb.getX() - iron.getX()) <= iron
+								.getWidth() / 2
+								&& Math.abs(eb.getY() - iron.getY()) <= iron
+										.getWidth() / 2) {// 子弹击中铁块
 							this.afterShotStuff(eb, iron, bombs, enemyTank); // 击中事物
 						}
 					}
@@ -156,13 +163,16 @@ public class Control {
 					Bullet mb = myTank.getBullets().get(k); // 从我的子弹容器中取出一颗子弹
 					for (int t = 0; t < enemyTank.getBullets().size(); t++) {
 						// 判断是否击中敌人坦克的子弹
-						if (Math.abs(mb.getX() - enemyTank.getBullets().get(t).getX()) <= 6
-								&& Math.abs(mb.getY() - enemyTank.getBullets().get(t).getY()) <= 6) {
+						if (Math.abs(mb.getX()
+								- enemyTank.getBullets().get(t).getX()) <= 6
+								&& Math.abs(mb.getY()
+										- enemyTank.getBullets().get(t).getY()) <= 6) {
 							// 子弹死亡、坦克也死亡
 							mb.setLive(false);
 							enemyTank.getBullets().get(t).setLive(false);
 							myTank.getBullets().remove(mb);
-							enemyTank.getBullets().remove(enemyTank.getBullets().get(t));
+							enemyTank.getBullets().remove(
+									enemyTank.getBullets().get(t));
 							// 产生爆炸
 							Bomb bomb = new Bomb(mb.getX(), mb.getY());
 							bomb.setL(20);
@@ -170,20 +180,25 @@ public class Control {
 						}
 					}
 					// 判断是否击中敌人坦克
-					if (Math.abs(mb.getX() - enemyTank.getX()) <= 20 && Math.abs(mb.getY() - enemyTank.getY()) <= 20) { // 判断是否击中敌人的坦克
+					if (Math.abs(mb.getX() - enemyTank.getX()) <= 20
+							&& Math.abs(mb.getY() - enemyTank.getY()) <= 20) { // 判断是否击中敌人的坦克
 						this.afterShotTank(mb, enemyTank, bombs); // 击中以后
 					}
 					for (int l = 0; l < map.getBricks().size(); l++) { // 取出每个砖块对象与子弹比较
 						Brick brick = map.getBricks().get(l);
-						if (Math.abs(mb.getX() - brick.getX()) <= brick.getWidth() / 2
-								&& Math.abs(mb.getY() - brick.getY()) <= brick.getWidth() / 2) {// 子弹击中砖块
+						if (Math.abs(mb.getX() - brick.getX()) <= brick
+								.getWidth() / 2
+								&& Math.abs(mb.getY() - brick.getY()) <= brick
+										.getWidth() / 2) {// 子弹击中砖块
 							this.afterShotStuff(mb, brick, bombs, myTank);
 						}
 					}
 					for (int t = 0; t < map.getIrons().size(); t++) {
 						Iron iron = map.getIrons().get(t);
-						if (Math.abs(mb.getX() - iron.getX()) <= iron.getWidth() / 2
-								&& Math.abs(mb.getY() - iron.getY()) <= iron.getWidth() / 2) {// 子弹击中砖块
+						if (Math.abs(mb.getX() - iron.getX()) <= iron
+								.getWidth() / 2
+								&& Math.abs(mb.getY() - iron.getY()) <= iron
+										.getWidth() / 2) {// 子弹击中砖块
 							this.afterShotStuff(mb, iron, bombs, myTank);
 						}
 					}
@@ -202,7 +217,8 @@ public class Control {
 	 * @param map
 	 *            地图对象
 	 */
-	public void judgeOverlap(Vector<MyTank> myTanks, Vector<EnemyTank> enemys, Map map) {
+	public void judgeOverlap(Vector<MyTank> myTanks, Vector<EnemyTank> enemys,
+			Map map) {
 		Vector<Brick> bricks = map.getBricks();
 		Vector<Iron> irons = map.getIrons();
 		Vector<Water> waters = map.getWaters();
@@ -249,11 +265,13 @@ public class Control {
 			for (int j = 0; j < bricks.size(); j++) {
 				if (enemyTank.Overlap(bricks.get(j), 20 + 10) == true) {
 					// 判断前面挡住砖块是否能被子弹打掉，能的话，就开炮
-					if ((Math.abs(bricks.get(j).getX() - enemyTank.getX()) <= 10
-							&& (enemyTank.getDirect() == EnemyTank.SOUTH || enemyTank.getDirect() == EnemyTank.NORTH))
-							|| (Math.abs(bricks.get(j).getY() - enemyTank.getY()) <= 10
-									&& (enemyTank.getDirect() == EnemyTank.EAST
-											|| enemyTank.getDirect() == EnemyTank.WEST))) {
+					if ((Math.abs(bricks.get(j).getX() - enemyTank.getX()) <= 10 && (enemyTank
+							.getDirect() == EnemyTank.SOUTH || enemyTank
+							.getDirect() == EnemyTank.NORTH))
+							|| (Math.abs(bricks.get(j).getY()
+									- enemyTank.getY()) <= 10 && (enemyTank
+									.getDirect() == EnemyTank.EAST || enemyTank
+									.getDirect() == EnemyTank.WEST))) {
 						enemyTank.setFrontInfomation(Stuff.BRICK);
 						enemyTank.setOverlapYes(true);
 						enemyTank.setShot(true);
@@ -292,7 +310,8 @@ public class Control {
 	 * @param bombs
 	 *            爆炸对象
 	 */
-	public void cleanAndCreat(Vector<MyTank> myTanks, Vector<EnemyTank> enemys, Map map, Vector<Bomb> bombs) {
+	public void cleanAndCreat(Vector<MyTank> myTanks, Vector<EnemyTank> enemys,
+			Map map, Vector<Bomb> bombs) {
 		for (int i = 0; i < myTanks.size(); i++) {
 			MyTank myTank = myTanks.get(i);
 			Vector<Bullet> mb = myTank.getBullets();
@@ -341,7 +360,8 @@ public class Control {
 					r = (int) (Math.random() * 5); // 随机选择三个位置中的一个
 					enemys.remove(enemy); // 敌人坦克死亡后马上产生一个新的敌人坦克
 					if (this.enemyTankNum >= 5) { // 如果还有敌人坦克，刚开始时面板上就创建了3个，所以大于等于3
-						EnemyTank enemyTank = new EnemyTank((r) * 140 + 20, -20, Tank.SOUTH); // 创建一个敌人坦克对象
+						EnemyTank enemyTank = new EnemyTank((r) * 140 + 20,
+								-20, Tank.SOUTH); // 创建一个敌人坦克对象
 						enemyTank.setLocation(r);
 						enemys.add(enemyTank); // 将该坦克加入敌人坦克容器中
 					}
@@ -401,7 +421,8 @@ public class Control {
 	 * @param bombs
 	 *            炸弹容量
 	 */
-	public void afterShotStuff(Bullet bullet, Stuff stuff, Vector<Bomb> bombs, Tank tank) {
+	public void afterShotStuff(Bullet bullet, Stuff stuff, Vector<Bomb> bombs,
+			Tank tank) {
 		Bomb bomb;
 		switch (stuff.getType()) {
 		case Stuff.BRICK: // 砖块
@@ -422,19 +443,23 @@ public class Control {
 	/**
 	 * 我的坦克事件，观察我按了什么键
 	 * 
-	 * @param resource.getMyTanks()
-	 *            我的坦克容量
+	 * @param resource
+	 *            .getMyTanks() 我的坦克容量
 	 */
 	public void myTankEvent(GameResource resource) {
 		for (int i = 0; i < resource.getMyTanks().size(); i++) {
 			MyTank myTank = resource.getMyTanks().get(i);
-			if (up == true && myTank.isOverlapNo() == false && myTank.isOverlapYes() == false) {
+			if (up == true && myTank.isOverlapNo() == false
+					&& myTank.isOverlapYes() == false) {
 				myTank.goNorth();
-			} else if (down == true && myTank.isOverlapNo() == false && myTank.isOverlapYes() == false) {
+			} else if (down == true && myTank.isOverlapNo() == false
+					&& myTank.isOverlapYes() == false) {
 				myTank.goSouth();
-			} else if (left == true && myTank.isOverlapNo() == false && myTank.isOverlapYes() == false) {
+			} else if (left == true && myTank.isOverlapNo() == false
+					&& myTank.isOverlapYes() == false) {
 				myTank.goWest();
-			} else if (right == true && myTank.isOverlapNo() == false && myTank.isOverlapYes() == false) {
+			} else if (right == true && myTank.isOverlapNo() == false
+					&& myTank.isOverlapYes() == false) {
 				myTank.goEast();
 			}
 		}
@@ -502,8 +527,8 @@ public class Control {
 	 * 
 	 * @param myTank
 	 *            我的坦克
-	 * @param resource.getEnemys()
-	 *            敌人坦克容量
+	 * @param resource
+	 *            .getEnemys() 敌人坦克容量
 	 */
 	public void gameEventStop(GameResource resource) {
 		for (int i = 0; i < resource.getMyTanks().size(); i++) {
@@ -513,16 +538,29 @@ public class Control {
 				myTank.setSpeedVector(myTank.getSpeed()); // 保存当前坦克的速度
 				myTank.setSpeed(0); // 设置当前坦克速度为0
 				for (int j = 0; j < myTank.getBullets().size(); j++) {
-					myTank.getBullets().get(j).setSpeedVector(myTank.getBullets().get(j).getSpeed());
+					myTank.getBullets()
+							.get(j)
+							.setSpeedVector(
+									myTank.getBullets().get(j).getSpeed());
 					myTank.getBullets().get(j).setSpeed(0); // 设置子弹为0
 				}
 				for (int j = 0; j < resource.getEnemys().size(); j++) {
-					resource.getEnemys().get(j).setSpeedVector(resource.getEnemys().get(j).getSpeed());
+					resource.getEnemys()
+							.get(j)
+							.setSpeedVector(
+									resource.getEnemys().get(j).getSpeed());
 					resource.getEnemys().get(j).setSpeed(0);
-					for (int k = 0; k < resource.getEnemys().get(j).getBullets().size(); k++) {
+					for (int k = 0; k < resource.getEnemys().get(j)
+							.getBullets().size(); k++) {
+						resource.getEnemys()
+								.get(j)
+								.getBullets()
+								.get(k)
+								.setSpeedVector(
+										resource.getEnemys().get(j)
+												.getBullets().get(k).getSpeed());
 						resource.getEnemys().get(j).getBullets().get(k)
-								.setSpeedVector(resource.getEnemys().get(j).getBullets().get(k).getSpeed());
-						resource.getEnemys().get(j).getBullets().get(k).setSpeed(0);
+								.setSpeed(0);
 					}
 				}
 			} else {
@@ -530,14 +568,28 @@ public class Control {
 				myTank.setSpeed(myTank.getSpeedVector());
 				myTank.setSpeedVector(0);
 				for (int j = 0; j < myTank.getBullets().size(); j++) {
-					myTank.getBullets().get(j).setSpeed(myTank.getBullets().get(j).getSpeedVector());
+					myTank.getBullets()
+							.get(j)
+							.setSpeed(
+									myTank.getBullets().get(j).getSpeedVector());
 				}
 				for (int j = 0; j < resource.getEnemys().size(); j++) {
-					resource.getEnemys().get(j).setSpeed(resource.getEnemys().get(j).getSpeedVector());
+					resource.getEnemys()
+							.get(j)
+							.setSpeed(
+									resource.getEnemys().get(j)
+											.getSpeedVector());
 					resource.getEnemys().get(j).setSpeedVector(0);
-					for (int k = 0; k < resource.getEnemys().get(j).getBullets().size(); k++) {
-						resource.getEnemys().get(j).getBullets().get(k)
-								.setSpeed(resource.getEnemys().get(j).getBullets().get(k).getSpeedVector());
+					for (int k = 0; k < resource.getEnemys().get(j)
+							.getBullets().size(); k++) {
+						resource.getEnemys()
+								.get(j)
+								.getBullets()
+								.get(k)
+								.setSpeed(
+										resource.getEnemys().get(j)
+												.getBullets().get(k)
+												.getSpeedVector());
 					}
 				}
 			}

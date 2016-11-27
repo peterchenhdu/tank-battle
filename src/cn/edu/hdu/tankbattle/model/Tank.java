@@ -1,9 +1,9 @@
-package cn.edu.hdu.pichen.game.tank.model;
+package cn.edu.hdu.tankbattle.model;
 
 import java.awt.Color;
 import java.util.Vector;
 
-import cn.edu.hdu.pichen.game.tank.view.GamePanel;
+import cn.edu.hdu.tankbattle.view.GamePanel;
 
 /**
  * 坦克类，继承自东西类
@@ -135,7 +135,8 @@ public class Tank extends Stuff {
 	 */
 	public void goEast() {
 		this.setDirect(EAST);
-		if (this.getX() < GamePanel.WIDTH - 20 && this.getY() <= GamePanel.HEIGHT - 20) {
+		if (this.getX() < GamePanel.WIDTH - 20
+				&& this.getY() <= GamePanel.HEIGHT - 20) {
 			this.setX(this.getX() + this.speed);
 		} else {
 			this.setFrontInfomation(Stuff.IRON);
@@ -193,7 +194,8 @@ public class Tank extends Stuff {
 		int y = stuff.getY();
 		if (this.getDirect() == Tank.NORTH) {
 			this.setY(this.getY() - this.getSpeed()); // 先假设该坦克往前移动一步
-			if (Math.abs(this.getY() - y) < length && Math.abs(this.getX() - x) < length) { // 如果在远离，此时他想逃出重叠，所以就设b为false，让它能够动
+			if (Math.abs(this.getY() - y) < length
+					&& Math.abs(this.getX() - x) < length) { // 如果在远离，此时他想逃出重叠，所以就设b为false，让它能够动
 				b = true;
 				this.setY(this.getY() + this.getSpeed());
 			} else {
@@ -202,21 +204,24 @@ public class Tank extends Stuff {
 		}
 		if (this.getDirect() == Tank.SOUTH) {
 			this.setY(this.getY() + this.getSpeed()); // 先假设该坦克往前移动一步
-			if (Math.abs(this.getY() - y) < length && Math.abs(this.getX() - x) < length) {
+			if (Math.abs(this.getY() - y) < length
+					&& Math.abs(this.getX() - x) < length) {
 				b = true;
 			}
 			this.setY(this.getY() - this.getSpeed());
 		}
 		if (this.getDirect() == Tank.EAST) {
 			this.setX(this.getX() + this.getSpeed());
-			if (Math.abs(this.getY() - y) < length && Math.abs(this.getX() - x) < length) {
+			if (Math.abs(this.getY() - y) < length
+					&& Math.abs(this.getX() - x) < length) {
 				b = true;
 			}
 			this.setX(this.getX() - this.getSpeed());
 		}
 		if (this.getDirect() == Tank.WEST) {
 			this.setX(this.getX() - this.getSpeed());
-			if (Math.abs(this.getY() - y) < length && Math.abs(this.getX() - x) < length) {
+			if (Math.abs(this.getY() - y) < length
+					&& Math.abs(this.getX() - x) < length) {
 				b = true;
 			}
 			this.setX(this.getX() + this.getSpeed());

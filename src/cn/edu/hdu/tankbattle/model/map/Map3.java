@@ -1,8 +1,8 @@
-package cn.edu.hdu.pichen.game.tank.model.map;
+package cn.edu.hdu.tankbattle.model.map;
 
 import java.util.Vector;
 
-import cn.edu.hdu.pichen.game.tank.model.Brick;
+import cn.edu.hdu.tankbattle.model.Brick;
 
 public class Map3 extends Map {
 	public Map3() {

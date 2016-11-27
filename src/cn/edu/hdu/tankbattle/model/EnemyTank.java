@@ -1,12 +1,12 @@
-package cn.edu.hdu.pichen.game.tank.model;
+package cn.edu.hdu.tankbattle.model;
 
 import java.awt.Color;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
 
-import cn.edu.hdu.pichen.game.tank.model.map.Map;
-import cn.edu.hdu.pichen.game.tank.view.GamePanel;
+import cn.edu.hdu.tankbattle.model.map.Map;
+import cn.edu.hdu.tankbattle.view.GamePanel;
 
 /**
  * 敌人坦克 继承自Tank类，并且实现Runnable接口 敌人坦克的线程是每隔36毫秒行走的，各种判断（30毫秒）会在这36毫秒以内判断完毕
@@ -101,7 +101,8 @@ public class EnemyTank extends Tank implements Runnable {
 					}
 					// 如果出界或者重叠的话 选择其他方向 跳出
 					if (this.getY() <= 20 || this.isOverlapNo() == true) {
-						this.setDirect(this.getRandomDirect(Tank.SOUTH, Tank.WEST, Tank.EAST));
+						this.setDirect(this.getRandomDirect(Tank.SOUTH,
+								Tank.WEST, Tank.EAST));
 						break;
 					}
 					// 如果现在坦克的方向不是北方，跳出
@@ -130,8 +131,10 @@ public class EnemyTank extends Tank implements Runnable {
 					if (this.getMyTankLocation() == EnemyTank.SOUTH) {
 						this.enemyGoSouth();
 					}
-					if (this.getY() >= GamePanel.HEIGHT - 20 || this.isOverlapNo() == true) {
-						this.setDirect(this.getRandomDirect(Tank.NORTH, Tank.WEST, Tank.EAST));
+					if (this.getY() >= GamePanel.HEIGHT - 20
+							|| this.isOverlapNo() == true) {
+						this.setDirect(this.getRandomDirect(Tank.NORTH,
+								Tank.WEST, Tank.EAST));
 						break;
 					}
 					if (this.getDirect() != Tank.SOUTH)
@@ -158,8 +161,10 @@ public class EnemyTank extends Tank implements Runnable {
 					if (this.getMyTankLocation() == EnemyTank.WEST) {
 						this.enemyGoWest();
 					}
-					if (this.getX() <= 20 || this.getY() <= 20 || this.isOverlapNo() == true) {
-						this.setDirect(this.getRandomDirect(Tank.NORTH, Tank.SOUTH, Tank.EAST));
+					if (this.getX() <= 20 || this.getY() <= 20
+							|| this.isOverlapNo() == true) {
+						this.setDirect(this.getRandomDirect(Tank.NORTH,
+								Tank.SOUTH, Tank.EAST));
 						break;
 					}
 					if (this.getDirect() != Tank.WEST)
@@ -186,8 +191,10 @@ public class EnemyTank extends Tank implements Runnable {
 					if (this.getMyTankLocation() == EnemyTank.EAST) {
 						this.enemyGoEast();
 					}
-					if (this.getX() >= GamePanel.WIDTH - 20 || this.getY() <= 20 || this.isOverlapNo() == true) {
-						this.setDirect(this.getRandomDirect(Tank.NORTH, Tank.SOUTH, Tank.WEST));
+					if (this.getX() >= GamePanel.WIDTH - 20
+							|| this.getY() <= 20 || this.isOverlapNo() == true) {
+						this.setDirect(this.getRandomDirect(Tank.NORTH,
+								Tank.SOUTH, Tank.WEST));
 						break;
 					}
 					if (this.getDirect() != Tank.EAST)
@@ -343,7 +350,8 @@ public class EnemyTank extends Tank implements Runnable {
 				int s = 0;
 				for (int t = 0; t < map.getIrons().size(); t++) {
 					Iron iron = map.getIrons().get(t);
-					if (Math.abs(enX - iron.getX()) <= 10 && iron.getY() > enY && iron.getY() < myY) {
+					if (Math.abs(enX - iron.getX()) <= 10 && iron.getY() > enY
+							&& iron.getY() < myY) {
 						s = 1; // 只要出现一个铁块能挡住子弹，就让s变为1，跳出判断
 						break;
 					}
@@ -356,7 +364,8 @@ public class EnemyTank extends Tank implements Runnable {
 				int s = 0;
 				for (int t = 0; t < map.getIrons().size(); t++) {
 					Iron iron = map.getIrons().get(t);
-					if (Math.abs(enX - iron.getX()) <= 10 && iron.getY() < enY && iron.getY() > myY) {
+					if (Math.abs(enX - iron.getX()) <= 10 && iron.getY() < enY
+							&& iron.getY() > myY) {
 						s = 1;
 						break;
 					}
@@ -372,7 +381,8 @@ public class EnemyTank extends Tank implements Runnable {
 				for (int t = 0; t < map.getIrons().size(); t++) {
 					Iron iron = map.getIrons().get(t);
 					// 铁块能挡住子弹，而且在我的坦克和敌人坦克之间
-					if (Math.abs(enY - iron.getY()) <= 10 && iron.getX() < enX && iron.getX() > myX) {
+					if (Math.abs(enY - iron.getY()) <= 10 && iron.getX() < enX
+							&& iron.getX() > myX) {
 						s = 1;
 						break;
 					}
@@ -385,7 +395,8 @@ public class EnemyTank extends Tank implements Runnable {
 				int s = 0;
 				for (int t = 0; t < map.getIrons().size(); t++) {
 					Iron iron = map.getIrons().get(t);
-					if (Math.abs(enY - iron.getY()) <= 10 && iron.getX() > enX && iron.getX() < myX) {
+					if (Math.abs(enY - iron.getY()) <= 10 && iron.getX() > enX
+							&& iron.getX() < myX) {
 						s = 1;
 						break;
 					}

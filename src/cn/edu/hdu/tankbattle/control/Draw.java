@@ -1,4 +1,4 @@
-package cn.edu.hdu.pichen.game.tank.control;
+package cn.edu.hdu.tankbattle.control;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -7,18 +7,18 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
-import cn.edu.hdu.pichen.game.tank.model.Bomb;
-import cn.edu.hdu.pichen.game.tank.model.Brick;
-import cn.edu.hdu.pichen.game.tank.model.Bullet;
-import cn.edu.hdu.pichen.game.tank.model.EnemyTank;
-import cn.edu.hdu.pichen.game.tank.model.Iron;
-import cn.edu.hdu.pichen.game.tank.model.MyTank;
-import cn.edu.hdu.pichen.game.tank.model.Stuff;
-import cn.edu.hdu.pichen.game.tank.model.Tank;
-import cn.edu.hdu.pichen.game.tank.model.TankGameImages;
-import cn.edu.hdu.pichen.game.tank.model.Water;
-import cn.edu.hdu.pichen.game.tank.model.map.Map;
-import cn.edu.hdu.pichen.game.tank.view.GamePanel;
+import cn.edu.hdu.tankbattle.model.Bomb;
+import cn.edu.hdu.tankbattle.model.Brick;
+import cn.edu.hdu.tankbattle.model.Bullet;
+import cn.edu.hdu.tankbattle.model.EnemyTank;
+import cn.edu.hdu.tankbattle.model.Iron;
+import cn.edu.hdu.tankbattle.model.MyTank;
+import cn.edu.hdu.tankbattle.model.Stuff;
+import cn.edu.hdu.tankbattle.model.Tank;
+import cn.edu.hdu.tankbattle.model.TankGameImages;
+import cn.edu.hdu.tankbattle.model.Water;
+import cn.edu.hdu.tankbattle.model.map.Map;
+import cn.edu.hdu.tankbattle.view.GamePanel;
 
 /**
  * 游戏绘画类
@@ -60,21 +60,24 @@ public class Draw {
 			 * g.setColor(new Color(216,90,49)); g.fill3DRect(stuff.getX()-20,
 			 * stuff.getY()-20, 40, 40, false);
 			 */
-			g.drawImage(TankGameImages.stuffImg[Stuff.BRICK], stuff.getX() - 10, stuff.getY() - 10, 20, 20, panel);
+			g.drawImage(TankGameImages.stuffImg[Stuff.BRICK],
+					stuff.getX() - 10, stuff.getY() - 10, 20, 20, panel);
 			break;
 		case Stuff.IRON:
 			/*
 			 * g.setColor(new Color(225,225,225)); g.fill3DRect(stuff.getX()-20,
 			 * stuff.getY()-20, 40, 40, false);
 			 */
-			g.drawImage(TankGameImages.stuffImg[Stuff.IRON], stuff.getX() - 10, stuff.getY() - 10, 20, 20, panel);
+			g.drawImage(TankGameImages.stuffImg[Stuff.IRON], stuff.getX() - 10,
+					stuff.getY() - 10, 20, 20, panel);
 			break;
 		case Stuff.WATER:
 			/*
 			 * g.setColor(new Color(65,64,253)); g.fillRect(stuff.getX()-20,
 			 * stuff.getY()-20, 40, 40);
 			 */
-			g.drawImage(TankGameImages.stuffImg[Stuff.WATER], stuff.getX() - 10, stuff.getY() - 10, 20, 20, panel);
+			g.drawImage(TankGameImages.stuffImg[Stuff.WATER],
+					stuff.getX() - 10, stuff.getY() - 10, 20, 20, panel);
 			break;
 		}
 
@@ -95,15 +98,20 @@ public class Draw {
 			int l = bombs.get(i).getL();
 			Bomb b = bombs.get(i); // 从炸弹容器中取出一颗炸弹
 			if (b.getLifeTime() > 24) { // 生命值21-25
-				g.drawImage(TankGameImages.bomb[0], b.getX() - l / 2, b.getY() - l / 2, l, l, panel);
+				g.drawImage(TankGameImages.bomb[0], b.getX() - l / 2, b.getY()
+						- l / 2, l, l, panel);
 			} else if (b.getLifeTime() > 18) { // 生命值16-20
-				g.drawImage(TankGameImages.bomb[1], b.getX() - l / 2, b.getY() - l / 2, l, l, panel);
+				g.drawImage(TankGameImages.bomb[1], b.getX() - l / 2, b.getY()
+						- l / 2, l, l, panel);
 			} else if (b.getLifeTime() > 12) { // 生命值11-15
-				g.drawImage(TankGameImages.bomb[2], b.getX() - l / 2, b.getY() - l / 2, l, l, panel);
+				g.drawImage(TankGameImages.bomb[2], b.getX() - l / 2, b.getY()
+						- l / 2, l, l, panel);
 			} else if (b.getLifeTime() > 6) { // 生命值6-10
-				g.drawImage(TankGameImages.bomb[3], b.getX() - l / 2, b.getY() - l / 2, l, l, panel);
+				g.drawImage(TankGameImages.bomb[3], b.getX() - l / 2, b.getY()
+						- l / 2, l, l, panel);
 			} else { // 生命值低于6
-				g.drawImage(TankGameImages.bomb[4], b.getX() - l / 2, b.getY() - l / 2, l, l, panel);
+				g.drawImage(TankGameImages.bomb[4], b.getX() - l / 2, b.getY()
+						- l / 2, l, l, panel);
 			}
 			b.lifeDown(); // 生命随时间衰减
 			if (b.getLifeTime() == 0) { // 该炸弹死亡
@@ -128,7 +136,8 @@ public class Draw {
 			for (int j = 0; j < enemys.get(i).getBullets().size(); j++) {
 				if (enemys.get(i).getBullets().get(j) != null) {
 					Bullet eb = enemys.get(i).getBullets().get(j);
-					g.drawImage(TankGameImages.bullet, eb.getX() - 2, eb.getY() - 2, 4, 4, panel);
+					g.drawImage(TankGameImages.bullet, eb.getX() - 2,
+							eb.getY() - 2, 4, 4, panel);
 				}
 			}
 		}
@@ -151,7 +160,8 @@ public class Draw {
 			for (int i = 0; i < myTank.getBullets().size(); i++) {
 				if (myTank.getBullets().get(i) != null) {
 					Bullet b = myTank.getBullets().get(i);
-					g.drawImage(TankGameImages.bullet, b.getX() - 2, b.getY() - 2, 4, 4, panel);
+					g.drawImage(TankGameImages.bullet, b.getX() - 2,
+							b.getY() - 2, 4, 4, panel);
 				}
 			}
 		}
@@ -343,13 +353,16 @@ public class Draw {
 	public void drawRight(Graphics g, GamePanel tgp) {
 		for (int i = 0; i < tgp.getControl().getEnemyTankNum(); i++) {
 			if (i >= 4) {
-				g.drawImage(TankGameImages.enemyTankImg[Stuff.NORTH], 402 + 50 * i, 100, 40, 40, tgp);
+				g.drawImage(TankGameImages.enemyTankImg[Stuff.NORTH],
+						402 + 50 * i, 100, 40, 40, tgp);
 			} else {
-				g.drawImage(TankGameImages.enemyTankImg[Stuff.NORTH], 602 + 50 * i, 20, 40, 40, tgp);
+				g.drawImage(TankGameImages.enemyTankImg[Stuff.NORTH],
+						602 + 50 * i, 20, 40, 40, tgp);
 			}
 		}
 		for (int j = 0; j < tgp.getControl().getMyTankNum(); j++) {
-			g.drawImage(TankGameImages.myTankImg[Stuff.NORTH], 602 + 50 * j, 400, 40, 40, tgp);
+			g.drawImage(TankGameImages.myTankImg[Stuff.NORTH], 602 + 50 * j,
+					400, 40, 40, tgp);
 		}
 		g.drawString("我的坦克子弹数目:" + tgp.getControl().getMyBulletNum(), 620, 500);
 	}

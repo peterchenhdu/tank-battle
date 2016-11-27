@@ -1,13 +1,13 @@
 /**
  * 第一关地图
  */
-package cn.edu.hdu.pichen.game.tank.model.map;
+package cn.edu.hdu.tankbattle.model.map;
 
 import java.util.Vector;
 
-import cn.edu.hdu.pichen.game.tank.model.Brick;
-import cn.edu.hdu.pichen.game.tank.model.Iron;
-import cn.edu.hdu.pichen.game.tank.model.Water;
+import cn.edu.hdu.tankbattle.model.Brick;
+import cn.edu.hdu.tankbattle.model.Iron;
+import cn.edu.hdu.tankbattle.model.Water;
 
 /**
  * 第一关地图类

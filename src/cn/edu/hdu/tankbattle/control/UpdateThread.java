@@ -1,13 +1,15 @@
-package cn.edu.hdu.pichen.game.tank.control;
+package cn.edu.hdu.tankbattle.control;
 
-import cn.edu.hdu.pichen.game.tank.model.GameResource;
-import cn.edu.hdu.pichen.game.tank.view.GamePanel;
+import cn.edu.hdu.tankbattle.model.GameResource;
+import cn.edu.hdu.tankbattle.view.GamePanel;
+
 /**
  * 游戏控制信息更新线程
-  * @ClassName: UpdateThread
-  * @Description: TODO
-  * @author chenpi
-  * @date 2016年2月16日 下午3:32:58
+ * 
+ * @ClassName: UpdateThread
+ * @Description: TODO
+ * @author chenpi
+ * @date 2016年2月16日 下午3:32:58
  */
 public class UpdateThread implements Runnable {
 
@@ -25,7 +27,8 @@ public class UpdateThread implements Runnable {
 				e.printStackTrace();
 			}
 			if (control.isStart() == true) {
-				if ((control.getMyTankNum() == 0 || control.getEnemyTankNum() == 0) && control.getDy() > 250) {
+				if ((control.getMyTankNum() == 0 || control.getEnemyTankNum() == 0)
+						&& control.getDy() > 250) {
 					control.setDy(control.getDy() - 2);
 				}
 				if (control.getDy() == 250) {
@@ -46,10 +49,13 @@ public class UpdateThread implements Runnable {
 					}
 				}
 				if (control.isStop() == false && control.getDy() == 600) {
-					control.cleanAndCreat(resource.getMyTanks(), resource.getEnemys(), resource.getMap(),
+					control.cleanAndCreat(resource.getMyTanks(),
+							resource.getEnemys(), resource.getMap(),
 							resource.getBombs()); // 从容器中移除死亡的对象
-					control.judge(resource.getMyTanks(), resource.getEnemys(), resource.getMap(), resource.getBombs()); // 判断子弹是否击中坦克
-					control.judgeOverlap(resource.getMyTanks(), resource.getEnemys(), resource.getMap()); // 判断坦克间是否出现重叠
+					control.judge(resource.getMyTanks(), resource.getEnemys(),
+							resource.getMap(), resource.getBombs()); // 判断子弹是否击中坦克
+					control.judgeOverlap(resource.getMyTanks(),
+							resource.getEnemys(), resource.getMap()); // 判断坦克间是否出现重叠
 					control.myTankEvent(resource);
 
 				}

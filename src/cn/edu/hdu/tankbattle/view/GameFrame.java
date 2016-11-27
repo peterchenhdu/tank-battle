@@ -1,4 +1,4 @@
-package cn.edu.hdu.pichen.game.tank.view;
+package cn.edu.hdu.tankbattle.view;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;

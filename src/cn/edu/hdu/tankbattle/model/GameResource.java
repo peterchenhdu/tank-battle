@@ -1,14 +1,16 @@
-package cn.edu.hdu.pichen.game.tank.model;
+package cn.edu.hdu.tankbattle.model;
 
 import java.util.Vector;
 
-import cn.edu.hdu.pichen.game.tank.model.map.Map;
+import cn.edu.hdu.tankbattle.model.map.Map;
+
 /**
  * 游戏资源类
-  * @ClassName: GameResource
-  * @Description: TODO
-  * @author chenpi
-  * @date 2016年2月16日 下午3:33:40
+ * 
+ * @ClassName: GameResource
+ * @Description: TODO
+ * @author chenpi
+ * @date 2016年2月16日 下午3:33:40
  */
 public class GameResource {
 	/**

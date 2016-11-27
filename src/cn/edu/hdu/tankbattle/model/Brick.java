@@ -1,4 +1,4 @@
-package cn.edu.hdu.pichen.game.tank.model;
+package cn.edu.hdu.tankbattle.model;
 
 /**
  * 砖块类，由东西类继承而来

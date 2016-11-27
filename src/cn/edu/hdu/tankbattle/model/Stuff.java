@@ -1,5 +1,4 @@
-
-package cn.edu.hdu.pichen.game.tank.model;
+package cn.edu.hdu.tankbattle.model;
 
 import java.awt.Color;
 
