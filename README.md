@@ -32,7 +32,7 @@ clean package<br/>
 tankbattle is released under the MIT license.
 
 ## Others
-四五年前的博客，写得好烂...<br/>
+<br/>
 http://pichenhdu.iteye.com/blog/903096<br/>
-最近又写了一篇，还是好烂。。。。。。。有空好好优化下代码，写下。<br/>
+<br/>
 http://www.cnblogs.com/chenpi/p/6106151.html<br/>
