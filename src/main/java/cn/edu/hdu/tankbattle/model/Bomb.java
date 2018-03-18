@@ -3,7 +3,7 @@ package cn.edu.hdu.tankbattle.model;
 /**
  * 爆炸对象，是一个正方形
  *
- * @author 1052067939
+ * @author chenpi
  * @version 1.0
  * @since JavaSe-1.6
  */

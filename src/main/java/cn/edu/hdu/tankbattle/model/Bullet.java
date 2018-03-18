@@ -5,7 +5,7 @@ import cn.edu.hdu.tankbattle.view.GamePanel;
 /**
  * 子弹类，实现Runnable接口
  *
- * @author 1052067939
+ * @author chenpi
  * @version 1.0
  * @since JavaSe-1.6
  */

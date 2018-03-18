@@ -7,7 +7,7 @@ import java.awt.Toolkit;
 /**
  * 坦克游戏图像类，全部要用到的图像
  *
- * @author 1052067939
+ * @author chenpi
  * @version 1.0
  * @since JavaSe-1.6
  */

@@ -11,7 +11,7 @@ import cn.edu.hdu.tankbattle.view.GamePanel;
 /**
  * 敌人坦克 继承自Tank类，并且实现Runnable接口 敌人坦克的线程是每隔36毫秒行走的，各种判断（30毫秒）会在这36毫秒以内判断完毕
  *
- * @author 1052067939
+ * @author chenpi
  * @version 1.0
  * @since JavaSe-1.6
  */
@@ -456,7 +456,7 @@ public class EnemyTank extends Tank implements Runnable {
 /**
  * 发射子弹
  *
- * @author 1052067939
+ * @author chenpi
  */
 class MyTimerTask extends TimerTask {
     EnemyTank tank;

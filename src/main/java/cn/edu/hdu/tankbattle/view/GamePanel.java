@@ -23,7 +23,7 @@ import cn.edu.hdu.tankbattle.model.TankGameImages;
  * <p>
  * 游戏主要类，坦克游戏就在该面板上进行
  *
- * @author 1052067939
+ * @author chenpi
  */
 public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
@@ -391,7 +391,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
                             "游戏帮助", JOptionPane.INFORMATION_MESSAGE);
         } else if (e.getActionCommand() == "aboutGame") {
             JOptionPane.showMessageDialog(null,
-                    "JAVA坦克大战CP版1.0\n作者:hdu-1052067939\n", "关于游戏",
+                    "JAVA坦克大战CP版1.0\n作者:hdu-chenpi\n", "关于游戏",
                     JOptionPane.INFORMATION_MESSAGE);
         }
     }

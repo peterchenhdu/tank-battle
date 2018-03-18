@@ -23,7 +23,7 @@ import cn.edu.hdu.tankbattle.view.GamePanel;
 /**
  * 游戏绘画类
  *
- * @author 1052067939
+ * @author chenpi
  * @since JavaSe-1.6
  */
 public class Draw {

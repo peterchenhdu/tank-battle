@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import cn.edu.hdu.tankbattle.view.GameFrame;
 
 /**
- * @author Pi Chen
+ * @author chenpi
  * @version tankbattle V1.0.0, 2016年11月27日
  * @see
  * @since tankbattle V1.0.0

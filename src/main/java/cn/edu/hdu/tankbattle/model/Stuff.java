@@ -6,7 +6,7 @@ import java.awt.Color;
  * 东西类，简单的一个对象
  * <p>
  *
- * @author 1052067939
+ * @author chenpi
  * @version 1.0
  * @since JavaSe-1.6
  */

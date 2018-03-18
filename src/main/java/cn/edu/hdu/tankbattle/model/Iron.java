@@ -3,7 +3,7 @@ package cn.edu.hdu.tankbattle.model;
 /**
  * 铁块类，继承自东西类
  *
- * @author 1052067939
+ * @author chenpi
  * @version 1.0
  * @since JavaSe-1.6
  */

@@ -23,7 +23,7 @@ import cn.edu.hdu.tankbattle.view.GamePanel;
 /**
  * 游戏控制类
  *
- * @author 1052067939
+ * @author chenpi
  * @version 1.0
  * @since JavaSe-1.6
  */

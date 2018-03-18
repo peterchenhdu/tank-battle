@@ -9,7 +9,7 @@ import cn.edu.hdu.tankbattle.model.Water;
 /**
  * 游戏地图
  *
- * @author 1052067939
+ * @author chenpi
  */
 public class Map {
     /**

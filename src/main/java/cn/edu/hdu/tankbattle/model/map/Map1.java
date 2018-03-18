@@ -12,7 +12,7 @@ import cn.edu.hdu.tankbattle.model.Water;
 /**
  * 第一关地图类
  *
- * @author 1052067939
+ * @author chenpi
  * @since JavaSe-1.6
  */
 public class Map1 extends Map {

@@ -6,7 +6,7 @@ import java.util.Vector;
 /**
  * 我的坦克类，继承自坦克类
  *
- * @author 1052067939
+ * @author chenpi
  * @version 1.0
  * @since JavaSe-1.6
  */

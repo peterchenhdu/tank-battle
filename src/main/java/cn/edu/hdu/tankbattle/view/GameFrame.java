@@ -8,7 +8,7 @@ import javax.swing.JMenuItem;
 /**
  * 游戏Frame
  *
- * @author 1052067939
+ * @author chenpi
  * @version 1.0
  */
 public class GameFrame extends JFrame {
