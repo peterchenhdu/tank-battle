@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 public class TankBattleMenuBar extends JMenuBar {
     public TankBattleMenuBar(ActionListener listener) {
         super();
+
         // --游戏/Game--菜单
         this.add(new GameMenu(listener));
         // --选择关卡--菜单

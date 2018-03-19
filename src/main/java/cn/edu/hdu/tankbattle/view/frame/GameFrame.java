@@ -19,33 +19,18 @@ import java.awt.*;
  * @author chenpi
  * @since 2011-02-10 19:29
  */
-@Component
 public class GameFrame extends JFrame {
 
     /**
      * serialVersionUID
      */
     private static final long serialVersionUID = -1176914786963603304L;
-    /**
-     * 游戏面板
-     */
-    @Autowired
-    private GamePanel tankGamePanel;
 
 
-    @PostConstruct
-    public void init() {
 
 
-        this.addKeyListener(tankGamePanel); // 游戏面板来作为按键侦听器
+    public void  init() {
 
-
-        // 菜单条
-        this.setJMenuBar(new TankBattleMenuBar(tankGamePanel));
-
-
-        // 将panel添加到Frame
-        this.add(tankGamePanel);
 
 
         this.setSize(800, 700);

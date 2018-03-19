@@ -13,14 +13,21 @@ import cn.edu.hdu.tankbattle.view.panel.GamePanel;
  * @author chenpi
  * @since 2011-02-10 19:29
  */
-public class UpdateThread implements Runnable {
+public class UpdateTask implements Runnable {
 
+    private GameResource resource;
+
+    private Control control;
     private GamePanel pannel;
+
+    public UpdateTask(Control control, GameResource resource, GamePanel pannel){
+        this.control = control;
+        this.resource = resource;
+        this.pannel = pannel;
+    }
 
     @Override
     public void run() {
-        Control control = pannel.getControl();
-        GameResource resource = pannel.getResource();
         // 每隔30毫秒重画
         while (true) {
             try {
@@ -28,7 +35,7 @@ public class UpdateThread implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (control.isStart() == true) {
+            if (control.isStart()) {
                 if ((control.getMyTankNum() == 0 || control.getEnemyTankNum() == 0)
                         && control.getDy() > 250) {
                     control.setDy(control.getDy() - 2);
@@ -76,12 +83,6 @@ public class UpdateThread implements Runnable {
         }
     }
 
-    public GamePanel getPannel() {
-        return pannel;
-    }
 
-    public void setPannel(GamePanel pannel) {
-        this.pannel = pannel;
-    }
 
 }

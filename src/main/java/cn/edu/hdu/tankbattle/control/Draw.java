@@ -11,6 +11,7 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
+import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.model.Bomb;
 import cn.edu.hdu.tankbattle.model.Brick;
 import cn.edu.hdu.tankbattle.model.Bullet;
@@ -23,6 +24,7 @@ import cn.edu.hdu.tankbattle.model.TankGameImages;
 import cn.edu.hdu.tankbattle.model.Water;
 import cn.edu.hdu.tankbattle.model.map.Map;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,6 +35,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class Draw {
+    @Autowired
+    private GameContext gameContext;
     /**
      * 画出东西（包括坦克、障碍物。。）
      *
@@ -328,7 +332,7 @@ public class Draw {
      * @param tgp 游戏主要面板对象
      */
     public void drawRight(Graphics g, GamePanel tgp) {
-        for (int i = 0; i < tgp.getControl().getEnemyTankNum(); i++) {
+        for (int i = 0; i < gameContext.getControl().getEnemyTankNum(); i++) {
             if (i >= 4) {
                 g.drawImage(TankGameImages.enemyTankImg[Stuff.NORTH],
                         402 + 50 * i, 100, 40, 40, tgp);
@@ -337,10 +341,10 @@ public class Draw {
                         602 + 50 * i, 20, 40, 40, tgp);
             }
         }
-        for (int j = 0; j < tgp.getControl().getMyTankNum(); j++) {
+        for (int j = 0; j < gameContext.getControl().getMyTankNum(); j++) {
             g.drawImage(TankGameImages.myTankImg[Stuff.NORTH], 602 + 50 * j,
                     400, 40, 40, tgp);
         }
-        g.drawString("我的坦克子弹数目:" + tgp.getControl().getMyBulletNum(), 620, 500);
+        g.drawString("我的坦克子弹数目:" + gameContext.getControl().getMyBulletNum(), 620, 500);
     }
 }
