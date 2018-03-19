@@ -1,9 +1,13 @@
 package cn.edu.hdu.tankbattle.view;
 
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import java.awt.*;
 
 /**
  * 游戏Frame
@@ -11,6 +15,7 @@ import javax.swing.JMenuItem;
  * @author chenpi
  * @version 1.0
  */
+@Component
 public class GameFrame extends JFrame {
 
     /**
@@ -140,6 +145,24 @@ public class GameFrame extends JFrame {
         // 将panel添加到Frame
         this.add(tankGamePanel);
 
+    }
+
+    @PostConstruct
+    public void init(){
+        this.setSize(800, 700);
+        this.setTitle("MyTankGame");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.setVisible(true);
+
+        // 显示器屏幕大小
+        Dimension screenSizeInfo = Toolkit.getDefaultToolkit().getScreenSize();
+        int leftTopX = ((int) screenSizeInfo.getWidth() - this.getWidth()) / 2;
+        int leftTopY = ((int) screenSizeInfo.getHeight() - this
+                .getHeight()) / 2;
+
+        // 设置显示的位置在屏幕中间
+        this.setLocation(leftTopX, leftTopY);
     }
 
 }

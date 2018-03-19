@@ -19,6 +19,9 @@ import cn.edu.hdu.tankbattle.model.map.Map3;
 import cn.edu.hdu.tankbattle.model.map.Map4;
 import cn.edu.hdu.tankbattle.model.map.Map5;
 import cn.edu.hdu.tankbattle.view.GamePanel;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 
 /**
  * 游戏控制类
@@ -27,6 +30,7 @@ import cn.edu.hdu.tankbattle.view.GamePanel;
  * @version 1.0
  * @since JavaSe-1.6
  */
+@Component
 public class Control {
     public static final int STARTBULLETNUM = 500;
     /**
@@ -99,6 +103,10 @@ public class Control {
         this.myTankNum = 4;
         this.myBulletNum = Control.STARTBULLETNUM;
         this.beKilled = 0;
+    }
+    @PostConstruct
+    public void init(){
+        System.out.println("control...");
     }
 
     /**

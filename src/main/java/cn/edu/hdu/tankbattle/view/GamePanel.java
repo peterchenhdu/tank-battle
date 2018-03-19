@@ -17,6 +17,7 @@ import cn.edu.hdu.tankbattle.model.GameResource;
 import cn.edu.hdu.tankbattle.model.MyTank;
 import cn.edu.hdu.tankbattle.model.Tank;
 import cn.edu.hdu.tankbattle.model.TankGameImages;
+import org.springframework.stereotype.Component;
 
 /**
  * 游戏面板，继承自JPanel，实现KeyListener,ActionListener接口
@@ -25,6 +26,7 @@ import cn.edu.hdu.tankbattle.model.TankGameImages;
  *
  * @author chenpi
  */
+@Component
 public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
     /**
