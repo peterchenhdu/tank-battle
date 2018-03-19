@@ -1,9 +1,19 @@
+/*
+ * Copyright (c) 2011-2025 PiChen.
+ */
+
 package cn.edu.hdu.tankbattle.model.map;
 
 import java.util.Vector;
 
 import cn.edu.hdu.tankbattle.model.Brick;
 
+/**
+ * map...
+ *
+ * @author chenpi
+ * @since 2011-02-10 19:29
+ */
 public class Map3 extends Map {
     public Map3() {
         Vector<Brick> bricks = this.getBricks();

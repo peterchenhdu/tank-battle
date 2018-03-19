@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2011-2025 PiChen.
+ */
+
 package cn.edu.hdu.tankbattle.model;
 
 import java.util.Vector;
@@ -6,12 +10,10 @@ import cn.edu.hdu.tankbattle.model.map.Map;
 import org.springframework.stereotype.Component;
 
 /**
- * 游戏资源类
+ * GameResource...
  *
  * @author chenpi
- * @ClassName: GameResource
- * @Description: TODO
- * @date 2016年2月16日 下午3:33:40
+ * @since 2011-02-10 19:29
  */
 @Component
 public class GameResource {

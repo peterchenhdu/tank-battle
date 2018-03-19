@@ -1,11 +1,14 @@
+/*
+ * Copyright (c) 2011-2025 PiChen.
+ */
+
 package cn.edu.hdu.tankbattle.model;
 
 /**
- * 铁块类，继承自东西类
+ * Iron...
  *
  * @author chenpi
- * @version 1.0
- * @since JavaSe-1.6
+ * @since 2011-02-10 19:29
  */
 public class Iron extends Stuff {
     /**

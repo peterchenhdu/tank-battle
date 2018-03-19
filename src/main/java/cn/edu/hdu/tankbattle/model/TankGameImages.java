@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2011-2025 PiChen.
+ */
+
 package cn.edu.hdu.tankbattle.model;
 
 import java.awt.Image;
@@ -5,11 +9,10 @@ import java.awt.Panel;
 import java.awt.Toolkit;
 
 /**
- * 坦克游戏图像类，全部要用到的图像
+ * TankGameImages...
  *
  * @author chenpi
- * @version 1.0
- * @since JavaSe-1.6
+ * @since 2011-02-10 19:29
  */
 public class TankGameImages {
     /**

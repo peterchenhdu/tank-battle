@@ -1,4 +1,8 @@
-package cn.edu.hdu.tankbattle.view;
+/*
+ * Copyright (c) 2011-2025 PiChen.
+ */
+
+package cn.edu.hdu.tankbattle.view.panel;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -22,11 +26,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * 游戏面板，继承自JPanel，实现KeyListener,ActionListener接口
- * <p>
- * 游戏主要类，坦克游戏就在该面板上进行
+ * GamePanel...
  *
  * @author chenpi
+ * @since 2011-02-10 19:29
  */
 @Component
 public class GamePanel extends JPanel implements KeyListener, ActionListener {
@@ -79,7 +82,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        if (control.isStart() == true) {
+        if (control.isStart()) {
             g.setColor(Color.black);
             g.fillRect(0, 0, WIDTH, HEIGHT);
             g.fillRect(280, 600, 40, 40);
@@ -125,7 +128,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         } else {
             g.drawImage(TankGameImages.startImage, 0, 0, 800, 700, this);
             g.drawImage(TankGameImages.font, 0, control.getKy(), this);
-            if (control.isIconSmile() == true) {
+            if (control.isIconSmile()) {
                 g.drawImage(TankGameImages.yct_smile1, control.getKx(), 45,
                         this);
                 control.setIconSmile(false);
@@ -142,7 +145,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         for (int i = 0; i < resource.getMyTanks().size(); i++) {
             MyTank myTank = resource.getMyTanks().get(i);
 
-            if (myTank.isLive() == false) {
+            if (!myTank.isLive()) {
                 control.setUp(false);
                 control.setDown(false);
                 control.setLeft(false);
@@ -211,14 +214,14 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand() == "stop") {
+        if ("stop".equals(e.getActionCommand())) {
             control.gameEventStop(resource);
-        } else if (e.getActionCommand() == "start") { // 当点了开始游戏
-            if (control.isStart() == false) { // 还没开始
+        } else if ("start".equals(e.getActionCommand())) { // 当点了开始游戏
+            if (!control.isStart()) { // 还没开始
                 control.setStart(true);// 已经开始了
                 control.startGame(resource);
                 this.setVisible(true);
-            } else if (control.isStop() == false
+            } else if (!control.isStop()
                     && this.control.getMyTankNum() != 0) {
                 // 暂停
                 control.gameEventStop(resource);
@@ -226,15 +229,15 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
                         JOptionPane.INFORMATION_MESSAGE);
                 // 恢复游戏
                 control.gameEventStop(resource);
-            } else if (control.isStop() == true) {
+            } else if (control.isStop()) {
                 JOptionPane.showMessageDialog(null, "游戏已经开始", "提示",
                         JOptionPane.INFORMATION_MESSAGE);
-            } else if (control.isStop() == false
+            } else if (!control.isStop()
                     && (this.control.getMyTankNum() == 0)) {
                 control.setStart(true);
                 control.startGame(resource);
             }
-        } else if (e.getActionCommand() == "exit") { // 退出按钮
+        } else if ("exit".equals(e.getActionCommand())) { // 退出按钮
             // 暂停游戏
             control.gameEventStop(resource);
             int select = JOptionPane.showConfirmDialog(null, "退出游戏吗？", "退出确认",
@@ -246,9 +249,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
                 // 恢复游戏
                 control.gameEventStop(resource);
             }
-        } else if (e.getActionCommand() == "again") { // 重来
-            if (control.isStart() == true) {
-                if (control.isStop() == true) {
+        } else if ("again".equals(e.getActionCommand())) { // 重来
+            if (control.isStart()) {
+                if (control.isStop()) {
                     // 先恢复
                     control.gameEventStop(resource);
                     control.startGame(resource);
@@ -256,16 +259,16 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
                     control.startGame(resource);
                 }
             }
-        } else if (e.getActionCommand() == "first") {
-            if (control.isStart() == true) {
-                if (control.isStop() == false) {// 暂停游戏
+        } else if ("first".equals(e.getActionCommand())) {
+            if (control.isStart()) {
+                if (!control.isStop()) {// 暂停游戏
                     control.gameEventStop(resource);
                 }
                 int select = JOptionPane.showConfirmDialog(null,
                         "您选择的是第一关，点击确定开始游戏", "选择确认",
                         JOptionPane.OK_CANCEL_OPTION);
                 if (select == JOptionPane.OK_OPTION) {
-                    if (control.isStart() == true) {
+                    if (control.isStart()) {
                         // 恢复游戏
                         control.gameEventStop(resource);
                     }
@@ -274,7 +277,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
                     control.startGame(resource);
                     this.setVisible(true);
                 } else {
-                    if (control.isStart() == true) {
+                    if (control.isStart()) {
                         // 恢复游戏
                         control.gameEventStop(resource);
                     }
@@ -283,16 +286,16 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
                 JOptionPane.showMessageDialog(null, "请先点击游戏Game菜单下的开始游戏", "提示",
                         JOptionPane.INFORMATION_MESSAGE);
             }
-        } else if (e.getActionCommand() == "second") {
-            if (control.isStart() == true) {
-                if (control.isStop() == false) {// 暂停游戏
+        } else if ("second".equals(e.getActionCommand())) {
+            if (control.isStart()) {
+                if (!control.isStop()) {// 暂停游戏
                     control.gameEventStop(resource);
                 }
                 int select = JOptionPane.showConfirmDialog(null,
                         "您选择的是第二关，点击确定开始游戏", "选择确认",
                         JOptionPane.OK_CANCEL_OPTION);
                 if (select == JOptionPane.OK_OPTION) {
-                    if (control.isStart() == true) {
+                    if (control.isStart()) {
                         // 恢复游戏
                         control.gameEventStop(resource);
                     }
@@ -301,7 +304,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
                     control.startGame(resource);
                     this.setVisible(true);
                 } else {
-                    if (control.isStart() == true) {
+                    if (control.isStart()) {
                         // 恢复游戏
                         control.gameEventStop(resource);
                     }
@@ -310,16 +313,16 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
                 JOptionPane.showMessageDialog(null, "请先点击游戏Game菜单下的开始游戏", "提示",
                         JOptionPane.INFORMATION_MESSAGE);
             }
-        } else if (e.getActionCommand() == "third") {
-            if (control.isStart() == true) {
-                if (control.isStop() == false) {// 暂停游戏
+        } else if ("third".equals(e.getActionCommand())) {
+            if (control.isStart()) {
+                if (!control.isStop()) {// 暂停游戏
                     control.gameEventStop(resource);
                 }
                 int select = JOptionPane.showConfirmDialog(null,
                         "您选择的是第三关，点击确定开始游戏", "选择确认",
                         JOptionPane.OK_CANCEL_OPTION);
                 if (select == JOptionPane.OK_OPTION) {
-                    if (control.isStart() == true) {
+                    if (control.isStart()) {
                         // 恢复游戏
                         control.gameEventStop(resource);
                     }
@@ -328,7 +331,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
                     control.startGame(resource);
                     this.setVisible(true);
                 } else {
-                    if (control.isStart() == true) {
+                    if (control.isStart()) {
                         // 恢复游戏
                         control.gameEventStop(resource);
                     }
@@ -337,16 +340,16 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
                 JOptionPane.showMessageDialog(null, "请先点击游戏Game菜单下的开始游戏", "提示",
                         JOptionPane.INFORMATION_MESSAGE);
             }
-        } else if (e.getActionCommand() == "fourth") {
-            if (control.isStart() == true) {
-                if (control.isStop() == false) {// 暂停游戏
+        } else if ("fourth".equals(e.getActionCommand())) {
+            if (control.isStart()) {
+                if (!control.isStop()) {// 暂停游戏
                     control.gameEventStop(resource);
                 }
                 int select = JOptionPane.showConfirmDialog(null,
                         "您选择的是第四关，点击确定开始游戏", "选择确认",
                         JOptionPane.OK_CANCEL_OPTION);
                 if (select == JOptionPane.OK_OPTION) {
-                    if (control.isStart() == true) {
+                    if (control.isStart()) {
                         // 恢复游戏
                         control.gameEventStop(resource);
                     }
@@ -355,7 +358,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
                     control.startGame(resource);
                     this.setVisible(true);
                 } else {
-                    if (control.isStart() == true) {
+                    if (control.isStart()) {
                         // 恢复游戏
                         control.gameEventStop(resource);
                     }
@@ -364,16 +367,16 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
                 JOptionPane.showMessageDialog(null, "请先点击游戏Game菜单下的开始游戏", "提示",
                         JOptionPane.INFORMATION_MESSAGE);
             }
-        } else if (e.getActionCommand() == "fifth") {
-            if (control.isStart() == true) {
-                if (control.isStop() == false) {// 暂停游戏
+        } else if ("fifth".equals(e.getActionCommand())) {
+            if (control.isStart()) {
+                if (!control.isStop()) {// 暂停游戏
                     control.gameEventStop(resource);
                 }
                 int select = JOptionPane.showConfirmDialog(null,
                         "您选择的是第五关，点击确定开始游戏", "选择确认",
                         JOptionPane.OK_CANCEL_OPTION);
                 if (select == JOptionPane.OK_OPTION) {
-                    if (control.isStart() == true) {
+                    if (control.isStart()) {
                         // 恢复游戏
                         control.gameEventStop(resource);
                     }
@@ -382,7 +385,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
                     control.startGame(resource);
                     this.setVisible(true);
                 } else {
-                    if (control.isStart() == true) {
+                    if (control.isStart()) {
                         // 恢复游戏
                         control.gameEventStop(resource);
                     }
@@ -391,13 +394,13 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
                 JOptionPane.showMessageDialog(null, "请先点击游戏Game菜单下的开始游戏", "提示",
                         JOptionPane.INFORMATION_MESSAGE);
             }
-        } else if (e.getActionCommand() == "gameHelp") {
+        } else if ("gameHelp".equals(e.getActionCommand())) {
             JOptionPane
                     .showMessageDialog(
                             null,
                             "坦克移动:---方向键---\n坦克开炮:------X键------\n每关只要打掉敌人8辆坦克即可过关，\n第五关有5辆坦克同时在地图上",
                             "游戏帮助", JOptionPane.INFORMATION_MESSAGE);
-        } else if (e.getActionCommand() == "aboutGame") {
+        } else if ("aboutGame".equals(e.getActionCommand())) {
             JOptionPane.showMessageDialog(null,
                     "JAVA坦克大战CP版1.0\n作者:hdu-chenpi\n", "关于游戏",
                     JOptionPane.INFORMATION_MESSAGE);

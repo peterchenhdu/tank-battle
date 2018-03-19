@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2011-2025 PiChen.
+ */
+
 package cn.edu.hdu.tankbattle.control;
 
 import java.awt.Color;
@@ -18,14 +22,14 @@ import cn.edu.hdu.tankbattle.model.Tank;
 import cn.edu.hdu.tankbattle.model.TankGameImages;
 import cn.edu.hdu.tankbattle.model.Water;
 import cn.edu.hdu.tankbattle.model.map.Map;
-import cn.edu.hdu.tankbattle.view.GamePanel;
+import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 import org.springframework.stereotype.Component;
 
 /**
- * 游戏绘画类
+ * Draw...
  *
  * @author chenpi
- * @since JavaSe-1.6
+ * @since 2011-02-10 19:29
  */
 @Component
 public class Draw {
@@ -63,7 +67,7 @@ public class Draw {
                         stuff.getX() - 10, stuff.getY() - 10, 20, 20, panel);
                 break;
             case Stuff.IRON:
-			/*
+            /*
 			 * g.setColor(new Color(225,225,225)); g.fill3DRect(stuff.getX()-20,
 			 * stuff.getY()-20, 40, 40, false);
 			 */

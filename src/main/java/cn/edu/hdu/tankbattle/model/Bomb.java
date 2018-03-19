@@ -1,11 +1,14 @@
+/*
+ * Copyright (c) 2011-2025 PiChen.
+ */
+
 package cn.edu.hdu.tankbattle.model;
 
 /**
- * 爆炸对象，是一个正方形
+ * Bomb...
  *
  * @author chenpi
- * @version 1.0
- * @since JavaSe-1.6
+ * @since 2011-02-10 19:29
  */
 public class Bomb {
     /**

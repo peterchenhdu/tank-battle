@@ -1,16 +1,19 @@
+/*
+ * Copyright (c) 2011-2025 PiChen.
+ */
+
 package cn.edu.hdu.tankbattle.model;
 
 import java.awt.Color;
 import java.util.Vector;
 
-import cn.edu.hdu.tankbattle.view.GamePanel;
+import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 
 /**
- * 坦克类，继承自东西类
+ * Tank...
  *
  * @author chenpi
- * @version 1.0
- * @since JavaSe-1.6
+ * @since 2011-02-10 19:29
  */
 public class Tank extends Stuff {
     /**

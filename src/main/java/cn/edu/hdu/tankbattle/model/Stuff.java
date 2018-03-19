@@ -1,14 +1,16 @@
+/*
+ * Copyright (c) 2011-2025 PiChen.
+ */
+
 package cn.edu.hdu.tankbattle.model;
 
 import java.awt.Color;
 
 /**
- * 东西类，简单的一个对象
- * <p>
+ * Stuff...
  *
  * @author chenpi
- * @version 1.0
- * @since JavaSe-1.6
+ * @since 2011-02-10 19:29
  */
 public class Stuff {
     /**

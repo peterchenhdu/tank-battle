@@ -1,9 +1,19 @@
+/*
+ * Copyright (c) 2011-2025 PiChen.
+ */
+
 package cn.edu.hdu.tankbattle.model.map;
 
 import java.util.Vector;
 
 import cn.edu.hdu.tankbattle.model.Iron;
 
+/**
+ * map...
+ *
+ * @author chenpi
+ * @since 2011-02-10 19:29
+ */
 public class Map2 extends Map {
     public Map2() {
         Vector<Iron> irons = this.getIrons();

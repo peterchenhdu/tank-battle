@@ -1,11 +1,14 @@
+/*
+ * Copyright (c) 2011-2025 PiChen.
+ */
+
 package cn.edu.hdu.tankbattle.model;
 
 /**
- * 砖块类，由东西类继承而来
+ * Brick...
  *
  * @author chenpi
- * @version 1.0
- * @since Java-1.6
+ * @since 2011-02-10 19:29
  */
 public class Brick extends Stuff {
     /**

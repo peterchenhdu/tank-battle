@@ -1,6 +1,7 @@
-/**
- * 第一关地图
+/*
+ * Copyright (c) 2011-2025 PiChen.
  */
+
 package cn.edu.hdu.tankbattle.model.map;
 
 import java.util.Vector;
@@ -10,10 +11,10 @@ import cn.edu.hdu.tankbattle.model.Iron;
 import cn.edu.hdu.tankbattle.model.Water;
 
 /**
- * 第一关地图类
+ * map...
  *
  * @author chenpi
- * @since JavaSe-1.6
+ * @since 2011-02-10 19:29
  */
 public class Map1 extends Map {
     /**

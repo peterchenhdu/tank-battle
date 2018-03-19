@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2011-2025 PiChen.
+ */
+
 package cn.edu.hdu.tankbattle.control;
 
 import java.util.Vector;
@@ -18,17 +22,16 @@ import cn.edu.hdu.tankbattle.model.map.Map2;
 import cn.edu.hdu.tankbattle.model.map.Map3;
 import cn.edu.hdu.tankbattle.model.map.Map4;
 import cn.edu.hdu.tankbattle.model.map.Map5;
-import cn.edu.hdu.tankbattle.view.GamePanel;
+import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
 /**
- * 游戏控制类
+ * Control...
  *
  * @author chenpi
- * @version 1.0
- * @since JavaSe-1.6
+ * @since 2011-02-10 19:29
  */
 @Component
 public class Control {
@@ -227,23 +230,23 @@ public class Control {
             myTank.setOverlapNo(false);
             myTank.setOverlapYes(false);
 
-            if (myTank.isOverlap_(enemys) == true) { // 判断我的坦克是否与敌人坦克重叠
+            if (myTank.isOverlap_(enemys)) { // 判断我的坦克是否与敌人坦克重叠
                 myTank.setOverlapYes(true);
             }
             for (int j = 0; j < bricks.size(); j++) { // 判断我的坦克是否与砖块重叠
-                if (myTanks.get(i).Overlap(bricks.get(j), 20 + 10) == true) {
+                if (myTanks.get(i).Overlap(bricks.get(j), 20 + 10)) {
                     myTanks.get(i).setOverlapYes(true);
                     break;
                 }
             }
             for (int j = 0; j < irons.size(); j++) { // 判断我的坦克是否与铁块重叠
-                if (myTanks.get(i).Overlap(irons.get(j), 20 + 10) == true) {
+                if (myTanks.get(i).Overlap(irons.get(j), 20 + 10)) {
                     myTanks.get(i).setOverlapNo(true);
                     break;
                 }
             }
             for (int j = 0; j < waters.size(); j++) { // 判断我的坦克是否与河流重叠
-                if (myTanks.get(i).Overlap(waters.get(j), 20 + 10) == true) {
+                if (myTanks.get(i).Overlap(waters.get(j), 20 + 10)) {
                     myTanks.get(i).setOverlapNo(true);
                     break;
                 }
@@ -257,12 +260,12 @@ public class Control {
             enemyTank.setOverlapYes(false);
             enemyTank.setFrontInfomation(-1); // 没有东西挡住
 
-            if (enemyTank.isOverlap_(enemys, myTanks) == true) {
+            if (enemyTank.isOverlap_(enemys, myTanks)) {
                 enemyTank.setOverlapYes(true);
             }
 
             for (int j = 0; j < bricks.size(); j++) {
-                if (enemyTank.Overlap(bricks.get(j), 20 + 10) == true) {
+                if (enemyTank.Overlap(bricks.get(j), 20 + 10)) {
                     // 判断前面挡住砖块是否能被子弹打掉，能的话，就开炮
                     if ((Math.abs(bricks.get(j).getX() - enemyTank.getX()) <= 10 && (enemyTank
                             .getDirect() == EnemyTank.SOUTH || enemyTank
@@ -280,7 +283,7 @@ public class Control {
                 }
             }
             for (int j = 0; j < irons.size(); j++) {
-                if (enemyTank.Overlap(irons.get(j), 20 + 10) == true) {
+                if (enemyTank.Overlap(irons.get(j), 20 + 10)) {
                     enemyTank.setFrontInfomation(Stuff.IRON); // 挡住的东西是铁块
                     enemyTank.setOverlapNo(true);
                     break;
@@ -288,7 +291,7 @@ public class Control {
             }
 
             for (int j = 0; j < waters.size(); j++) {
-                if (enemyTank.Overlap(waters.get(j), 20 + 10) == true) {
+                if (enemyTank.Overlap(waters.get(j), 20 + 10)) {
                     enemyTank.setFrontInfomation(Stuff.WATER);
                     enemyTank.setOverlapNo(true);
                     break;
@@ -313,12 +316,12 @@ public class Control {
             // 清除我的坦克死亡的子弹
             for (int j = 0; j < mb.size(); j++) {
                 Bullet b = mb.get(j);
-                if (b.isLive() == false) {
+                if (!b.isLive()) {
                     mb.remove(b);
                 }
             }
             // 清除我的死亡的坦克
-            if (myTank.isLive() == false) {
+            if (!myTank.isLive()) {
                 myTanks.remove(myTank);
                 this.myTankNum--; // 我的坦克数量减1
                 this.beKilled++;
@@ -336,16 +339,16 @@ public class Control {
             // 清除敌人坦克的死亡的子弹
             for (int j = 0; j < eb.size(); j++) {
                 Bullet b = eb.get(j);
-                if (b.isLive() == false) {
+                if (!b.isLive()) {
                     eb.remove(b);
                 }
             }
             // 清除死亡的敌人坦克，并创建新的坦克
-            if (enemy.isLive() == false) {
+            if (!enemy.isLive()) {
                 enemy.getTimer().cancel(); // 取消定时发射子弹
                 int r, isOk = 0;
                 for (int p = 0; p < enemys.size(); p++) {
-                    if (enemys.get(p).isInMap() == false) { // 有坦克还没有出去
+                    if (!enemys.get(p).isInMap()) { // 有坦克还没有出去
                         isOk = -1;
                         break;
                     }
@@ -366,13 +369,13 @@ public class Control {
         }
         // 清除死亡的炸弹
         for (int i = 0; i < bombs.size(); i++) {
-            if (bombs.get(i).isLive() == false) {
+            if (!bombs.get(i).isLive()) {
                 bombs.remove(bombs.get(i));
             }
         }
         // 清除死亡的砖块
         for (int i = 0; i < map.getBricks().size(); i++) {
-            if (map.getBricks().get(i).isLive() == false) {
+            if (!map.getBricks().get(i).isLive()) {
                 map.getBricks().remove(map.getBricks().get(i));
             }
         }
@@ -437,17 +440,13 @@ public class Control {
     public void myTankEvent(GameResource resource) {
         for (int i = 0; i < resource.getMyTanks().size(); i++) {
             MyTank myTank = resource.getMyTanks().get(i);
-            if (up == true && myTank.isOverlapNo() == false
-                    && myTank.isOverlapYes() == false) {
+            if (up && !myTank.isOverlapNo() && !myTank.isOverlapYes()) {
                 myTank.goNorth();
-            } else if (down == true && myTank.isOverlapNo() == false
-                    && myTank.isOverlapYes() == false) {
+            } else if (down && !myTank.isOverlapNo() && !myTank.isOverlapYes()) {
                 myTank.goSouth();
-            } else if (left == true && myTank.isOverlapNo() == false
-                    && myTank.isOverlapYes() == false) {
+            } else if (left && !myTank.isOverlapNo() && !myTank.isOverlapYes()) {
                 myTank.goWest();
-            } else if (right == true && myTank.isOverlapNo() == false
-                    && myTank.isOverlapYes() == false) {
+            } else if (right && !myTank.isOverlapNo() && !myTank.isOverlapYes()) {
                 myTank.goEast();
             }
         }
@@ -457,17 +456,7 @@ public class Control {
      * 下一关
      */
     public void nextGame(GameResource resource) {
-        if (level == 1) { // 游戏关卡
-            resource.setMap(new Map1());
-        } else if (level == 2) {
-            resource.setMap(new Map2());
-        } else if (level == 3) {
-            resource.setMap(new Map3());
-        } else if (level == 4) {
-            resource.setMap(new Map4());
-        } else if (level == 5) {
-            resource.setMap(new Map5());
-        }
+        this.setMapByLevel(level, resource);
 
         for (int i = 0; i < 5; i++) {
             EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, Tank.SOUTH); // 创建一个敌人坦克对象
@@ -482,12 +471,7 @@ public class Control {
         }
     }
 
-    /**
-     * 开始游戏
-     */
-    public void startGame(GameResource resource) {
-        resource.reset();
-        this.setDy(600);
+    private void setMapByLevel(int level, GameResource resource) {
         if (level == 1) { // 游戏关卡
             resource.setMap(new Map1());
         } else if (level == 2) {
@@ -499,6 +483,17 @@ public class Control {
         } else if (level == 5) {
             resource.setMap(new Map5());
         }
+    }
+
+    /**
+     * 开始游戏
+     */
+    public void startGame(GameResource resource) {
+        resource.reset();
+        this.setDy(600);
+
+        this.setMapByLevel(level, resource);
+
         for (int i = 0; i < 5; i++) {
             EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, Tank.SOUTH); // 创建一个敌人坦克对象
             enemy.setLocation(i);
@@ -513,7 +508,6 @@ public class Control {
     /**
      * 游戏暂停
      *
-     * @param myTank   我的坦克
      * @param resource .getEnemys() 敌人坦克容量
      */
     public void gameEventStop(GameResource resource) {

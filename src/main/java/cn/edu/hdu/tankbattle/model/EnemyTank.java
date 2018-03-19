@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2011-2025 PiChen.
+ */
+
 package cn.edu.hdu.tankbattle.model;
 
 import java.awt.Color;
@@ -6,14 +10,13 @@ import java.util.TimerTask;
 import java.util.Vector;
 
 import cn.edu.hdu.tankbattle.model.map.Map;
-import cn.edu.hdu.tankbattle.view.GamePanel;
+import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 
 /**
- * 敌人坦克 继承自Tank类，并且实现Runnable接口 敌人坦克的线程是每隔36毫秒行走的，各种判断（30毫秒）会在这36毫秒以内判断完毕
+ * EnemyTank...
  *
  * @author chenpi
- * @version 1.0
- * @since JavaSe-1.6
+ * @since 2011-02-10 19:29
  */
 public class EnemyTank extends Tank implements Runnable {
     /**
@@ -454,9 +457,10 @@ public class EnemyTank extends Tank implements Runnable {
 }
 
 /**
- * 发射子弹
+ * MyTimerTask...
  *
  * @author chenpi
+ * @since 2011-02-10 19:29
  */
 class MyTimerTask extends TimerTask {
     EnemyTank tank;

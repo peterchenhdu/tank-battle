@@ -1,15 +1,17 @@
+/*
+ * Copyright (c) 2011-2025 PiChen.
+ */
+
 package cn.edu.hdu.tankbattle.control;
 
 import cn.edu.hdu.tankbattle.model.GameResource;
-import cn.edu.hdu.tankbattle.view.GamePanel;
+import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 
 /**
- * 游戏控制信息更新线程
+ * UpdateThread...
  *
  * @author chenpi
- * @ClassName: UpdateThread
- * @Description: TODO
- * @date 2016年2月16日 下午3:32:58
+ * @since 2011-02-10 19:29
  */
 public class UpdateThread implements Runnable {
 
@@ -48,7 +50,7 @@ public class UpdateThread implements Runnable {
                         control.nextGame(resource);
                     }
                 }
-                if (control.isStop() == false && control.getDy() == 600) {
+                if (!control.isStop() && control.getDy() == 600) {
                     control.cleanAndCreat(resource.getMyTanks(),
                             resource.getEnemys(), resource.getMap(),
                             resource.getBombs()); // 从容器中移除死亡的对象

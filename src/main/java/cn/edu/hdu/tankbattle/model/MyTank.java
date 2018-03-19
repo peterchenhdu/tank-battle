@@ -1,14 +1,17 @@
+/*
+ * Copyright (c) 2011-2025 PiChen.
+ */
+
 package cn.edu.hdu.tankbattle.model;
 
 import java.awt.Color;
 import java.util.Vector;
 
 /**
- * 我的坦克类，继承自坦克类
+ * MyTank...
  *
  * @author chenpi
- * @version 1.0
- * @since JavaSe-1.6
+ * @since 2011-02-10 19:29
  */
 public class MyTank extends Tank {
     /**
