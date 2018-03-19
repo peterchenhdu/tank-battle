@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.annotation.PostConstruct;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -57,10 +58,12 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
      */
     private Control control = new Control();
 
+
     /**
      * 构造方法
      */
-    public GamePanel() {
+    @PostConstruct
+    public void init() {
 
         UpdateThread updateThread = new UpdateThread();
         updateThread.setPannel(this);

@@ -1,5 +1,6 @@
 package cn.edu.hdu.tankbattle.view;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -64,15 +65,13 @@ public class GameFrame extends JFrame {
     /**
      * 游戏面板
      */
+    @Autowired
     private GamePanel tankGamePanel;
 
-    /**
-     * 构造函数，初始化相关信息
-     */
-    public GameFrame() {
 
-        tankGamePanel = new GamePanel();
 
+    @PostConstruct
+    public void init() {
         // 菜单相关
         jMenuBar = new JMenuBar();
 
@@ -145,10 +144,8 @@ public class GameFrame extends JFrame {
         // 将panel添加到Frame
         this.add(tankGamePanel);
 
-    }
 
-    @PostConstruct
-    public void init(){
+
         this.setSize(800, 700);
         this.setTitle("MyTankGame");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
