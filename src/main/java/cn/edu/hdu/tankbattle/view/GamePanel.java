@@ -18,6 +18,7 @@ import cn.edu.hdu.tankbattle.model.GameResource;
 import cn.edu.hdu.tankbattle.model.MyTank;
 import cn.edu.hdu.tankbattle.model.Tank;
 import cn.edu.hdu.tankbattle.model.TankGameImages;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -46,17 +47,19 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
     /**
      * 坦克游戏画笔对象
      */
-    private Draw pen = new Draw();
-    ;
+    @Autowired
+    private Draw pen;
 
     /**
      * 面板上的资源，坦克...等
      */
-    private GameResource resource = new GameResource();
+    @Autowired
+    private GameResource resource;
     /**
      * 游戏控制相关
      */
-    private Control control = new Control();
+    @Autowired
+    private Control control;
 
 
     /**

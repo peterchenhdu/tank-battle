@@ -69,7 +69,6 @@ public class GameFrame extends JFrame {
     private GamePanel tankGamePanel;
 
 
-
     @PostConstruct
     public void init() {
         // 菜单相关
@@ -143,7 +142,6 @@ public class GameFrame extends JFrame {
 
         // 将panel添加到Frame
         this.add(tankGamePanel);
-
 
 
         this.setSize(800, 700);

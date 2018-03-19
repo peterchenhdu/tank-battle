@@ -3,6 +3,7 @@ package cn.edu.hdu.tankbattle.model;
 import java.util.Vector;
 
 import cn.edu.hdu.tankbattle.model.map.Map;
+import org.springframework.stereotype.Component;
 
 /**
  * 游戏资源类
@@ -12,6 +13,7 @@ import cn.edu.hdu.tankbattle.model.map.Map;
  * @Description: TODO
  * @date 2016年2月16日 下午3:33:40
  */
+@Component
 public class GameResource {
     /**
      * 我的坦克容量

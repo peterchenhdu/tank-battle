@@ -19,6 +19,7 @@ import cn.edu.hdu.tankbattle.model.TankGameImages;
 import cn.edu.hdu.tankbattle.model.Water;
 import cn.edu.hdu.tankbattle.model.map.Map;
 import cn.edu.hdu.tankbattle.view.GamePanel;
+import org.springframework.stereotype.Component;
 
 /**
  * 游戏绘画类
@@ -26,6 +27,7 @@ import cn.edu.hdu.tankbattle.view.GamePanel;
  * @author chenpi
  * @since JavaSe-1.6
  */
+@Component
 public class Draw {
     /**
      * 画出东西（包括坦克、障碍物。。）
@@ -54,7 +56,7 @@ public class Draw {
                 break;
             case Stuff.BRICK:
             /*
-			 * g.setColor(new Color(216,90,49)); g.fill3DRect(stuff.getX()-20,
+             * g.setColor(new Color(216,90,49)); g.fill3DRect(stuff.getX()-20,
 			 * stuff.getY()-20, 40, 40, false);
 			 */
                 g.drawImage(TankGameImages.stuffImg[Stuff.BRICK],

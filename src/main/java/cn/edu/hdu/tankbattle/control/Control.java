@@ -98,14 +98,12 @@ public class Control {
     /**
      * 构造方法 完成初始化: 敌人坦克数量8辆 我的坦克数量2辆 我的子弹数量200发 我杀死的敌人坦克数量0辆
      */
-    public Control() {
+    @PostConstruct
+    public void init() {
         this.enemyTankNum = 8;
         this.myTankNum = 4;
         this.myBulletNum = Control.STARTBULLETNUM;
         this.beKilled = 0;
-    }
-    @PostConstruct
-    public void init(){
         System.out.println("control...");
     }
 
