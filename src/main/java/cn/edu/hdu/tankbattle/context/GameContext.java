@@ -26,8 +26,17 @@ import javax.annotation.PostConstruct;
  */
 @Component
 public class GameContext {
+    /**
+     * Frame
+     */
     private GameFrame gameFrame;
+    /**
+     * 菜单条
+     */
     private TankBattleMenuBar tankBattleMenuBar;
+    /**
+     * Panel
+     */
     private GamePanel gamePanel;
 
     @Autowired
@@ -43,21 +52,26 @@ public class GameContext {
 
     @PostConstruct
     public void init() {
+        //创建Frame
         this.gameFrame = new GameFrame();
+        //创建MenuBar
         this.tankBattleMenuBar = new TankBattleMenuBar(menuActionListener);
+        //创建Panel
         this.gamePanel = new GamePanel(painter);
 
+        //设置Frame的MenuBar
         this.gameFrame.setJMenuBar(this.tankBattleMenuBar);
+        //添加Panel到Frame中
         this.gameFrame.add(this.gamePanel);
-
+        //设置Frame的KeyListener
         this.gameFrame.addKeyListener(mainFrameKeyListener);
-        this.gameFrame.init();
+        //设置Frame为可见
+        this.gameFrame.setVisible(true);
 
 
         UpdateTask updateTask = new UpdateTask(control, gameResource, gamePanel);
         new Thread(updateTask).start();
     }
-
 
     public GameFrame getGameFrame() {
         return gameFrame;
@@ -71,7 +85,5 @@ public class GameContext {
         return gamePanel;
     }
 
-    public Control getControl() {
-        return control;
-    }
+
 }

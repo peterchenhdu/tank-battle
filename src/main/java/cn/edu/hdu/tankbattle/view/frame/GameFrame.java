@@ -29,15 +29,15 @@ public class GameFrame extends JFrame {
 
 
 
-    public void  init() {
-
+    public   GameFrame() {
+        super();
 
 
         this.setSize(800, 700);
         this.setTitle("MyTankGame");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
-        this.setVisible(true);
+
 
         // 显示器屏幕大小
         Dimension screenSizeInfo = Toolkit.getDefaultToolkit().getScreenSize();

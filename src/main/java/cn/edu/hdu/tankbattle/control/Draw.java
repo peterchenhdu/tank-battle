@@ -36,7 +36,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Draw {
     @Autowired
-    private GameContext gameContext;
+    private Control control;
     /**
      * 画出东西（包括坦克、障碍物。。）
      *
@@ -332,7 +332,7 @@ public class Draw {
      * @param tgp 游戏主要面板对象
      */
     public void drawRight(Graphics g, GamePanel tgp) {
-        for (int i = 0; i < gameContext.getControl().getEnemyTankNum(); i++) {
+        for (int i = 0; i < control.getEnemyTankNum(); i++) {
             if (i >= 4) {
                 g.drawImage(TankGameImages.enemyTankImg[Stuff.NORTH],
                         402 + 50 * i, 100, 40, 40, tgp);
@@ -341,10 +341,10 @@ public class Draw {
                         602 + 50 * i, 20, 40, 40, tgp);
             }
         }
-        for (int j = 0; j < gameContext.getControl().getMyTankNum(); j++) {
+        for (int j = 0; j < control.getMyTankNum(); j++) {
             g.drawImage(TankGameImages.myTankImg[Stuff.NORTH], 602 + 50 * j,
                     400, 40, 40, tgp);
         }
-        g.drawString("我的坦克子弹数目:" + gameContext.getControl().getMyBulletNum(), 620, 500);
+        g.drawString("我的坦克子弹数目:" + control.getMyBulletNum(), 620, 500);
     }
 }

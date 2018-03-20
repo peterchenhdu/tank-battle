@@ -5,6 +5,7 @@
 package cn.edu.hdu.tankbattle.control;
 
 import cn.edu.hdu.tankbattle.model.GameResource;
+import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 
 /**
@@ -30,11 +31,7 @@ public class UpdateTask implements Runnable {
     public void run() {
         // 每隔30毫秒重画
         while (true) {
-            try {
-                Thread.sleep(30);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            GameTimeUnit.sleepMillis(30);
             if (control.isStart()) {
                 if ((control.getMyTankNum() == 0 || control.getEnemyTankNum() == 0)
                         && control.getDy() > 250) {
@@ -42,12 +39,7 @@ public class UpdateTask implements Runnable {
                 }
                 if (control.getDy() == 250) {
                     pannel.repaint();
-                    try {
-                        Thread.sleep(4000);
-                    } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
+                    GameTimeUnit.sleepMillis(4000);
                     if (control.getLevel() == 5) {
                         control.setLevel(0);
                     }
@@ -72,11 +64,7 @@ public class UpdateTask implements Runnable {
                 if (control.getKy() == 21 && control.getKx() <= 654)
                     control.setKx(control.getKx() + 2);
                 control.fontMove(resource, pannel);
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                GameTimeUnit.sleepMillis(100);
 
             }
             pannel.repaint();

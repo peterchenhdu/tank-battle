@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 import cn.edu.hdu.tankbattle.control.Painter;
 import cn.edu.hdu.tankbattle.model.map.Map;
+import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 
 /**
@@ -83,7 +84,7 @@ public class EnemyTank extends Tank implements Runnable {
                 case EnemyTank.NORTH:
                     for (; ; ) {
                         // 睡眠36毫秒，36毫秒可以保证坦克的信息已经判断过一次了
-                        this.sleep(36);
+                        GameTimeUnit.sleepMillis(36);
                         // 如果我的坦克在敌人坦克的正西方
                         if (this.getMyTankLocation() == EnemyTank.WEST) {
                             this.setDirect(EnemyTank.WEST);
@@ -119,7 +120,7 @@ public class EnemyTank extends Tank implements Runnable {
                     break;
                 case EnemyTank.SOUTH:
                     for (; ; ) {
-                        this.sleep(36);
+                        GameTimeUnit.sleepMillis(36);
                         if (this.getMyTankLocation() == EnemyTank.WEST) {
                             this.setDirect(EnemyTank.WEST);
                             this.enemyGoWest();
@@ -149,7 +150,7 @@ public class EnemyTank extends Tank implements Runnable {
                     break;
                 case EnemyTank.WEST:
                     for (; ; ) {
-                        this.sleep(36);
+                        GameTimeUnit.sleepMillis(36);
                         if (this.getMyTankLocation() == EnemyTank.NORTH) {
                             this.setDirect(EnemyTank.NORTH);
                             this.enemyGoNorth();
@@ -179,7 +180,7 @@ public class EnemyTank extends Tank implements Runnable {
                     break;
                 case EnemyTank.EAST:
                     for (; ; ) {
-                        this.sleep(36);
+                        GameTimeUnit.sleepMillis(36);
                         if (this.getMyTankLocation() == EnemyTank.WEST) {
                             this.setDirect(EnemyTank.WEST);
                             this.enemyGoWest();
@@ -208,7 +209,7 @@ public class EnemyTank extends Tank implements Runnable {
                     }
                     break;
             }
-            this.sleep(216); // 改变一个方向的话，不要让他很快
+            GameTimeUnit.sleepMillis(216); // 改变一个方向的话，不要让他很快
             if (!isLive()) { // 如果坦克死亡的话 该坦克线程结束
                 break;
             }
@@ -248,7 +249,7 @@ public class EnemyTank extends Tank implements Runnable {
      */
     public void enemyGoWest() {
         for (; ; ) {
-            this.sleep(36);
+            GameTimeUnit.sleepMillis(36);
             if (this.isOverlapNo() == false && this.isOverlapYes() == false) { // 不重叠的话
                 this.goWest();
             }
@@ -264,7 +265,7 @@ public class EnemyTank extends Tank implements Runnable {
      */
     public void enemyGoEast() {
         for (; ; ) {
-            this.sleep(36);
+            GameTimeUnit.sleepMillis(36);
             if (this.isOverlapNo() == false && this.isOverlapYes() == false) {
                 this.goEast();
             }
@@ -280,7 +281,7 @@ public class EnemyTank extends Tank implements Runnable {
      */
     public void enemyGoNorth() {
         for (; ; ) {
-            this.sleep(36);
+            GameTimeUnit.sleepMillis(36);
             if (this.isOverlapNo() == false && this.isOverlapYes() == false) {
                 this.goNorth();
             }
@@ -296,7 +297,7 @@ public class EnemyTank extends Tank implements Runnable {
      */
     public void enemyGoSouth() {
         for (; ; ) {
-            this.sleep(36);
+            GameTimeUnit.sleepMillis(36);
             if (this.isOverlapNo() == false && this.isOverlapYes() == false) {
                 this.goSouth();
             }

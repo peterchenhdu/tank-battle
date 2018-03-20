@@ -35,7 +35,7 @@ import javax.annotation.PostConstruct;
  */
 @Component
 public class Control {
-    public static final int STARTBULLETNUM = 500;
+    public static final int START_BULLET_NUM = 500;
     /**
      * 敌人坦克总的数量
      */
@@ -105,7 +105,7 @@ public class Control {
     public void init() {
         this.enemyTankNum = 8;
         this.myTankNum = 4;
-        this.myBulletNum = Control.STARTBULLETNUM;
+        this.myBulletNum = Control.START_BULLET_NUM;
         this.beKilled = 0;
         System.out.println("control...");
     }

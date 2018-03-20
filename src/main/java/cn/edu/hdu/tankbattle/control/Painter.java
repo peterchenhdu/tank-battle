@@ -10,7 +10,6 @@ import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -82,7 +81,7 @@ public class Painter {
                         280);
                 g.drawString(
                         "我的炮弹消耗总数量:"
-                                + (Control.STARTBULLETNUM - this.control
+                                + (Control.START_BULLET_NUM - this.control
                                 .getMyBulletNum()), 300, 300);
                 g.drawString("敌人坦克剩余数量:" + this.control.getEnemyTankNum(), 300,
                         320);
