@@ -112,7 +112,7 @@ public class EnemyTank extends Tank implements Runnable {
                         if (this.getDirect() != Tank.NORTH)
                             break;
                         // 如果不重叠，前进
-                        if (this.isOverlapYes() == false)
+                        if (!this.isOverlapYes())
                             this.goNorth();
                     }
                     break;
@@ -135,14 +135,14 @@ public class EnemyTank extends Tank implements Runnable {
                             this.enemyGoSouth();
                         }
                         if (this.getY() >= GamePanel.HEIGHT - 20
-                                || this.isOverlapNo() == true) {
+                                || this.isOverlapNo()) {
                             this.setDirect(this.getRandomDirect(Tank.NORTH,
                                     Tank.WEST, Tank.EAST));
                             break;
                         }
                         if (this.getDirect() != Tank.SOUTH)
                             break;
-                        if (this.isOverlapYes() == false)
+                        if (!this.isOverlapYes())
                             this.goSouth();
                     }
                     break;
@@ -165,15 +165,15 @@ public class EnemyTank extends Tank implements Runnable {
                             this.enemyGoWest();
                         }
                         if (this.getX() <= 20 || this.getY() <= 20
-                                || this.isOverlapNo() == true) {
+                                || this.isOverlapNo()) {
                             this.setDirect(this.getRandomDirect(Tank.NORTH,
                                     Tank.SOUTH, Tank.EAST));
                             break;
                         }
                         if (this.getDirect() != Tank.WEST)
                             break;
-                        if (this.isOverlapYes() == false)
-                            this.goWest();
+                        if (!isOverlapYes())
+                            goWest();
                     }
                     break;
                 case EnemyTank.EAST:
@@ -195,20 +195,20 @@ public class EnemyTank extends Tank implements Runnable {
                             this.enemyGoEast();
                         }
                         if (this.getX() >= GamePanel.WIDTH - 20
-                                || this.getY() <= 20 || this.isOverlapNo() == true) {
+                                || this.getY() <= 20 || isOverlapNo()) {
                             this.setDirect(this.getRandomDirect(Tank.NORTH,
                                     Tank.SOUTH, Tank.WEST));
                             break;
                         }
                         if (this.getDirect() != Tank.EAST)
                             break;
-                        if (this.isOverlapYes() == false)
+                        if (!isOverlapYes())
                             this.goEast();
                     }
                     break;
             }
             this.sleep(216); // 改变一个方向的话，不要让他很快
-            if (this.isLive() == false) { // 如果坦克死亡的话 该坦克线程结束
+            if (!isLive()) { // 如果坦克死亡的话 该坦克线程结束
                 break;
             }
         }

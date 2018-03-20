@@ -25,12 +25,12 @@ public class GameResource {
      * 敌人坦克容量
      */
     private Vector<EnemyTank> enemys = new Vector<EnemyTank>();
-    ; // 敌人坦克组
+     // 敌人坦克组
     /**
      * 炸弹容量
      */
     private Vector<Bomb> bombs = new Vector<Bomb>();
-    ; // 炸弹集合
+     // 炸弹集合
 
     /**
      * 坦克游戏地图对象
