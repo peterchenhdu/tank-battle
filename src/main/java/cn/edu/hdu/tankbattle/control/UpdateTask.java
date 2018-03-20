@@ -20,7 +20,7 @@ public class UpdateTask implements Runnable {
     private Control control;
     private GamePanel pannel;
 
-    public UpdateTask(Control control, GameResource resource, GamePanel pannel){
+    public UpdateTask(Control control, GameResource resource, GamePanel pannel) {
         this.control = control;
         this.resource = resource;
         this.pannel = pannel;
@@ -82,7 +82,6 @@ public class UpdateTask implements Runnable {
             pannel.repaint();
         }
     }
-
 
 
 }

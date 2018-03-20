@@ -14,6 +14,7 @@ import cn.edu.hdu.tankbattle.control.Draw;
 import cn.edu.hdu.tankbattle.control.Painter;
 import cn.edu.hdu.tankbattle.model.GameResource;
 import cn.edu.hdu.tankbattle.model.TankGameImages;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -45,6 +46,7 @@ public class GamePanel extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         this.painter.paint(this, g);
+        LogFactory.getLog(this.getClass()).debug("paint...");
     }
 
 
