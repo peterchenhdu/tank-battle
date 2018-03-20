@@ -15,23 +15,20 @@ import org.springframework.stereotype.Component;
  * @author chenpi
  * @since 2011-02-10 19:29
  */
-@Component
+
 public class GameResource {
     /**
      * 我的坦克容量
      */
-    private Vector<MyTank> myTanks = new Vector<MyTank>();
+    private Vector<MyTank> myTanks = new Vector<>();
     /**
      * 敌人坦克容量
      */
-    private Vector<EnemyTank> enemys = new Vector<EnemyTank>();
-     // 敌人坦克组
+    private Vector<EnemyTank> enemies = new Vector<>();
     /**
      * 炸弹容量
      */
-    private Vector<Bomb> bombs = new Vector<Bomb>();
-     // 炸弹集合
-
+    private Vector<Bomb> bombs = new Vector<>();
     /**
      * 坦克游戏地图对象
      */
@@ -42,7 +39,7 @@ public class GameResource {
      */
     public void reset() {
         myTanks.clear();
-        enemys.clear();
+        enemies.clear();
         bombs.clear();
         map = null;
     }
@@ -55,12 +52,12 @@ public class GameResource {
         this.myTanks = myTanks;
     }
 
-    public Vector<EnemyTank> getEnemys() {
-        return enemys;
+    public Vector<EnemyTank> getEnemies() {
+        return enemies;
     }
 
-    public void setEnemys(Vector<EnemyTank> enemys) {
-        this.enemys = enemys;
+    public void setEnemies(Vector<EnemyTank> enemies) {
+        this.enemies = enemies;
     }
 
     public Vector<Bomb> getBombs() {

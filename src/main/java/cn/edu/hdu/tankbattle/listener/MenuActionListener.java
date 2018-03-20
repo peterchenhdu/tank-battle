@@ -4,6 +4,7 @@
 
 package cn.edu.hdu.tankbattle.listener;
 
+import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.control.Control;
 import cn.edu.hdu.tankbattle.model.GameResource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +26,15 @@ public class MenuActionListener implements ActionListener {
     private Control control;
 
     @Autowired
-    private GameResource resource;
+    private GameContext context;
     @Override
     public void actionPerformed(ActionEvent e) {
+        GameResource resource = context.getResource();
         if ("stop".equals(e.getActionCommand())) {
             control.gameEventStop(resource);
         } else if ("start".equals(e.getActionCommand())) { // 当点了开始游戏
             if (!control.isStart()) { // 还没开始
-                control.setStart(true);// 已经开始了
-                control.startGame(resource);
+                control.startGame();// 已经开始了
                 //this.setVisible(true);
             } else if (!control.isStop()
                     && this.control.getMyTankNum() != 0) {
@@ -48,8 +49,7 @@ public class MenuActionListener implements ActionListener {
                         JOptionPane.INFORMATION_MESSAGE);
             } else if (!control.isStop()
                     && (this.control.getMyTankNum() == 0)) {
-                control.setStart(true);
-                control.startGame(resource);
+                control.startGame();
             }
         } else if ("exit".equals(e.getActionCommand())) { // 退出按钮
             // 暂停游戏
@@ -68,9 +68,7 @@ public class MenuActionListener implements ActionListener {
                 if (control.isStop()) {
                     // 先恢复
                     control.gameEventStop(resource);
-                    control.startGame(resource);
                 } else {
-                    control.startGame(resource);
                 }
             }
         } else if ("first".equals(e.getActionCommand())) {
@@ -86,9 +84,8 @@ public class MenuActionListener implements ActionListener {
                         // 恢复游戏
                         control.gameEventStop(resource);
                     }
-                    control.setStart(true);
+                    control.startGame();
                     control.setLevel(1);
-                    control.startGame(resource);
                     //this.setVisible(true);
                 } else {
                     if (control.isStart()) {
@@ -113,9 +110,8 @@ public class MenuActionListener implements ActionListener {
                         // 恢复游戏
                         control.gameEventStop(resource);
                     }
-                    control.setStart(true);
+                    control.startGame();
                     control.setLevel(2);
-                    control.startGame(resource);
                     //this.setVisible(true);
                 } else {
                     if (control.isStart()) {
@@ -140,9 +136,8 @@ public class MenuActionListener implements ActionListener {
                         // 恢复游戏
                         control.gameEventStop(resource);
                     }
-                    control.setStart(true);
+                    control.startGame();
                     control.setLevel(3);
-                    control.startGame(resource);
                     //this.setVisible(true);
                 } else {
                     if (control.isStart()) {
@@ -167,9 +162,8 @@ public class MenuActionListener implements ActionListener {
                         // 恢复游戏
                         control.gameEventStop(resource);
                     }
-                    control.setStart(true);
+                    control.startGame();
                     control.setLevel(4);
-                    control.startGame(resource);
                     //this.setVisible(true);
                 } else {
                     if (control.isStart()) {
@@ -194,9 +188,8 @@ public class MenuActionListener implements ActionListener {
                         // 恢复游戏
                         control.gameEventStop(resource);
                     }
-                    control.setStart(true);
+                    control.startGame();
                     control.setLevel(5);
-                    control.startGame(resource);
                     //this.setVisible(true);
                 } else {
                     if (control.isStart()) {

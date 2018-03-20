@@ -4,6 +4,7 @@
 
 package cn.edu.hdu.tankbattle.control;
 
+import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.model.GameResource;
 import cn.edu.hdu.tankbattle.model.TankGameImages;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
@@ -19,7 +20,7 @@ import java.awt.*;
  * @since 2018/3/19 21:11
  */
 @Component
-public class Painter {
+public class PanelPainter {
 
     /**
      * 游戏面板的宽度
@@ -34,28 +35,27 @@ public class Painter {
      * 坦克游戏画笔对象
      */
     @Autowired
-    private Draw pen;
+    private Drawer pen;
 
-    /**
-     * 面板上的资源，坦克...等
-     */
     @Autowired
-    private GameResource resource;
+    private GameContext context;
+
     /**
      * 游戏控制相关
      */
     @Autowired
     private Control control;
     public void paint(GamePanel panel, Graphics g){
+        GameResource resource = context.getResource();
         if (control.isStart()) {
             g.setColor(Color.black);
             g.fillRect(0, 0, WIDTH, HEIGHT);
             g.fillRect(280, 600, 40, 40);
             pen.drawMap(g, resource.getMap(), panel);
             pen.drawMyTank(g, resource.getMyTanks(), panel); // 画出我的坦克（包括子弹）
-            pen.drawEnemyTank(g, resource.getEnemys(), panel); // 画出敌人坦克（包括子弹）
+            pen.drawEnemyTank(g, resource.getEnemies(), panel); // 画出敌人坦克（包括子弹）
             pen.drawBomb(g, resource.getBombs(), panel); // 画出爆炸
-            pen.drawRight(g, panel);
+            pen.drawRight(g, panel, control);
 
             if (this.control.getMyTankNum() == 0) { // 如果我的坦克数量为0
                 g.drawImage(TankGameImages.gameOver, 250, control.getDy(), 100,

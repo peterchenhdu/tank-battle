@@ -385,7 +385,7 @@ public class Control {
      * 击中坦克以后
      *
      * @param bullet 击中别人的子弹
-     * @param t      被击中的坦克
+     * @param tank   被击中的坦克
      * @param bombs  炸弹容量
      */
     public void afterShotTank(Bullet bullet, Tank tank, Vector<Bomb> bombs) {
@@ -461,7 +461,7 @@ public class Control {
         for (int i = 0; i < 5; i++) {
             EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, Tank.SOUTH); // 创建一个敌人坦克对象
             enemy.setLocation(i);
-            resource.getEnemys().add(enemy); // 将该坦克加入敌人坦克容器中 //将该子弹加入该坦克的子弹容器中
+            resource.getEnemies().add(enemy); // 将该坦克加入敌人坦克容器中 //将该子弹加入该坦克的子弹容器中
         }
         this.setEnemyTankNum(8);
         for (int i = 0; i < resource.getMyTanks().size(); i++) {
@@ -471,7 +471,7 @@ public class Control {
         }
     }
 
-    private void setMapByLevel(int level, GameResource resource) {
+    public void setMapByLevel(int level, GameResource resource) {
         if (level == 1) { // 游戏关卡
             resource.setMap(new Map1());
         } else if (level == 2) {
@@ -485,30 +485,12 @@ public class Control {
         }
     }
 
-    /**
-     * 开始游戏
-     */
-    public void startGame(GameResource resource) {
-        resource.reset();
-        this.setDy(600);
 
-        this.setMapByLevel(level, resource);
-
-        for (int i = 0; i < 5; i++) {
-            EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, Tank.SOUTH); // 创建一个敌人坦克对象
-            enemy.setLocation(i);
-            resource.getEnemys().add(enemy); // 将该坦克加入敌人坦克容器中 //将该子弹加入该坦克的子弹容器中
-        }
-        for (int i = 0; i < 1; i++) {
-            MyTank myTank = new MyTank(300, 620, Tank.NORTH); // 创建一个我的坦克
-            resource.getMyTanks().add(myTank); // 将我的坦克加入我的坦克容器中
-        }
-    }
 
     /**
      * 游戏暂停
      *
-     * @param resource .getEnemys() 敌人坦克容量
+     * @param resource .getEnemies() 敌人坦克容量
      */
     public void gameEventStop(GameResource resource) {
         for (int i = 0; i < resource.getMyTanks().size(); i++) {
@@ -524,22 +506,22 @@ public class Control {
                                     myTank.getBullets().get(j).getSpeed());
                     myTank.getBullets().get(j).setSpeed(0); // 设置子弹为0
                 }
-                for (int j = 0; j < resource.getEnemys().size(); j++) {
-                    resource.getEnemys()
+                for (int j = 0; j < resource.getEnemies().size(); j++) {
+                    resource.getEnemies()
                             .get(j)
                             .setSpeedVector(
-                                    resource.getEnemys().get(j).getSpeed());
-                    resource.getEnemys().get(j).setSpeed(0);
-                    for (int k = 0; k < resource.getEnemys().get(j)
+                                    resource.getEnemies().get(j).getSpeed());
+                    resource.getEnemies().get(j).setSpeed(0);
+                    for (int k = 0; k < resource.getEnemies().get(j)
                             .getBullets().size(); k++) {
-                        resource.getEnemys()
+                        resource.getEnemies()
                                 .get(j)
                                 .getBullets()
                                 .get(k)
                                 .setSpeedVector(
-                                        resource.getEnemys().get(j)
+                                        resource.getEnemies().get(j)
                                                 .getBullets().get(k).getSpeed());
-                        resource.getEnemys().get(j).getBullets().get(k)
+                        resource.getEnemies().get(j).getBullets().get(k)
                                 .setSpeed(0);
                     }
                 }
@@ -553,21 +535,21 @@ public class Control {
                             .setSpeed(
                                     myTank.getBullets().get(j).getSpeedVector());
                 }
-                for (int j = 0; j < resource.getEnemys().size(); j++) {
-                    resource.getEnemys()
+                for (int j = 0; j < resource.getEnemies().size(); j++) {
+                    resource.getEnemies()
                             .get(j)
                             .setSpeed(
-                                    resource.getEnemys().get(j)
+                                    resource.getEnemies().get(j)
                                             .getSpeedVector());
-                    resource.getEnemys().get(j).setSpeedVector(0);
-                    for (int k = 0; k < resource.getEnemys().get(j)
+                    resource.getEnemies().get(j).setSpeedVector(0);
+                    for (int k = 0; k < resource.getEnemies().get(j)
                             .getBullets().size(); k++) {
-                        resource.getEnemys()
+                        resource.getEnemies()
                                 .get(j)
                                 .getBullets()
                                 .get(k)
                                 .setSpeed(
-                                        resource.getEnemys().get(j)
+                                        resource.getEnemies().get(j)
                                                 .getBullets().get(k)
                                                 .getSpeedVector());
                     }
@@ -628,6 +610,10 @@ public class Control {
         }
     }
 
+    public void startGame() {
+        this.isStart = isStart;
+    }
+
     public int getEnemyTankNum() {
         return enemyTankNum;
     }
@@ -662,10 +648,6 @@ public class Control {
 
     public boolean isStart() {
         return isStart;
-    }
-
-    public void setStart(boolean isStart) {
-        this.isStart = isStart;
     }
 
     public boolean isUp() {

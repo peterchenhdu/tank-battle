@@ -8,12 +8,10 @@ import java.awt.Color;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
-import java.util.concurrent.TimeUnit;
 
-import cn.edu.hdu.tankbattle.control.Painter;
+import cn.edu.hdu.tankbattle.control.PanelPainter;
 import cn.edu.hdu.tankbattle.model.map.Map;
 import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
-import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 
 /**
  * EnemyTank...
@@ -82,7 +80,7 @@ public class EnemyTank extends Tank implements Runnable {
         while (true) {
             switch (this.getDirect()) { // 选择坦克方向
                 case EnemyTank.NORTH:
-                    for (; ; ) {
+                    while (this.activate()) {
                         // 睡眠36毫秒，36毫秒可以保证坦克的信息已经判断过一次了
                         GameTimeUnit.sleepMillis(36);
                         // 如果我的坦克在敌人坦克的正西方
@@ -136,7 +134,7 @@ public class EnemyTank extends Tank implements Runnable {
                         if (this.getMyTankLocation() == EnemyTank.SOUTH) {
                             this.enemyGoSouth();
                         }
-                        if (this.getY() >= Painter.HEIGHT - 20
+                        if (this.getY() >= PanelPainter.HEIGHT - 20
                                 || this.isOverlapNo()) {
                             this.setDirect(this.getRandomDirect(Tank.NORTH,
                                     Tank.WEST, Tank.EAST));
@@ -196,7 +194,7 @@ public class EnemyTank extends Tank implements Runnable {
                         if (this.getMyTankLocation() == EnemyTank.EAST) {
                             this.enemyGoEast();
                         }
-                        if (this.getX() >= Painter.WIDTH - 20
+                        if (this.getX() >= PanelPainter.WIDTH - 20
                                 || this.getY() <= 20 || isOverlapNo()) {
                             this.setDirect(this.getRandomDirect(Tank.NORTH,
                                     Tank.SOUTH, Tank.WEST));
@@ -474,7 +472,7 @@ class MyTimerTask extends TimerTask {
 
     @Override
     public void run() {
-        if (tank.getSpeedVector() == 0 && tank.isShot() == true)
+        if (tank.getSpeedVector() == 0 && tank.isShot() && tank.activate())
             tank.shot(tank);
     }
 

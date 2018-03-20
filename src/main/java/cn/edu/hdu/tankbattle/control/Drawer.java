@@ -34,9 +34,8 @@ import org.springframework.stereotype.Component;
  * @since 2011-02-10 19:29
  */
 @Component
-public class Draw {
-    @Autowired
-    private Control control;
+public class Drawer {
+
     /**
      * 画出东西（包括坦克、障碍物。。）
      *
@@ -63,26 +62,28 @@ public class Draw {
                 }
                 break;
             case Stuff.BRICK:
-            /*
-             * g.setColor(new Color(216,90,49)); g.fill3DRect(stuff.getX()-20,
-			 * stuff.getY()-20, 40, 40, false);
-			 */
+
+//                g.setColor(new Color(216, 90, 49));
+//                g.fill3DRect(stuff.getX() - 20, stuff.getY() - 20, 40, 40, false);
+
                 g.drawImage(TankGameImages.stuffImg[Stuff.BRICK],
                         stuff.getX() - 10, stuff.getY() - 10, 20, 20, panel);
                 break;
             case Stuff.IRON:
-            /*
-			 * g.setColor(new Color(225,225,225)); g.fill3DRect(stuff.getX()-20,
-			 * stuff.getY()-20, 40, 40, false);
-			 */
+
+//                g.setColor(new Color(225, 225, 225));
+//                g.fill3DRect(stuff.getX() - 20,
+//                        stuff.getY() - 20, 40, 40, false);
+
                 g.drawImage(TankGameImages.stuffImg[Stuff.IRON], stuff.getX() - 10,
                         stuff.getY() - 10, 20, 20, panel);
                 break;
             case Stuff.WATER:
-			/*
-			 * g.setColor(new Color(65,64,253)); g.fillRect(stuff.getX()-20,
-			 * stuff.getY()-20, 40, 40);
-			 */
+
+//                g.setColor(new Color(65, 64, 253));
+//                g.fillRect(stuff.getX() - 20,
+//                        stuff.getY() - 20, 40, 40);
+
                 g.drawImage(TankGameImages.stuffImg[Stuff.WATER],
                         stuff.getX() - 10, stuff.getY() - 10, 20, 20, panel);
                 break;
@@ -195,22 +196,39 @@ public class Draw {
      * @param panel 被画的那个面板
      */
     public void drawNorth(Graphics g, Stuff tank, JPanel panel) {
-		/*
-		 * int x=tank.getX(); int y=tank.getY(); //0.设置画笔颜色
-		 * g.setColor(Color.white); //1.画出左边的矩形 g.fill3DRect(x-20, y-20, 10,
-		 * 40,false); //2.画出右边矩形 g.fill3DRect(x+10, y-20, 10, 40,false);
-		 * //3.更换画笔颜色 g.setColor(tank.getColor()); //4.画出轮子条纹 for(int
-		 * i=0;i<20-1;i++){ g.drawLine(x-20, y-20+(i+1)*2, x-10-1,y-20+(i+1)*2);
-		 * g.drawLine(x+10, y-20+(i+1)*2, x+20-1,y-20+(i+1)*2); } //5.画出中间1矩形
-		 * g.fill3DRect(x-15, y-14, 30, 28,false); //6.更换画笔颜色
-		 * g.setColor(Color.white); //7.画出中间2矩形 g.draw3DRect(x-10, y-9, 20,
-		 * 18,false); //8.画出中间3矩形 g.draw3DRect(x-3, y-5, 6, 10,false); //9.画直线
-		 * g.drawLine(x-15, y-14, x-10, y-9); g.drawLine(x+15, y-14, x+10, y-9);
-		 * g.drawLine(x-15, y+14, x-10, y+9); g.drawLine(x+15, y+14, x+10, y+9);
-		 * g.setColor(tank.getColor()); //10.画矩形 g.fill3DRect(x-3, y-12, 6, 3,
-		 * false); g.fill3DRect(x-2, y-20, 4, 2, false); g.fill3DRect(x-1, y-20,
-		 * 2, 11, false);
-		 */
+
+//        int x = tank.getX();
+//        int y = tank.getY(); //0.设置画笔颜色
+//        g.setColor(Color.white);
+//        //1.画出左边的矩形
+//        g.fill3DRect(x - 20, y - 20, 10,
+//                40, false);
+//        g.fill3DRect(x + 10, y - 20, 10, 40, false);//2.画出右边矩形
+//        //3.更换画笔颜色
+//        g.setColor(tank.getColor()); //4.画出轮子条纹
+//        for (int
+//             i = 0;
+//             i < 20 - 1;
+//             i++) {
+//            g.drawLine(x - 20, y - 20 + (i + 1) * 2, x - 10 - 1, y - 20 + (i + 1) * 2);
+//            g.drawLine(x + 10, y - 20 + (i + 1) * 2, x + 20 - 1, y - 20 + (i + 1) * 2);
+//        } //5.画出中间1矩形
+//        g.fill3DRect(x - 15, y - 14, 30, 28, false); //6.更换画笔颜色
+//        g.setColor(Color.white); //7.画出中间2矩形
+//        g.draw3DRect(x - 10, y - 9, 20,
+//                18, false); //8.画出中间3矩形
+//        g.draw3DRect(x - 3, y - 5, 6, 10, false); //9.画直线
+//        g.drawLine(x - 15, y - 14, x - 10, y - 9);
+//        g.drawLine(x + 15, y - 14, x + 10, y - 9);
+//        g.drawLine(x - 15, y + 14, x - 10, y + 9);
+//        g.drawLine(x + 15, y + 14, x + 10, y + 9);
+//        g.setColor(tank.getColor()); //10.画矩形
+//        g.fill3DRect(x - 3, y - 12, 6, 3,
+//                false);
+//        g.fill3DRect(x - 2, y - 20, 4, 2, false);
+//        g.fill3DRect(x - 1, y - 20,
+//                2, 11, false);
+
         Image image;
         if (tank.getType2() == Tank.MY) {
             g.setColor(Color.green);
@@ -231,20 +249,37 @@ public class Draw {
      * @param panel 被画的那个面板
      */
     public void drawSouth(Graphics g, Stuff tank, JPanel panel) {
-		/*
-		 * int x=tank.getX(); int y=tank.getY(); g.setColor(Color.white);
-		 * g.fill3DRect(x-20, y-20, 10, 40,false); g.fill3DRect(x+10, y-20, 10,
-		 * 40,false); g.setColor(tank.getColor()); for(int i=0;i<20-1;i++){
-		 * g.drawLine(x-20, y-20+(i+1)*2, x-10-1,y-20+(i+1)*2); g.drawLine(x+10,
-		 * y-20+(i+1)*2, x+20-1,y-20+(i+1)*2); } g.fill3DRect(x-15, y-14, 30,
-		 * 28,false); g.setColor(Color.white); g.draw3DRect(x-10, y-9, 20,
-		 * 18,false); g.draw3DRect(x-3, y-5, 6, 10,false); g.drawLine(x-15,
-		 * y-14, x-10, y-9); g.drawLine(x+15, y-14, x+10, y-9); g.drawLine(x-15,
-		 * y+14, x-10, y+9); g.drawLine(x+15, y+14, x+10, y+9);
-		 * g.setColor(tank.getColor()); g.fill3DRect(x-3, y+9, 6, 3, false);
-		 * g.fill3DRect(x-1, y+9, 2, 11, false); g.fill3DRect(x-2, y+18, 4, 2,
-		 * false);
-		 */
+
+//        int x = tank.getX();
+//        int y = tank.getY();
+//        g.setColor(Color.white);
+//        g.fill3DRect(x - 20, y - 20, 10, 40, false);
+//        g.fill3DRect(x + 10, y - 20, 10,
+//                40, false);
+//        g.setColor(tank.getColor());
+//        for (int i = 0; i < 20 - 1; i++) {
+//            g.drawLine(x - 20, y - 20 + (i + 1) * 2, x - 10 - 1, y - 20 + (i + 1) * 2);
+//            g.drawLine(x + 10,
+//                    y - 20 + (i + 1) * 2, x + 20 - 1, y - 20 + (i + 1) * 2);
+//        }
+//        g.fill3DRect(x - 15, y - 14, 30,
+//                28, false);
+//        g.setColor(Color.white);
+//        g.draw3DRect(x - 10, y - 9, 20,
+//                18, false);
+//        g.draw3DRect(x - 3, y - 5, 6, 10, false);
+//        g.drawLine(x - 15,
+//                y - 14, x - 10, y - 9);
+//        g.drawLine(x + 15, y - 14, x + 10, y - 9);
+//        g.drawLine(x - 15,
+//                y + 14, x - 10, y + 9);
+//        g.drawLine(x + 15, y + 14, x + 10, y + 9);
+//        g.setColor(tank.getColor());
+//        g.fill3DRect(x - 3, y + 9, 6, 3, false);
+//        g.fill3DRect(x - 1, y + 9, 2, 11, false);
+//        g.fill3DRect(x - 2, y + 18, 4, 2,
+//                false);
+
         Image image;
         if (tank.getType2() == Tank.MY) {
             g.setColor(Color.green);
@@ -265,20 +300,36 @@ public class Draw {
      * @param panel 被画的那个面板
      */
     public void drawWest(Graphics g, Stuff tank, JPanel panel) {
-		/*
-		 * int x=tank.getX(); int y=tank.getY(); g.setColor(Color.white);
-		 * g.fill3DRect(x-20, y-20, 40, 10,false); g.fill3DRect(x-20, y+10, 40,
-		 * 10,false); g.setColor(tank.getColor()); for(int i=0;i<20-1;i++){
-		 * g.drawLine(x-20+(i+1)*2, y-20, x-20+(i+1)*2,y-10-1);
-		 * g.drawLine(x-20+(i+1)*2, y-20+30, x-20+(i+1)*2,y-10-1+30); }
-		 * g.fill3DRect(x-14, y-15, 28, 30,false); g.setColor(Color.white);
-		 * g.draw3DRect(x-9, y-10, 18, 20,false); g.draw3DRect(x-5, y-3, 10,
-		 * 6,false); g.drawLine(x-15, y-14, x-10, y-9); g.drawLine(x+15, y-14,
-		 * x+10, y-9); g.drawLine(x-15, y+14, x-10, y+9); g.drawLine(x+15, y+14,
-		 * x+10, y+9); g.setColor(tank.getColor()); g.fill3DRect(x-12, y-3, 3,
-		 * 6, false); g.fill3DRect(x-20, y-1, 11, 2, false); g.fill3DRect(x-20,
-		 * y-2, 2, 4, false);
-		 */
+
+//        int x = tank.getX();
+//        int y = tank.getY();
+//        g.setColor(Color.white);
+//        g.fill3DRect(x - 20, y - 20, 40, 10, false);
+//        g.fill3DRect(x - 20, y + 10, 40,
+//                10, false);
+//        g.setColor(tank.getColor());
+//        for (int i = 0; i < 20 - 1; i++) {
+//            g.drawLine(x - 20 + (i + 1) * 2, y - 20, x - 20 + (i + 1) * 2, y - 10 - 1);
+//            g.drawLine(x - 20 + (i + 1) * 2, y - 20 + 30, x - 20 + (i + 1) * 2, y - 10 - 1 + 30);
+//        }
+//        g.fill3DRect(x - 14, y - 15, 28, 30, false);
+//        g.setColor(Color.white);
+//        g.draw3DRect(x - 9, y - 10, 18, 20, false);
+//        g.draw3DRect(x - 5, y - 3, 10,
+//                6, false);
+//        g.drawLine(x - 15, y - 14, x - 10, y - 9);
+//        g.drawLine(x + 15, y - 14,
+//                x + 10, y - 9);
+//        g.drawLine(x - 15, y + 14, x - 10, y + 9);
+//        g.drawLine(x + 15, y + 14,
+//                x + 10, y + 9);
+//        g.setColor(tank.getColor());
+//        g.fill3DRect(x - 12, y - 3, 3,
+//                6, false);
+//        g.fill3DRect(x - 20, y - 1, 11, 2, false);
+//        g.fill3DRect(x - 20,
+//                y - 2, 2, 4, false);
+
         Image image;
         if (tank.getType2() == Tank.MY) {
             image = TankGameImages.myTankImg[Stuff.WEST];// 初始化图片
@@ -299,20 +350,36 @@ public class Draw {
      * @param panel 被画的那个面板
      */
     public void drawEast(Graphics g, Stuff tank, JPanel panel) {
-		/*
-		 * int x=tank.getX(); int y=tank.getY(); g.setColor(Color.white);
-		 * g.fill3DRect(x-20, y-20, 40, 10,false); g.fill3DRect(x-20, y+10, 40,
-		 * 10,false); g.setColor(tank.getColor()); for(int i=0;i<20-1;i++){
-		 * g.drawLine(x-20+(i+1)*2, y-20, x-20+(i+1)*2,y-10-1);
-		 * g.drawLine(x-20+(i+1)*2, y-20+30, x-20+(i+1)*2,y-10-1+30); }
-		 * g.fill3DRect(x-14, y-15, 28, 30,false); g.setColor(Color.white);
-		 * g.draw3DRect(x-9, y-10, 18, 20,false); g.draw3DRect(x-5, y-3, 10,
-		 * 6,false); g.drawLine(x-15, y-14, x-10, y-9); g.drawLine(x+15, y-14,
-		 * x+10, y-9); g.drawLine(x-15, y+14, x-10, y+9); g.drawLine(x+15, y+14,
-		 * x+10, y+9); g.setColor(tank.getColor()); g.fill3DRect(x+9, y-3, 3, 6,
-		 * false); g.fill3DRect(x+9, y-1, 11, 2, false); g.fill3DRect(x+18, y-2,
-		 * 2, 4, false);
-		 */
+
+//        int x = tank.getX();
+//        int y = tank.getY();
+//        g.setColor(Color.white);
+//        g.fill3DRect(x - 20, y - 20, 40, 10, false);
+//        g.fill3DRect(x - 20, y + 10, 40,
+//                10, false);
+//        g.setColor(tank.getColor());
+//        for (int i = 0; i < 20 - 1; i++) {
+//            g.drawLine(x - 20 + (i + 1) * 2, y - 20, x - 20 + (i + 1) * 2, y - 10 - 1);
+//            g.drawLine(x - 20 + (i + 1) * 2, y - 20 + 30, x - 20 + (i + 1) * 2, y - 10 - 1 + 30);
+//        }
+//        g.fill3DRect(x - 14, y - 15, 28, 30, false);
+//        g.setColor(Color.white);
+//        g.draw3DRect(x - 9, y - 10, 18, 20, false);
+//        g.draw3DRect(x - 5, y - 3, 10,
+//                6, false);
+//        g.drawLine(x - 15, y - 14, x - 10, y - 9);
+//        g.drawLine(x + 15, y - 14,
+//                x + 10, y - 9);
+//        g.drawLine(x - 15, y + 14, x - 10, y + 9);
+//        g.drawLine(x + 15, y + 14,
+//                x + 10, y + 9);
+//        g.setColor(tank.getColor());
+//        g.fill3DRect(x + 9, y - 3, 3, 6,
+//                false);
+//        g.fill3DRect(x + 9, y - 1, 11, 2, false);
+//        g.fill3DRect(x + 18, y - 2,
+//                2, 4, false);
+
         Image image;
         if (tank.getType2() == Tank.MY) {
             image = TankGameImages.myTankImg[Stuff.EAST];// 初始化图片
@@ -331,8 +398,8 @@ public class Draw {
      * @param g   Graphics
      * @param tgp 游戏主要面板对象
      */
-    public void drawRight(Graphics g, GamePanel tgp) {
-        for (int i = 0; i < control.getEnemyTankNum(); i++) {
+    public void drawRight(Graphics g, GamePanel tgp, Control Control) {
+        for (int i = 0; i < Control.getEnemyTankNum(); i++) {
             if (i >= 4) {
                 g.drawImage(TankGameImages.enemyTankImg[Stuff.NORTH],
                         402 + 50 * i, 100, 40, 40, tgp);
@@ -341,10 +408,10 @@ public class Draw {
                         602 + 50 * i, 20, 40, 40, tgp);
             }
         }
-        for (int j = 0; j < control.getMyTankNum(); j++) {
+        for (int j = 0; j < Control.getMyTankNum(); j++) {
             g.drawImage(TankGameImages.myTankImg[Stuff.NORTH], 602 + 50 * j,
                     400, 40, 40, tgp);
         }
-        g.drawString("我的坦克子弹数目:" + control.getMyBulletNum(), 620, 500);
+        g.drawString("我的坦克子弹数目:" + Control.getMyBulletNum(), 620, 500);
     }
 }

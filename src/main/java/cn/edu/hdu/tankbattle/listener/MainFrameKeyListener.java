@@ -4,6 +4,7 @@
 
 package cn.edu.hdu.tankbattle.listener;
 
+import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.control.Control;
 import cn.edu.hdu.tankbattle.model.GameResource;
 import cn.edu.hdu.tankbattle.model.MyTank;
@@ -26,9 +27,10 @@ public class MainFrameKeyListener implements KeyListener {
     private Control control;
 
     @Autowired
-    private GameResource resource;
+    private GameContext context;
     @Override
     public void keyPressed(KeyEvent e) {
+        GameResource resource = context.getResource();
         for (int i = 0; i < resource.getMyTanks().size(); i++) {
             MyTank myTank = resource.getMyTanks().get(i);
 

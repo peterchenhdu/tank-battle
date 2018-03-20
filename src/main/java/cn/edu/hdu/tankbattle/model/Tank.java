@@ -7,8 +7,7 @@ package cn.edu.hdu.tankbattle.model;
 import java.awt.Color;
 import java.util.Vector;
 
-import cn.edu.hdu.tankbattle.control.Painter;
-import cn.edu.hdu.tankbattle.view.panel.GamePanel;
+import cn.edu.hdu.tankbattle.control.PanelPainter;
 
 /**
  * Tank...
@@ -53,6 +52,8 @@ public class Tank extends Stuff {
      * 游戏暂停时存储速度
      */
     private int speedVector;
+
+    private Boolean isActivate = Boolean.FALSE;
 
     /**
      * 坦克的构造方法
@@ -111,7 +112,7 @@ public class Tank extends Stuff {
      */
     public void goSouth() {
         this.setDirect(SOUTH);
-        if (this.getY() < Painter.HEIGHT - 20) {
+        if (this.getY() < PanelPainter.HEIGHT - 20) {
             this.setY(this.getY() + this.speed);
         } else {
             this.setFrontInfomation(Stuff.IRON); // 碰到边界就相当于碰到铁块
@@ -123,7 +124,7 @@ public class Tank extends Stuff {
      */
     public void goWest() {
         this.setDirect(WEST);
-        if (this.getX() > 20 && this.getY() <= Painter.HEIGHT - 20) {
+        if (this.getX() > 20 && this.getY() <= PanelPainter.HEIGHT - 20) {
             this.setX(this.getX() - this.speed);
         } else {
             this.setFrontInfomation(Stuff.IRON);
@@ -135,8 +136,8 @@ public class Tank extends Stuff {
      */
     public void goEast() {
         this.setDirect(EAST);
-        if (this.getX() < Painter.WIDTH - 20
-                && this.getY() <= Painter.HEIGHT - 20) {
+        if (this.getX() < PanelPainter.WIDTH - 20
+                && this.getY() <= PanelPainter.HEIGHT - 20) {
             this.setX(this.getX() + this.speed);
         } else {
             this.setFrontInfomation(Stuff.IRON);
@@ -280,5 +281,13 @@ public class Tank extends Stuff {
 
     public void setFrontInfomation(int frontInfomation) {
         this.frontInfomation = frontInfomation;
+    }
+
+    public Boolean activate() {
+        return isActivate;
+    }
+
+    public void setActivate(Boolean activate) {
+        isActivate = activate;
     }
 }
