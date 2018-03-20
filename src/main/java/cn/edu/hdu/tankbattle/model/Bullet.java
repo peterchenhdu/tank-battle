@@ -4,7 +4,7 @@
 
 package cn.edu.hdu.tankbattle.model;
 
-import cn.edu.hdu.tankbattle.control.PanelPainter;
+import cn.edu.hdu.tankbattle.constant.GameConstants;
 
 /**
  * Bullet...
@@ -93,8 +93,8 @@ public class Bullet implements Runnable {
                     this.setX(this.getX() + this.getSpeed());
                     break;
             }
-            if (x < 5 || x > PanelPainter.WIDTH - 5 || y < 5
-                    || y > PanelPainter.HEIGHT - 5) { // 判断子弹是否碰到边界
+            if (x < 5 || x > GameConstants.GAME_PANEL_WIDTH - 5 || y < 5
+                    || y > GameConstants.GAME_PANEL_HEIGHT - 5) { // 判断子弹是否碰到边界
                 this.isLive = false; // 子弹死亡
                 break;
             }

@@ -12,6 +12,7 @@ import java.util.Vector;
 import javax.swing.JPanel;
 
 import cn.edu.hdu.tankbattle.context.GameContext;
+import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.model.Bomb;
 import cn.edu.hdu.tankbattle.model.Brick;
 import cn.edu.hdu.tankbattle.model.Bullet;
@@ -398,8 +399,8 @@ public class Drawer {
      * @param g   Graphics
      * @param tgp 游戏主要面板对象
      */
-    public void drawRight(Graphics g, GamePanel tgp, Control Control) {
-        for (int i = 0; i < Control.getEnemyTankNum(); i++) {
+    public void drawRight(Graphics g, GamePanel tgp, RealTimeGameData data) {
+        for (int i = 0; i < data.getEnemyTankNum(); i++) {
             if (i >= 4) {
                 g.drawImage(TankGameImages.enemyTankImg[Stuff.NORTH],
                         402 + 50 * i, 100, 40, 40, tgp);
@@ -408,10 +409,10 @@ public class Drawer {
                         602 + 50 * i, 20, 40, 40, tgp);
             }
         }
-        for (int j = 0; j < Control.getMyTankNum(); j++) {
+        for (int j = 0; j < data.getMyTankNum(); j++) {
             g.drawImage(TankGameImages.myTankImg[Stuff.NORTH], 602 + 50 * j,
                     400, 40, 40, tgp);
         }
-        g.drawString("我的坦克子弹数目:" + Control.getMyBulletNum(), 620, 500);
+        g.drawString("我的坦克子弹数目:" + data.getMyBulletNum(), 620, 500);
     }
 }

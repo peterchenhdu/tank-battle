@@ -7,7 +7,7 @@ package cn.edu.hdu.tankbattle.model;
 import java.awt.Color;
 import java.util.Vector;
 
-import cn.edu.hdu.tankbattle.control.PanelPainter;
+import cn.edu.hdu.tankbattle.constant.GameConstants;
 
 /**
  * Tank...
@@ -112,7 +112,7 @@ public class Tank extends Stuff {
      */
     public void goSouth() {
         this.setDirect(SOUTH);
-        if (this.getY() < PanelPainter.HEIGHT - 20) {
+        if (this.getY() < GameConstants.GAME_PANEL_HEIGHT - 20) {
             this.setY(this.getY() + this.speed);
         } else {
             this.setFrontInfomation(Stuff.IRON); // 碰到边界就相当于碰到铁块
@@ -124,7 +124,7 @@ public class Tank extends Stuff {
      */
     public void goWest() {
         this.setDirect(WEST);
-        if (this.getX() > 20 && this.getY() <= PanelPainter.HEIGHT - 20) {
+        if (this.getX() > 20 && this.getY() <= GameConstants.GAME_PANEL_HEIGHT - 20) {
             this.setX(this.getX() - this.speed);
         } else {
             this.setFrontInfomation(Stuff.IRON);
@@ -136,8 +136,8 @@ public class Tank extends Stuff {
      */
     public void goEast() {
         this.setDirect(EAST);
-        if (this.getX() < PanelPainter.WIDTH - 20
-                && this.getY() <= PanelPainter.HEIGHT - 20) {
+        if (this.getX() < GameConstants.GAME_PANEL_WIDTH - 20
+                && this.getY() <= GameConstants.GAME_PANEL_HEIGHT - 20) {
             this.setX(this.getX() + this.speed);
         } else {
             this.setFrontInfomation(Stuff.IRON);

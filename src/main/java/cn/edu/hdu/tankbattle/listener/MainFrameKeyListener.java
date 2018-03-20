@@ -6,6 +6,7 @@ package cn.edu.hdu.tankbattle.listener;
 
 import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.control.Control;
+import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.model.GameResource;
 import cn.edu.hdu.tankbattle.model.MyTank;
 import cn.edu.hdu.tankbattle.model.Tank;
@@ -31,49 +32,50 @@ public class MainFrameKeyListener implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         GameResource resource = context.getResource();
+        RealTimeGameData data = context.getGameData();
         for (int i = 0; i < resource.getMyTanks().size(); i++) {
             MyTank myTank = resource.getMyTanks().get(i);
 
             if (!myTank.isLive()) {
-                control.setUp(false);
-                control.setDown(false);
-                control.setLeft(false);
-                control.setRight(false);
+                data.setUp(false);
+                data.setDown(false);
+                data.setLeft(false);
+                data.setRight(false);
             }
 
             if ((e.getKeyCode() == KeyEvent.VK_UP) && myTank.isLive()) {
                 myTank.setDirect(Tank.NORTH);
-                control.setUp(true);
-                control.setDown(false);
-                control.setLeft(false);
-                control.setRight(false);
+                data.setUp(true);
+                data.setDown(false);
+                data.setLeft(false);
+                data.setRight(false);
             } else if ((e.getKeyCode() == KeyEvent.VK_DOWN) && myTank.isLive()) {
                 myTank.setDirect(Tank.SOUTH);
-                control.setUp(false);
-                control.setDown(true);
-                control.setLeft(false);
-                control.setRight(false);
+                data.setUp(false);
+                data.setDown(true);
+                data.setLeft(false);
+                data.setRight(false);
             } else if ((e.getKeyCode() == KeyEvent.VK_LEFT) && myTank.isLive()
                     && myTank.getY() <= 580) {
                 myTank.setDirect(Tank.WEST);
-                control.setUp(false);
-                control.setDown(false);
-                control.setLeft(true);
-                control.setRight(false);
+                data.setUp(false);
+                data.setDown(false);
+                data.setLeft(true);
+                data.setRight(false);
             } else if ((e.getKeyCode() == KeyEvent.VK_RIGHT) && myTank.isLive()
                     && myTank.getY() <= 580) {
                 myTank.setDirect(Tank.EAST);
-                control.setUp(false);
-                control.setDown(false);
-                control.setLeft(false);
-                control.setRight(true);
+                data.setUp(false);
+                data.setDown(false);
+                data.setLeft(false);
+                data.setRight(true);
             }
             if (e.getKeyCode() == KeyEvent.VK_X && myTank.isLive()
                     && myTank.getY() <= 580) {
                 if (myTank.getBullets().size() <= 1
-                        && this.control.getMyBulletNum() > 0) { // 最多颗子弹
-                    this.control
-                            .setMyBulletNum(this.control.getMyBulletNum() - 1);
+                        && data.getMyBulletNum() > 0) { // 最多颗子弹
+                    data
+                            .setMyBulletNum(data.getMyBulletNum() - 1);
                     myTank.shot(myTank); // 这时才会往容器中添加子弹对象
                 }
             }
@@ -85,14 +87,15 @@ public class MainFrameKeyListener implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        RealTimeGameData data = context.getGameData();
         if (e.getKeyCode() == KeyEvent.VK_UP) {
-            control.setUp(false);
+            data.setUp(false);
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            control.setDown(false);
+            data.setDown(false);
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            control.setLeft(false);
+            data.setLeft(false);
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            control.setRight(false);
+            data.setRight(false);
         }
     }
 

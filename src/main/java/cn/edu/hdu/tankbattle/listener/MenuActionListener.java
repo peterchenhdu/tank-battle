@@ -6,6 +6,7 @@ package cn.edu.hdu.tankbattle.listener;
 
 import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.control.Control;
+import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.model.GameResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,37 +24,37 @@ import java.awt.event.ActionListener;
 @Component
 public class MenuActionListener implements ActionListener {
     @Autowired
-    private Control control;
-
+    private Control commond;
     @Autowired
     private GameContext context;
     @Override
     public void actionPerformed(ActionEvent e) {
+        RealTimeGameData control = context.getGameData();
         GameResource resource = context.getResource();
         if ("stop".equals(e.getActionCommand())) {
-            control.gameEventStop(resource);
+            commond.gameEventStop(resource);
         } else if ("start".equals(e.getActionCommand())) { // 当点了开始游戏
             if (!control.isStart()) { // 还没开始
-                control.startGame();// 已经开始了
+                context.startGame();// 已经开始了
                 //this.setVisible(true);
             } else if (!control.isStop()
-                    && this.control.getMyTankNum() != 0) {
+                    && control.getMyTankNum() != 0) {
                 // 暂停
-                control.gameEventStop(resource);
+                commond.gameEventStop(resource);
                 JOptionPane.showMessageDialog(null, "游戏已经开始", "提示",
                         JOptionPane.INFORMATION_MESSAGE);
                 // 恢复游戏
-                control.gameEventStop(resource);
+                commond.gameEventStop(resource);
             } else if (control.isStop()) {
                 JOptionPane.showMessageDialog(null, "游戏已经开始", "提示",
                         JOptionPane.INFORMATION_MESSAGE);
             } else if (!control.isStop()
-                    && (this.control.getMyTankNum() == 0)) {
-                control.startGame();
+                    && (control.getMyTankNum() == 0)) {
+                context.startGame();
             }
         } else if ("exit".equals(e.getActionCommand())) { // 退出按钮
             // 暂停游戏
-            control.gameEventStop(resource);
+            commond.gameEventStop(resource);
             int select = JOptionPane.showConfirmDialog(null, "退出游戏吗？", "退出确认",
                     JOptionPane.YES_NO_OPTION);
             if (select == JOptionPane.OK_OPTION) {
@@ -61,20 +62,20 @@ public class MenuActionListener implements ActionListener {
                 System.exit(0);
             } else {
                 // 恢复游戏
-                control.gameEventStop(resource);
+                commond.gameEventStop(resource);
             }
         } else if ("again".equals(e.getActionCommand())) { // 重来
             if (control.isStart()) {
                 if (control.isStop()) {
                     // 先恢复
-                    control.gameEventStop(resource);
+                    commond.gameEventStop(resource);
                 } else {
                 }
             }
         } else if ("first".equals(e.getActionCommand())) {
             if (control.isStart()) {
                 if (!control.isStop()) {// 暂停游戏
-                    control.gameEventStop(resource);
+                    commond.gameEventStop(resource);
                 }
                 int select = JOptionPane.showConfirmDialog(null,
                         "您选择的是第一关，点击确定开始游戏", "选择确认",
@@ -82,15 +83,15 @@ public class MenuActionListener implements ActionListener {
                 if (select == JOptionPane.OK_OPTION) {
                     if (control.isStart()) {
                         // 恢复游戏
-                        control.gameEventStop(resource);
+                        commond.gameEventStop(resource);
                     }
-                    control.startGame();
+                    context.startGame();
                     control.setLevel(1);
                     //this.setVisible(true);
                 } else {
                     if (control.isStart()) {
                         // 恢复游戏
-                        control.gameEventStop(resource);
+                        commond.gameEventStop(resource);
                     }
                 }
             } else {
@@ -100,7 +101,7 @@ public class MenuActionListener implements ActionListener {
         } else if ("second".equals(e.getActionCommand())) {
             if (control.isStart()) {
                 if (!control.isStop()) {// 暂停游戏
-                    control.gameEventStop(resource);
+                    commond.gameEventStop(resource);
                 }
                 int select = JOptionPane.showConfirmDialog(null,
                         "您选择的是第二关，点击确定开始游戏", "选择确认",
@@ -108,15 +109,15 @@ public class MenuActionListener implements ActionListener {
                 if (select == JOptionPane.OK_OPTION) {
                     if (control.isStart()) {
                         // 恢复游戏
-                        control.gameEventStop(resource);
+                        commond.gameEventStop(resource);
                     }
-                    control.startGame();
+                    context.startGame();
                     control.setLevel(2);
                     //this.setVisible(true);
                 } else {
                     if (control.isStart()) {
                         // 恢复游戏
-                        control.gameEventStop(resource);
+                        commond.gameEventStop(resource);
                     }
                 }
             } else {
@@ -126,7 +127,7 @@ public class MenuActionListener implements ActionListener {
         } else if ("third".equals(e.getActionCommand())) {
             if (control.isStart()) {
                 if (!control.isStop()) {// 暂停游戏
-                    control.gameEventStop(resource);
+                    commond.gameEventStop(resource);
                 }
                 int select = JOptionPane.showConfirmDialog(null,
                         "您选择的是第三关，点击确定开始游戏", "选择确认",
@@ -134,15 +135,15 @@ public class MenuActionListener implements ActionListener {
                 if (select == JOptionPane.OK_OPTION) {
                     if (control.isStart()) {
                         // 恢复游戏
-                        control.gameEventStop(resource);
+                        commond.gameEventStop(resource);
                     }
-                    control.startGame();
+                    context.startGame();
                     control.setLevel(3);
                     //this.setVisible(true);
                 } else {
                     if (control.isStart()) {
                         // 恢复游戏
-                        control.gameEventStop(resource);
+                        commond.gameEventStop(resource);
                     }
                 }
             } else {
@@ -152,7 +153,7 @@ public class MenuActionListener implements ActionListener {
         } else if ("fourth".equals(e.getActionCommand())) {
             if (control.isStart()) {
                 if (!control.isStop()) {// 暂停游戏
-                    control.gameEventStop(resource);
+                    commond.gameEventStop(resource);
                 }
                 int select = JOptionPane.showConfirmDialog(null,
                         "您选择的是第四关，点击确定开始游戏", "选择确认",
@@ -160,15 +161,15 @@ public class MenuActionListener implements ActionListener {
                 if (select == JOptionPane.OK_OPTION) {
                     if (control.isStart()) {
                         // 恢复游戏
-                        control.gameEventStop(resource);
+                        commond.gameEventStop(resource);
                     }
-                    control.startGame();
+                    context.startGame();
                     control.setLevel(4);
                     //this.setVisible(true);
                 } else {
                     if (control.isStart()) {
                         // 恢复游戏
-                        control.gameEventStop(resource);
+                        commond.gameEventStop(resource);
                     }
                 }
             } else {
@@ -178,7 +179,7 @@ public class MenuActionListener implements ActionListener {
         } else if ("fifth".equals(e.getActionCommand())) {
             if (control.isStart()) {
                 if (!control.isStop()) {// 暂停游戏
-                    control.gameEventStop(resource);
+                    commond.gameEventStop(resource);
                 }
                 int select = JOptionPane.showConfirmDialog(null,
                         "您选择的是第五关，点击确定开始游戏", "选择确认",
@@ -186,15 +187,15 @@ public class MenuActionListener implements ActionListener {
                 if (select == JOptionPane.OK_OPTION) {
                     if (control.isStart()) {
                         // 恢复游戏
-                        control.gameEventStop(resource);
+                        commond.gameEventStop(resource);
                     }
-                    control.startGame();
+                    context.startGame();
                     control.setLevel(5);
                     //this.setVisible(true);
                 } else {
                     if (control.isStart()) {
                         // 恢复游戏
-                        control.gameEventStop(resource);
+                        commond.gameEventStop(resource);
                     }
                 }
             } else {

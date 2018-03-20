@@ -9,7 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
 
-import cn.edu.hdu.tankbattle.control.PanelPainter;
+import cn.edu.hdu.tankbattle.constant.GameConstants;
 import cn.edu.hdu.tankbattle.model.map.Map;
 import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
 
@@ -134,7 +134,7 @@ public class EnemyTank extends Tank implements Runnable {
                         if (this.getMyTankLocation() == EnemyTank.SOUTH) {
                             this.enemyGoSouth();
                         }
-                        if (this.getY() >= PanelPainter.HEIGHT - 20
+                        if (this.getY() >= GameConstants.GAME_PANEL_HEIGHT - 20
                                 || this.isOverlapNo()) {
                             this.setDirect(this.getRandomDirect(Tank.NORTH,
                                     Tank.WEST, Tank.EAST));
@@ -194,7 +194,7 @@ public class EnemyTank extends Tank implements Runnable {
                         if (this.getMyTankLocation() == EnemyTank.EAST) {
                             this.enemyGoEast();
                         }
-                        if (this.getX() >= PanelPainter.WIDTH - 20
+                        if (this.getX() >= GameConstants.GAME_PANEL_WIDTH - 20
                                 || this.getY() <= 20 || isOverlapNo()) {
                             this.setDirect(this.getRandomDirect(Tank.NORTH,
                                     Tank.SOUTH, Tank.WEST));

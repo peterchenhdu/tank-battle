@@ -4,7 +4,9 @@
 
 package cn.edu.hdu.tankbattle.thread.task;
 
+import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.control.Control;
+import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.model.GameResource;
 import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
@@ -17,41 +19,42 @@ import cn.edu.hdu.tankbattle.view.panel.GamePanel;
  */
 public class UpdateTask implements Runnable {
 
-    private GameResource resource;
+    private GameContext gameContext;
 
-    private Control control;
-    private GamePanel panel;
 
-    public UpdateTask(Control control, GameResource resource, GamePanel pannel) {
-        this.control = control;
-        this.resource = resource;
-        this.panel = pannel;
+
+    public UpdateTask(GameContext gameContext) {
+        this.gameContext = gameContext;
     }
 
     @Override
     public void run() {
+        GamePanel panel = gameContext.getGamePanel();
+        RealTimeGameData gameData = gameContext.getGameData();
+        Control control = gameContext.getControl();
+        GameResource resource = gameContext.getResource();
         // 每隔30毫秒重画
         while (true) {
             GameTimeUnit.sleepMillis(30);
-            if (control.isStart()) {
-                if ((control.getMyTankNum() == 0 || control.getEnemyTankNum() == 0)
-                        && control.getDy() > 250) {
-                    control.setDy(control.getDy() - 2);
+            if (gameData.isStart()) {
+                if ((gameData.getMyTankNum() == 0 || gameData.getEnemyTankNum() == 0)
+                        && gameData.getDy() > 250) {
+                    gameData.setDy(gameData.getDy() - 2);
                 }
-                if (control.getDy() == 250) {
+                if (gameData.getDy() == 250) {
                     panel.repaint();
                     GameTimeUnit.sleepMillis(4000);
-                    if (control.getLevel() == 5) {
-                        control.setLevel(0);
+                    if (gameData.getLevel() == 5) {
+                        gameData.setLevel(0);
                     }
-                    if (control.getMyTankNum() >= 1 && control.getLevel() <= 4) {
-                        control.setLevel(control.getLevel() + 1);
-                        control.setDy(600);
+                    if (gameData.getMyTankNum() >= 1 && gameData.getLevel() <= 4) {
+                        gameData.setLevel(gameData.getLevel() + 1);
+                        gameData.setDy(600);
                         control.nextGame(resource);
                     }
                 }
-                if (!control.isStop() && control.getDy() == 600) {
-                    control.cleanAndCreat(resource.getMyTanks(),
+                if (!gameData.isStop() && gameData.getDy() == 600) {
+                    control.cleanAndCreate(resource.getMyTanks(),
                             resource.getEnemies(), resource.getMap(),
                             resource.getBombs()); // 从容器中移除死亡的对象
                     control.judge(resource.getMyTanks(), resource.getEnemies(),
@@ -62,8 +65,8 @@ public class UpdateTask implements Runnable {
 
                 }
             } else {
-                if (control.getKy() == 21 && control.getKx() <= 654)
-                    control.setKx(control.getKx() + 2);
+                if (gameData.getKy() == 21 && gameData.getKx() <= 654)
+                    gameData.setKx(gameData.getKx() + 2);
                 control.fontMove(resource, panel);
                 GameTimeUnit.sleepMillis(100);
 

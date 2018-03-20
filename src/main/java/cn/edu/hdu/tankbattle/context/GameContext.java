@@ -4,8 +4,10 @@
 
 package cn.edu.hdu.tankbattle.context;
 
+import cn.edu.hdu.tankbattle.constant.GameConstants;
 import cn.edu.hdu.tankbattle.control.Control;
 import cn.edu.hdu.tankbattle.control.PanelPainter;
+import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.model.EnemyTank;
 import cn.edu.hdu.tankbattle.model.MyTank;
 import cn.edu.hdu.tankbattle.model.Tank;
@@ -46,8 +48,15 @@ public class GameContext {
      * Panel
      */
     private GamePanel gamePanel;
+    /**
+     * Game Resource
+     */
     private GameResource resource;
 
+    /**
+     * RealTimeGameData
+     */
+    private RealTimeGameData gameData;
 
     @Autowired
     private MainFrameKeyListener mainFrameKeyListener;
@@ -64,7 +73,12 @@ public class GameContext {
     @PostConstruct
     public void init() {
         logger.info("GameContext...");
+
         loadResource();
+        initGameData();
+
+
+        gameData = new RealTimeGameData();
 
         //创建Frame
         this.gameFrame = new GameFrame();
@@ -83,7 +97,7 @@ public class GameContext {
         this.gameFrame.setVisible(true);
 
         logger.info("execute UpdateTask...");
-        taskExecutor.execute(new UpdateTask(control, resource, gamePanel));
+        taskExecutor.execute(new UpdateTask(this));
         logger.info("game start success...");
 
     }
@@ -91,21 +105,39 @@ public class GameContext {
     private void loadResource() {
         resource = new GameResource();
         resource.reset();
-        control.setDy(600);
 
-        control.setMapByLevel(control.getLevel(), resource);
+
+
 
         for (int i = 0; i < 5; i++) {
-            EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, Tank.SOUTH); // 创建一个敌人坦克对象
+            EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, Tank.SOUTH);
             enemy.setLocation(i);
-            resource.getEnemies().add(enemy); // 将该坦克加入敌人坦克容器中 //将该子弹加入该坦克的子弹容器中
+            resource.getEnemies().add(enemy);
         }
         for (int i = 0; i < 1; i++) {
-            MyTank myTank = new MyTank(300, 620, Tank.NORTH); // 创建一个我的坦克
-            resource.getMyTanks().add(myTank); // 将我的坦克加入我的坦克容器中
+            MyTank myTank = new MyTank(300, 620, Tank.NORTH);
+            resource.getMyTanks().add(myTank);
         }
     }
 
+    public void initGameData(){
+        gameData = new RealTimeGameData();
+        gameData.setEnemyTankNum(8);
+        gameData.setMyTankNum(4);
+        gameData.setMyBulletNum(GameConstants.MY_TANK_INIT_BULLET_NUM);
+        gameData.setBeKilled(0);
+        gameData.setDy(600);
+
+        control.setMapByLevel(gameData.getLevel(), resource);
+        logger.info("init Game Data...");
+    }
+
+
+    public void startGame() {
+        gameData.setStart(Boolean.TRUE);
+        resource.getEnemies().forEach(t->t.setActivate(Boolean.TRUE));
+        resource.getMyTanks().forEach(t->t.setActivate(Boolean.TRUE));
+    }
 
     public GameFrame getGameFrame() {
         return gameFrame;
@@ -121,5 +153,13 @@ public class GameContext {
 
     public GameResource getResource() {
         return resource;
+    }
+
+    public RealTimeGameData getGameData() {
+        return gameData;
+    }
+
+    public Control getControl() {
+        return control;
     }
 }

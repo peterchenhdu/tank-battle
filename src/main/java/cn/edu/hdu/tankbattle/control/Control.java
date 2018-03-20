@@ -6,6 +6,9 @@ package cn.edu.hdu.tankbattle.control;
 
 import java.util.Vector;
 
+import cn.edu.hdu.tankbattle.constant.GameConstants;
+import cn.edu.hdu.tankbattle.context.GameContext;
+import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.model.Bomb;
 import cn.edu.hdu.tankbattle.model.Brick;
 import cn.edu.hdu.tankbattle.model.Bullet;
@@ -22,7 +25,9 @@ import cn.edu.hdu.tankbattle.model.map.Map2;
 import cn.edu.hdu.tankbattle.model.map.Map3;
 import cn.edu.hdu.tankbattle.model.map.Map4;
 import cn.edu.hdu.tankbattle.model.map.Map5;
+import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -35,80 +40,11 @@ import javax.annotation.PostConstruct;
  */
 @Component
 public class Control {
-    public static final int START_BULLET_NUM = 500;
-    /**
-     * 敌人坦克总的数量
-     */
-    private int enemyTankNum;
-    /**
-     * 我的坦克数量
-     */
-    private int myTankNum;
-    /**
-     * 我的坦克被杀数量
-     */
-    private int beKilled;
-    /**
-     * 我的子弹数量
-     */
-    private int myBulletNum;
-    /**
-     * 是否已经开始
-     */
-    private boolean isStart = false;
-    /**
-     * 是否暂停
-     */
-    private boolean isStop = false;
-    /**
-     * 是否按了向上的方向键
-     */
-    private boolean up = false;
-    /**
-     * 是否按了向下的方向键
-     */
-    private boolean down = false;
-    /**
-     * 是否按了向左的方向键
-     */
-    private boolean left = false;
-    /**
-     * 是否按了向右的方向键
-     */
-    private boolean right = false;
-    /**
-     * 游戏关卡
-     */
-    private int level = 1;
 
-    /**
-     * 动态笑脸的控制flag
-     */
-    private boolean iconSmile;
-    /**
-     * 游戏失败或成功时的图片的y坐标
-     */
-    private int dy = 600;
-    /**
-     * 游戏开始的移动文字
-     */
-    private int ky = 600;
-    /**
-     * 游戏开始的笑脸icon
-     */
-    private int kx = 0;
+    @Autowired
+    private GameContext context;
 
-    /**
-     * 构造方法 完成初始化: 敌人坦克数量8辆 我的坦克数量2辆 我的子弹数量200发 我杀死的敌人坦克数量0辆
-     */
-    @PostConstruct
-    public void init() {
-        this.enemyTankNum = 8;
-        this.myTankNum = 4;
-        this.myBulletNum = Control.START_BULLET_NUM;
-        this.beKilled = 0;
-        System.out.println("control...");
-    }
+
 
     /**
      * 判断子弹击中情况 坦克属性初始化等
@@ -121,7 +57,7 @@ public class Control {
      */
     public void judge(Vector<MyTank> myTanks, Vector<EnemyTank> enemys,
                       Map map, Vector<Bomb> bombs) {
-        if (this.myTankNum == 0) { // 游戏结束时
+        if (context.getGameData().getMyTankNum() == 0) { // 游戏结束时
             for (int i = 0; i < enemys.size(); i++) {
                 EnemyTank enemyTank = enemys.get(i);
                 enemyTank.setShot(false);
@@ -216,10 +152,10 @@ public class Control {
      * 判断是否重叠
      *
      * @param myTanks 我的坦克容量
-     * @param enemys  敌人坦克容量
+     * @param enemies  敌人坦克容量
      * @param map     地图对象
      */
-    public void judgeOverlap(Vector<MyTank> myTanks, Vector<EnemyTank> enemys,
+    public void judgeOverlap(Vector<MyTank> myTanks, Vector<EnemyTank> enemies,
                              Map map) {
         Vector<Brick> bricks = map.getBricks();
         Vector<Iron> irons = map.getIrons();
@@ -230,7 +166,7 @@ public class Control {
             myTank.setOverlapNo(false);
             myTank.setOverlapYes(false);
 
-            if (myTank.isOverlap_(enemys)) { // 判断我的坦克是否与敌人坦克重叠
+            if (myTank.isOverlap_(enemies)) { // 判断我的坦克是否与敌人坦克重叠
                 myTank.setOverlapYes(true);
             }
             for (int j = 0; j < bricks.size(); j++) { // 判断我的坦克是否与砖块重叠
@@ -253,14 +189,14 @@ public class Control {
             }
         }
 
-        for (int i = 0; i < enemys.size(); i++) {
-            EnemyTank enemyTank = enemys.get(i);
+        for (int i = 0; i < enemies.size(); i++) {
+            EnemyTank enemyTank = enemies.get(i);
             // 先初始化，让敌人坦克不重叠，前面无东西挡住
             enemyTank.setOverlapNo(false);
             enemyTank.setOverlapYes(false);
             enemyTank.setFrontInfomation(-1); // 没有东西挡住
 
-            if (enemyTank.isOverlap_(enemys, myTanks)) {
+            if (enemyTank.isOverlap_(enemies, myTanks)) {
                 enemyTank.setOverlapYes(true);
             }
 
@@ -304,12 +240,14 @@ public class Control {
      * 移走已经死亡的坦克和子弹，创建要创建的坦克
      *
      * @param myTanks 我的坦克容量
-     * @param enemys  敌人坦克容量
+     * @param enemies  敌人坦克容量
      * @param map     地图对象
      * @param bombs   爆炸对象
      */
-    public void cleanAndCreat(Vector<MyTank> myTanks, Vector<EnemyTank> enemys,
-                              Map map, Vector<Bomb> bombs) {
+    public void cleanAndCreate(Vector<MyTank> myTanks, Vector<EnemyTank> enemies,
+                               Map map, Vector<Bomb> bombs) {
+
+        RealTimeGameData data = context.getGameData();
         for (int i = 0; i < myTanks.size(); i++) {
             MyTank myTank = myTanks.get(i);
             Vector<Bullet> mb = myTank.getBullets();
@@ -323,18 +261,19 @@ public class Control {
             // 清除我的死亡的坦克
             if (!myTank.isLive()) {
                 myTanks.remove(myTank);
-                this.myTankNum--; // 我的坦克数量减1
-                this.beKilled++;
-                if (this.myTankNum >= 1) { // 如果还有我的坦克就创建一个，刚开始面板上就创建了一个我的坦克，所以大于等于
+                data.setMyTankNum(data.getMyTankNum()-1);
+                data.setBeKilled(data.getBeKilled()+1);
+
+                if (data.getMyTankNum() >= 1) { // 如果还有我的坦克就创建一个，刚开始面板上就创建了一个我的坦克，所以大于等于
                     // 1
-                    MyTank myTanktemp = new MyTank(300, 620, Tank.NORTH); // 创建一个我的坦克
-                    myTanks.add(myTanktemp);
+                    MyTank myTankTemp = new MyTank(300, 620, Tank.NORTH); // 创建一个我的坦克
+                    myTanks.add(myTankTemp);
                 }
             }
         }
 
-        for (int i = 0; i < enemys.size(); i++) {
-            EnemyTank enemy = enemys.get(i);
+        for (int i = 0; i < enemies.size(); i++) {
+            EnemyTank enemy = enemies.get(i);
             Vector<Bullet> eb = enemy.getBullets();
             // 清除敌人坦克的死亡的子弹
             for (int j = 0; j < eb.size(); j++) {
@@ -347,21 +286,21 @@ public class Control {
             if (!enemy.isLive()) {
                 enemy.getTimer().cancel(); // 取消定时发射子弹
                 int r, isOk = 0;
-                for (int p = 0; p < enemys.size(); p++) {
-                    if (!enemys.get(p).isInMap()) { // 有坦克还没有出去
+                for (int p = 0; p < enemies.size(); p++) {
+                    if (!enemies.get(p).isInMap()) { // 有坦克还没有出去
                         isOk = -1;
                         break;
                     }
                 }
                 if (isOk == 0) { // 所有坦克都已经在地图中了
-                    this.enemyTankNum--; // 敌人坦克的数量减1
+                    data.setEnemyTankNum(data.getEnemyTankNum()-1);
                     r = (int) (Math.random() * 5); // 随机选择三个位置中的一个
-                    enemys.remove(enemy); // 敌人坦克死亡后马上产生一个新的敌人坦克
-                    if (this.enemyTankNum >= 5) { // 如果还有敌人坦克，刚开始时面板上就创建了3个，所以大于等于3
+                    enemies.remove(enemy); // 敌人坦克死亡后马上产生一个新的敌人坦克
+                    if (data.getEnemyTankNum() >= 5) { // 如果还有敌人坦克，刚开始时面板上就创建了3个，所以大于等于3
                         EnemyTank enemyTank = new EnemyTank((r) * 140 + 20,
                                 -20, Tank.SOUTH); // 创建一个敌人坦克对象
                         enemyTank.setLocation(r);
-                        enemys.add(enemyTank); // 将该坦克加入敌人坦克容器中
+                        enemies.add(enemyTank); // 将该坦克加入敌人坦克容器中
                     }
                     break;
                 }
@@ -438,15 +377,16 @@ public class Control {
      * @param resource .getMyTanks() 我的坦克容量
      */
     public void myTankEvent(GameResource resource) {
+        RealTimeGameData data = context.getGameData();
         for (int i = 0; i < resource.getMyTanks().size(); i++) {
             MyTank myTank = resource.getMyTanks().get(i);
-            if (up && !myTank.isOverlapNo() && !myTank.isOverlapYes()) {
+            if (data.isUp() && !myTank.isOverlapNo() && !myTank.isOverlapYes()) {
                 myTank.goNorth();
-            } else if (down && !myTank.isOverlapNo() && !myTank.isOverlapYes()) {
+            } else if (data.isDown() && !myTank.isOverlapNo() && !myTank.isOverlapYes()) {
                 myTank.goSouth();
-            } else if (left && !myTank.isOverlapNo() && !myTank.isOverlapYes()) {
+            } else if (data.isLeft() && !myTank.isOverlapNo() && !myTank.isOverlapYes()) {
                 myTank.goWest();
-            } else if (right && !myTank.isOverlapNo() && !myTank.isOverlapYes()) {
+            } else if (data.isRight() && !myTank.isOverlapNo() && !myTank.isOverlapYes()) {
                 myTank.goEast();
             }
         }
@@ -456,14 +396,15 @@ public class Control {
      * 下一关
      */
     public void nextGame(GameResource resource) {
-        this.setMapByLevel(level, resource);
+        RealTimeGameData data = context.getGameData();
+        this.setMapByLevel(data.getLevel(), resource);
 
         for (int i = 0; i < 5; i++) {
             EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, Tank.SOUTH); // 创建一个敌人坦克对象
             enemy.setLocation(i);
             resource.getEnemies().add(enemy); // 将该坦克加入敌人坦克容器中 //将该子弹加入该坦克的子弹容器中
         }
-        this.setEnemyTankNum(8);
+        data.setEnemyTankNum(8);
         for (int i = 0; i < resource.getMyTanks().size(); i++) {
             MyTank myTank = resource.getMyTanks().get(i);
             myTank.setX(300);
@@ -493,10 +434,12 @@ public class Control {
      * @param resource .getEnemies() 敌人坦克容量
      */
     public void gameEventStop(GameResource resource) {
+        RealTimeGameData data = context.getGameData();
+
         for (int i = 0; i < resource.getMyTanks().size(); i++) {
             MyTank myTank = resource.getMyTanks().get(i);
             if (myTank.getSpeedVector() == 0) { // 已经暂停的不能在执行下面的语句
-                setStop(true);
+                data.setStop(true);
                 myTank.setSpeedVector(myTank.getSpeed()); // 保存当前坦克的速度
                 myTank.setSpeed(0); // 设置当前坦克速度为0
                 for (int j = 0; j < myTank.getBullets().size(); j++) {
@@ -526,7 +469,7 @@ public class Control {
                     }
                 }
             } else {
-                setStop(false);
+                data.setStop(false);
                 myTank.setSpeed(myTank.getSpeedVector());
                 myTank.setSpeedVector(0);
                 for (int j = 0; j < myTank.getBullets().size(); j++) {
@@ -562,172 +505,36 @@ public class Control {
      * 游戏没开始时的欢迎图片上的字体移动
      */
     public void fontMove(GameResource resource, GamePanel panel) {
-
+        RealTimeGameData data = context.getGameData();
+        int ky = data.getKy();
         if (ky > 0 && ky != 21)
             ky = ky - 8; // 当字体刚出来时，向上移动
         if (ky == 0) { // 当字体移到顶端时，以7的速度向下移动5步
             for (int i = 0; i < 5; i++) {
                 ky = ky + 7;
                 panel.repaint();
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                GameTimeUnit.sleepMillis(100);
             }
             for (int i = 0; i < 4; i++) { // 以6的速度向上移动4步
                 ky = ky - 6;
                 panel.repaint();
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                GameTimeUnit.sleepMillis(100);
             }
             for (int i = 0; i < 3; i++) { // 以5的速度向下移动
                 ky = ky + 5;
                 panel.repaint();
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                GameTimeUnit.sleepMillis(100);
             }
             for (int i = 0; i < 2; i++) { // 以4的速度向上移动
                 ky = ky - 4;
                 panel.repaint();
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                GameTimeUnit.sleepMillis(100);
             }
             ky = ky + 3;// 最后，字体的图片停留在（0，21）的地方
         }
+        data.setKy(ky);
     }
 
-    public void startGame() {
-        this.isStart = isStart;
-    }
 
-    public int getEnemyTankNum() {
-        return enemyTankNum;
-    }
-
-    public void setEnemyTankNum(int enemyTankNum) {
-        this.enemyTankNum = enemyTankNum;
-    }
-
-    public int getMyTankNum() {
-        return myTankNum;
-    }
-
-    public void setMyTankNum(int myTankNum) {
-        this.myTankNum = myTankNum;
-    }
-
-    public int getMyBulletNum() {
-        return myBulletNum;
-    }
-
-    public void setMyBulletNum(int myBulletNum) {
-        this.myBulletNum = myBulletNum;
-    }
-
-    public int getBeKilled() {
-        return beKilled;
-    }
-
-    public void setBeKilled(int beKilled) {
-        this.beKilled = beKilled;
-    }
-
-    public boolean isStart() {
-        return isStart;
-    }
-
-    public boolean isUp() {
-        return up;
-    }
-
-    public void setUp(boolean up) {
-        this.up = up;
-    }
-
-    public boolean isDown() {
-        return down;
-    }
-
-    public void setDown(boolean down) {
-        this.down = down;
-    }
-
-    public boolean isLeft() {
-        return left;
-    }
-
-    public void setLeft(boolean left) {
-        this.left = left;
-    }
-
-    public boolean isRight() {
-        return right;
-    }
-
-    public void setRight(boolean right) {
-        this.right = right;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public boolean isStop() {
-        return isStop;
-    }
-
-    public void setStop(boolean isStop) {
-        this.isStop = isStop;
-    }
-
-    public boolean isIconSmile() {
-        return iconSmile;
-    }
-
-    public void setIconSmile(boolean iconSmile) {
-        this.iconSmile = iconSmile;
-    }
-
-    public int getDy() {
-        return dy;
-    }
-
-    public void setDy(int dy) {
-        this.dy = dy;
-    }
-
-    public int getKy() {
-        return ky;
-    }
-
-    public void setKy(int ky) {
-        this.ky = ky;
-    }
-
-    public int getKx() {
-        return kx;
-    }
-
-    public void setKx(int kx) {
-        this.kx = kx;
-    }
 
 }
