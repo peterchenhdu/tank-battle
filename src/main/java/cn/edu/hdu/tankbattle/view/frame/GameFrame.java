@@ -27,9 +27,7 @@ public class GameFrame extends JFrame {
     private static final long serialVersionUID = -1176914786963603304L;
 
 
-
-
-    public   GameFrame() {
+    public GameFrame() {
         super();
 
 

@@ -7,7 +7,7 @@ package cn.edu.hdu.tankbattle.control;
 import cn.edu.hdu.tankbattle.constant.GameConstants;
 import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
-import cn.edu.hdu.tankbattle.model.GameResource;
+import cn.edu.hdu.tankbattle.dto.GameResource;
 import cn.edu.hdu.tankbattle.model.TankGameImages;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,6 @@ import java.awt.*;
 public class PanelPainter {
 
 
-
     /**
      * 坦克游戏画笔对象
      */
@@ -40,9 +39,11 @@ public class PanelPainter {
      */
     @Autowired
     private Control control;
-    public void paint(GamePanel panel, Graphics g){
-        GameResource resource = context.getResource();
+
+    public void paint(GamePanel panel, Graphics g) {
+
         RealTimeGameData data = context.getGameData();
+        GameResource resource = data.getGameResource();
         if (data.isStart()) {
             g.setColor(Color.black);
             g.fillRect(0, 0, GameConstants.GAME_PANEL_WIDTH, GameConstants.GAME_PANEL_HEIGHT);

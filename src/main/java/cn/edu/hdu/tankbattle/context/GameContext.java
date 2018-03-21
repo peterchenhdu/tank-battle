@@ -11,10 +11,11 @@ import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.model.EnemyTank;
 import cn.edu.hdu.tankbattle.model.MyTank;
 import cn.edu.hdu.tankbattle.model.Tank;
+import cn.edu.hdu.tankbattle.model.map.*;
 import cn.edu.hdu.tankbattle.thread.task.UpdateTask;
 import cn.edu.hdu.tankbattle.listener.MainFrameKeyListener;
 import cn.edu.hdu.tankbattle.listener.MenuActionListener;
-import cn.edu.hdu.tankbattle.model.GameResource;
+import cn.edu.hdu.tankbattle.dto.GameResource;
 import cn.edu.hdu.tankbattle.view.frame.GameFrame;
 import cn.edu.hdu.tankbattle.view.menubar.TankBattleMenuBar;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
@@ -48,10 +49,6 @@ public class GameContext {
      * Panel
      */
     private GamePanel gamePanel;
-    /**
-     * Game Resource
-     */
-    private GameResource resource;
 
     /**
      * RealTimeGameData
@@ -74,7 +71,6 @@ public class GameContext {
     public void init() {
         logger.info("GameContext...");
 
-        loadResource();
         initGameData();
 
 
@@ -100,12 +96,14 @@ public class GameContext {
 
     }
 
-    private void loadResource() {
-        resource = new GameResource();
+
+
+    public void initGameData() {
+        gameData = new RealTimeGameData();
+        GameResource resource = new GameResource();
+        gameData.setGameResource(resource);
+
         resource.reset();
-
-
-
 
         for (int i = 0; i < 5; i++) {
             EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, Tank.SOUTH);
@@ -116,25 +114,39 @@ public class GameContext {
             MyTank myTank = new MyTank(300, 620, Tank.NORTH);
             resource.getMyTanks().add(myTank);
         }
-    }
+        setMapByLevel(gameData.getLevel());
 
-    public void initGameData(){
-        gameData = new RealTimeGameData();
+
+
         gameData.setEnemyTankNum(8);
         gameData.setMyTankNum(4);
         gameData.setMyBulletNum(GameConstants.MY_TANK_INIT_BULLET_NUM);
         gameData.setBeKilled(0);
         gameData.setDy(600);
 
-        control.setMapByLevel(gameData.getLevel(), resource);
+
         logger.info("init Game Data...");
     }
 
 
     public void startGame() {
         gameData.setStart(Boolean.TRUE);
-        resource.getEnemies().forEach(t->t.setActivate(Boolean.TRUE));
-        resource.getMyTanks().forEach(t->t.setActivate(Boolean.TRUE));
+        gameData.getGameResource().getEnemies().forEach(t -> t.setActivate(Boolean.TRUE));
+        gameData.getGameResource().getMyTanks().forEach(t -> t.setActivate(Boolean.TRUE));
+    }
+
+    public void setMapByLevel(int level) {
+        if (level == 1) { // 游戏关卡
+            gameData.getGameResource().setMap(new Map1());
+        } else if (level == 2) {
+            gameData.getGameResource().setMap(new Map2());
+        } else if (level == 3) {
+            gameData.getGameResource().setMap(new Map3());
+        } else if (level == 4) {
+            gameData.getGameResource().setMap(new Map4());
+        } else if (level == 5) {
+            gameData.getGameResource().setMap(new Map5());
+        }
     }
 
     public GameFrame getGameFrame() {
@@ -149,10 +161,6 @@ public class GameContext {
         return gamePanel;
     }
 
-    public GameResource getResource() {
-        return resource;
-    }
-
     public RealTimeGameData getGameData() {
         return gameData;
     }
@@ -160,4 +168,6 @@ public class GameContext {
     public Control getControl() {
         return control;
     }
+
+
 }

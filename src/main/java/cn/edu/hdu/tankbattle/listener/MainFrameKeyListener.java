@@ -7,7 +7,7 @@ package cn.edu.hdu.tankbattle.listener;
 import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.control.Control;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
-import cn.edu.hdu.tankbattle.model.GameResource;
+import cn.edu.hdu.tankbattle.dto.GameResource;
 import cn.edu.hdu.tankbattle.model.MyTank;
 import cn.edu.hdu.tankbattle.model.Tank;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +29,12 @@ public class MainFrameKeyListener implements KeyListener {
 
     @Autowired
     private GameContext context;
+
     @Override
     public void keyPressed(KeyEvent e) {
-        GameResource resource = context.getResource();
+
         RealTimeGameData data = context.getGameData();
+        GameResource resource = data.getGameResource();
         for (int i = 0; i < resource.getMyTanks().size(); i++) {
             MyTank myTank = resource.getMyTanks().get(i);
 

@@ -6,14 +6,13 @@ package cn.edu.hdu.tankbattle.control;
 
 import java.util.Vector;
 
-import cn.edu.hdu.tankbattle.constant.GameConstants;
 import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.model.Bomb;
 import cn.edu.hdu.tankbattle.model.Brick;
 import cn.edu.hdu.tankbattle.model.Bullet;
 import cn.edu.hdu.tankbattle.model.EnemyTank;
-import cn.edu.hdu.tankbattle.model.GameResource;
+import cn.edu.hdu.tankbattle.dto.GameResource;
 import cn.edu.hdu.tankbattle.model.Iron;
 import cn.edu.hdu.tankbattle.model.MyTank;
 import cn.edu.hdu.tankbattle.model.Stuff;
@@ -30,8 +29,6 @@ import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-
 /**
  * Control...
  *
@@ -43,7 +40,6 @@ public class Control {
 
     @Autowired
     private GameContext context;
-
 
 
     /**
@@ -152,7 +148,7 @@ public class Control {
      * 判断是否重叠
      *
      * @param myTanks 我的坦克容量
-     * @param enemies  敌人坦克容量
+     * @param enemies 敌人坦克容量
      * @param map     地图对象
      */
     public void judgeOverlap(Vector<MyTank> myTanks, Vector<EnemyTank> enemies,
@@ -240,7 +236,7 @@ public class Control {
      * 移走已经死亡的坦克和子弹，创建要创建的坦克
      *
      * @param myTanks 我的坦克容量
-     * @param enemies  敌人坦克容量
+     * @param enemies 敌人坦克容量
      * @param map     地图对象
      * @param bombs   爆炸对象
      */
@@ -261,8 +257,8 @@ public class Control {
             // 清除我的死亡的坦克
             if (!myTank.isLive()) {
                 myTanks.remove(myTank);
-                data.setMyTankNum(data.getMyTankNum()-1);
-                data.setBeKilled(data.getBeKilled()+1);
+                data.setMyTankNum(data.getMyTankNum() - 1);
+                data.setBeKilled(data.getBeKilled() + 1);
 
                 if (data.getMyTankNum() >= 1) { // 如果还有我的坦克就创建一个，刚开始面板上就创建了一个我的坦克，所以大于等于
                     // 1
@@ -293,7 +289,7 @@ public class Control {
                     }
                 }
                 if (isOk == 0) { // 所有坦克都已经在地图中了
-                    data.setEnemyTankNum(data.getEnemyTankNum()-1);
+                    data.setEnemyTankNum(data.getEnemyTankNum() - 1);
                     r = (int) (Math.random() * 5); // 随机选择三个位置中的一个
                     enemies.remove(enemy); // 敌人坦克死亡后马上产生一个新的敌人坦克
                     if (data.getEnemyTankNum() >= 5) { // 如果还有敌人坦克，刚开始时面板上就创建了3个，所以大于等于3
@@ -397,7 +393,7 @@ public class Control {
      */
     public void nextGame(GameResource resource) {
         RealTimeGameData data = context.getGameData();
-        this.setMapByLevel(data.getLevel(), resource);
+        context.setMapByLevel(data.getLevel());
 
         for (int i = 0; i < 5; i++) {
             EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, Tank.SOUTH); // 创建一个敌人坦克对象
@@ -412,19 +408,6 @@ public class Control {
         }
     }
 
-    public void setMapByLevel(int level, GameResource resource) {
-        if (level == 1) { // 游戏关卡
-            resource.setMap(new Map1());
-        } else if (level == 2) {
-            resource.setMap(new Map2());
-        } else if (level == 3) {
-            resource.setMap(new Map3());
-        } else if (level == 4) {
-            resource.setMap(new Map4());
-        } else if (level == 5) {
-            resource.setMap(new Map5());
-        }
-    }
 
 
 
@@ -534,7 +517,6 @@ public class Control {
         }
         data.setKy(ky);
     }
-
 
 
 }

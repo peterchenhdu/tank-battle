@@ -7,7 +7,7 @@ package cn.edu.hdu.tankbattle.thread.task;
 import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.control.Control;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
-import cn.edu.hdu.tankbattle.model.GameResource;
+import cn.edu.hdu.tankbattle.dto.GameResource;
 import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 
@@ -22,7 +22,6 @@ public class UpdateTask implements Runnable {
     private GameContext gameContext;
 
 
-
     public UpdateTask(GameContext gameContext) {
         this.gameContext = gameContext;
     }
@@ -32,7 +31,7 @@ public class UpdateTask implements Runnable {
         GamePanel panel = gameContext.getGamePanel();
         RealTimeGameData gameData = gameContext.getGameData();
         Control control = gameContext.getControl();
-        GameResource resource = gameContext.getResource();
+        GameResource resource = gameData.getGameResource();
         // 每隔30毫秒重画
         while (true) {
             GameTimeUnit.sleepMillis(30);

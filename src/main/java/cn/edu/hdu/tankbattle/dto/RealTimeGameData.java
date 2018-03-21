@@ -11,6 +11,8 @@ package cn.edu.hdu.tankbattle.dto;
  * @since 2018/3/20 23:01
  */
 public class RealTimeGameData {
+    private GameResource gameResource;
+
     /**
      * 敌人坦克总的数量
      */
@@ -191,5 +193,13 @@ public class RealTimeGameData {
 
     public void setKx(int kx) {
         this.kx = kx;
+    }
+
+    public GameResource getGameResource() {
+        return gameResource;
+    }
+
+    public void setGameResource(GameResource gameResource) {
+        this.gameResource = gameResource;
     }
 }

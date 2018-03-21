@@ -2,12 +2,14 @@
  * Copyright (c) 2011-2025 PiChen.
  */
 
-package cn.edu.hdu.tankbattle.model;
+package cn.edu.hdu.tankbattle.dto;
 
 import java.util.Vector;
 
+import cn.edu.hdu.tankbattle.model.Bomb;
+import cn.edu.hdu.tankbattle.model.EnemyTank;
+import cn.edu.hdu.tankbattle.model.MyTank;
 import cn.edu.hdu.tankbattle.model.map.Map;
-import org.springframework.stereotype.Component;
 
 /**
  * GameResource...
