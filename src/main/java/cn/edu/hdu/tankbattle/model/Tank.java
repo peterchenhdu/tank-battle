@@ -67,6 +67,8 @@ public class Tank extends Stuff {
         this.setDirect(direct);
         this.bullets = new Vector<Bullet>();
         this.setType(Stuff.TANK);
+        this.setWidth(40);
+        this.setHeight(40);
     }
 
     /**

@@ -76,7 +76,7 @@ public class EnemyTank extends Tank implements Runnable {
     /**
      * 敌人坦克移动
      */
-    public void enemyTankRun() {
+    private void enemyTankRun() {
         while (true) {
             switch (this.getDirect()) { // 选择坦克方向
                 case EnemyTank.NORTH:
@@ -264,7 +264,7 @@ public class EnemyTank extends Tank implements Runnable {
     public void enemyGoEast() {
         for (; ; ) {
             GameTimeUnit.sleepMillis(36);
-            if (this.isOverlapNo() == false && this.isOverlapYes() == false) {
+            if (!this.isOverlapNo()  && !this.isOverlapYes()) {
                 this.goEast();
             }
             if (this.getMyTankLocation() != Tank.EAST) {

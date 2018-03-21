@@ -54,6 +54,9 @@ public class Bullet implements Runnable {
      */
     private int speedVector;
 
+    private int width;
+    private int height;
+
     /**
      * 子弹类构造方法
      *
@@ -65,6 +68,8 @@ public class Bullet implements Runnable {
         this.x = x;
         this.y = y;
         this.direct = direct;
+        this.width = 4;
+        this.height = 4;
         Thread threadBullet = new Thread(this); // 创建子弹线程
         threadBullet.start();
     }
@@ -152,5 +157,21 @@ public class Bullet implements Runnable {
 
     public int getSpeedVector() {
         return speedVector;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 }
