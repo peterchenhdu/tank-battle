@@ -78,8 +78,6 @@ public class GameContext {
         initGameData();
 
 
-        gameData = new RealTimeGameData();
-
         //创建Frame
         this.gameFrame = new GameFrame();
         //创建MenuBar
