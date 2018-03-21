@@ -8,6 +8,7 @@ import cn.edu.hdu.tankbattle.constant.GameConstants;
 import cn.edu.hdu.tankbattle.control.Control;
 import cn.edu.hdu.tankbattle.control.PanelPainter;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
+import cn.edu.hdu.tankbattle.enums.LevelEnum;
 import cn.edu.hdu.tankbattle.model.EnemyTank;
 import cn.edu.hdu.tankbattle.model.MyTank;
 import cn.edu.hdu.tankbattle.model.Tank;
@@ -99,13 +100,13 @@ public class GameContext {
 
 
     public void initGameData() {
-        gameData = new RealTimeGameData();
+
         GameResource resource = new GameResource();
-        gameData.setGameResource(resource);
+
 
         resource.reset();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < GameConstants.INIT_ENEMY_TANK_IN_MAP_NUM; i++) {
             EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, Tank.SOUTH);
             enemy.setLocation(i);
             resource.getEnemies().add(enemy);
@@ -114,12 +115,13 @@ public class GameContext {
             MyTank myTank = new MyTank(300, 620, Tank.NORTH);
             resource.getMyTanks().add(myTank);
         }
-        setMapByLevel(gameData.getLevel());
 
+        resource.setMap(LevelEnum.getByLevel(1).getMap());
 
-
-        gameData.setEnemyTankNum(8);
-        gameData.setMyTankNum(4);
+        gameData = new RealTimeGameData();
+        gameData.setGameResource(resource);
+        gameData.setEnemyTankNum(GameConstants.INIT_ENEMY_TANK_NUM);
+        gameData.setMyTankNum(GameConstants.INIT_MY_TANK_NUM);
         gameData.setMyBulletNum(GameConstants.MY_TANK_INIT_BULLET_NUM);
         gameData.setBeKilled(0);
         gameData.setDy(600);
@@ -133,20 +135,6 @@ public class GameContext {
         gameData.setStart(Boolean.TRUE);
         gameData.getGameResource().getEnemies().forEach(t -> t.setActivate(Boolean.TRUE));
         gameData.getGameResource().getMyTanks().forEach(t -> t.setActivate(Boolean.TRUE));
-    }
-
-    public void setMapByLevel(int level) {
-        if (level == 1) { // 游戏关卡
-            gameData.getGameResource().setMap(new Map1());
-        } else if (level == 2) {
-            gameData.getGameResource().setMap(new Map2());
-        } else if (level == 3) {
-            gameData.getGameResource().setMap(new Map3());
-        } else if (level == 4) {
-            gameData.getGameResource().setMap(new Map4());
-        } else if (level == 5) {
-            gameData.getGameResource().setMap(new Map5());
-        }
     }
 
     public GameFrame getGameFrame() {

@@ -202,4 +202,26 @@ public class RealTimeGameData {
     public void setGameResource(GameResource gameResource) {
         this.gameResource = gameResource;
     }
+
+    @Override
+    public String toString() {
+        return "RealTimeGameData{" +
+                "gameResource=" + gameResource +
+                ", enemyTankNum=" + enemyTankNum +
+                ", myTankNum=" + myTankNum +
+                ", beKilled=" + beKilled +
+                ", myBulletNum=" + myBulletNum +
+                ", isStart=" + isStart +
+                ", isStop=" + isStop +
+                ", up=" + up +
+                ", down=" + down +
+                ", left=" + left +
+                ", right=" + right +
+                ", level=" + level +
+                ", iconSmile=" + iconSmile +
+                ", dy=" + dy +
+                ", ky=" + ky +
+                ", kx=" + kx +
+                '}';
+    }
 }

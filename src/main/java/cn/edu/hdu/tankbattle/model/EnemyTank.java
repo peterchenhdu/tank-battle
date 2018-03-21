@@ -43,7 +43,7 @@ public class EnemyTank extends Tank implements Runnable {
     /**
      * 是否在地图中
      */
-    private boolean isInMap = false;
+    //private boolean isInMap = false;
 
     /**
      * 敌人坦克构造方法
@@ -448,13 +448,13 @@ public class EnemyTank extends Tank implements Runnable {
         this.myTankDirect = myTankDirect;
     }
 
-    public boolean isInMap() {
-        return isInMap;
-    }
-
-    public void setInMap(boolean isInMap) {
-        this.isInMap = isInMap;
-    }
+//    public boolean isInMap() {
+//        return isInMap;
+//    }
+//
+//    public void setInMap(boolean isInMap) {
+//        this.isInMap = isInMap;
+//    }
 }
 
 /**

@@ -10,6 +10,8 @@ import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.dto.GameResource;
 import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * UpdateThread...
@@ -18,6 +20,7 @@ import cn.edu.hdu.tankbattle.view.panel.GamePanel;
  * @since 2011-02-10 19:29
  */
 public class UpdateTask implements Runnable {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private GameContext gameContext;
 
@@ -64,13 +67,15 @@ public class UpdateTask implements Runnable {
 
                 }
             } else {
-                if (gameData.getKy() == 21 && gameData.getKx() <= 654)
+                if (gameData.getKy() == 21 && gameData.getKx() <= 654){
                     gameData.setKx(gameData.getKx() + 2);
-                control.fontMove(resource, panel);
+                }
+                control.fontMove(panel);
                 GameTimeUnit.sleepMillis(100);
 
             }
             panel.repaint();
+            logger.debug("data : {}", gameData);
         }
     }
 

@@ -8,6 +8,7 @@ import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.control.Control;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.dto.GameResource;
+import cn.edu.hdu.tankbattle.enums.LevelEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -139,6 +140,7 @@ public class MenuActionListener implements ActionListener {
                         commond.gameEventStop(resource);
                     }
                     context.startGame();
+                    gameData.getGameResource().setMap(LevelEnum.getByLevel(3).getMap());
                     gameData.setLevel(3);
                     //this.setVisible(true);
                 } else {

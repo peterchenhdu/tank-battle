@@ -8,6 +8,7 @@ import java.util.Vector;
 
 import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
+import cn.edu.hdu.tankbattle.enums.LevelEnum;
 import cn.edu.hdu.tankbattle.model.Bomb;
 import cn.edu.hdu.tankbattle.model.Brick;
 import cn.edu.hdu.tankbattle.model.Bullet;
@@ -19,11 +20,6 @@ import cn.edu.hdu.tankbattle.model.Stuff;
 import cn.edu.hdu.tankbattle.model.Tank;
 import cn.edu.hdu.tankbattle.model.Water;
 import cn.edu.hdu.tankbattle.model.map.Map;
-import cn.edu.hdu.tankbattle.model.map.Map1;
-import cn.edu.hdu.tankbattle.model.map.Map2;
-import cn.edu.hdu.tankbattle.model.map.Map3;
-import cn.edu.hdu.tankbattle.model.map.Map4;
-import cn.edu.hdu.tankbattle.model.map.Map5;
 import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,8 +61,7 @@ public class Control {
             for (int i = 0; i < enemys.size(); i++) { // 从敌人的坦克容器中取出一辆敌人的坦克
                 EnemyTank enemyTank = enemys.get(i);
 
-                if (enemyTank.getY() >= 20)
-                    enemyTank.setInMap(true);
+
                 enemyTank.setMyTankDirect(myTank.getDirect()); // 设置敌人坦克的“我的坦克”位置
                 enemyTank.findAndKill(myTank, map); // 让敌人坦克能够发现我的坦克并开炮
 
@@ -281,25 +276,21 @@ public class Control {
             // 清除死亡的敌人坦克，并创建新的坦克
             if (!enemy.isLive()) {
                 enemy.getTimer().cancel(); // 取消定时发射子弹
-                int r, isOk = 0;
-                for (int p = 0; p < enemies.size(); p++) {
-                    if (!enemies.get(p).isInMap()) { // 有坦克还没有出去
-                        isOk = -1;
-                        break;
-                    }
+                int r;
+
+
+                data.setEnemyTankNum(data.getEnemyTankNum() - 1);
+                r = (int) (Math.random() * 5); // 随机选择三个位置中的一个
+                enemies.remove(enemy); // 敌人坦克死亡后马上产生一个新的敌人坦克
+                if (data.getEnemyTankNum() >= 5) { // 如果还有敌人坦克，刚开始时面板上就创建了3个，所以大于等于3
+                    EnemyTank enemyTank = new EnemyTank((r) * 140 + 20,
+                            -20, Tank.SOUTH); // 创建一个敌人坦克对象
+                    enemyTank.setLocation(r);
+                    enemyTank.setActivate(Boolean.TRUE);
+                    enemies.add(enemyTank); // 将该坦克加入敌人坦克容器中
                 }
-                if (isOk == 0) { // 所有坦克都已经在地图中了
-                    data.setEnemyTankNum(data.getEnemyTankNum() - 1);
-                    r = (int) (Math.random() * 5); // 随机选择三个位置中的一个
-                    enemies.remove(enemy); // 敌人坦克死亡后马上产生一个新的敌人坦克
-                    if (data.getEnemyTankNum() >= 5) { // 如果还有敌人坦克，刚开始时面板上就创建了3个，所以大于等于3
-                        EnemyTank enemyTank = new EnemyTank((r) * 140 + 20,
-                                -20, Tank.SOUTH); // 创建一个敌人坦克对象
-                        enemyTank.setLocation(r);
-                        enemies.add(enemyTank); // 将该坦克加入敌人坦克容器中
-                    }
-                    break;
-                }
+                break;
+
             }
         }
         // 清除死亡的炸弹
@@ -393,22 +384,23 @@ public class Control {
      */
     public void nextGame(GameResource resource) {
         RealTimeGameData data = context.getGameData();
-        context.setMapByLevel(data.getLevel());
+
+        resource.setMap(LevelEnum.getByLevel(data.getLevel()).getMap());
 
         for (int i = 0; i < 5; i++) {
             EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, Tank.SOUTH); // 创建一个敌人坦克对象
+            enemy.setActivate(Boolean.TRUE);
             enemy.setLocation(i);
             resource.getEnemies().add(enemy); // 将该坦克加入敌人坦克容器中 //将该子弹加入该坦克的子弹容器中
         }
         data.setEnemyTankNum(8);
         for (int i = 0; i < resource.getMyTanks().size(); i++) {
             MyTank myTank = resource.getMyTanks().get(i);
+            myTank.setActivate(Boolean.TRUE);
             myTank.setX(300);
             myTank.setY(620);
         }
     }
-
-
 
 
     /**
@@ -487,7 +479,7 @@ public class Control {
     /**
      * 游戏没开始时的欢迎图片上的字体移动
      */
-    public void fontMove(GameResource resource, GamePanel panel) {
+    public void fontMove(GamePanel panel) {
         RealTimeGameData data = context.getGameData();
         int ky = data.getKy();
         if (ky > 0 && ky != 21)
