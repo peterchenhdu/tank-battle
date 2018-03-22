@@ -118,8 +118,7 @@ public class Control {
      * @param enemies 敌人坦克容量
      * @param map     地图对象
      */
-    public void judgeOverlap(Vector<MyTank> myTanks, Vector<EnemyTank> enemies,
-                             Map map) {
+    public void judgeOverlap(Vector<MyTank> myTanks, Vector<EnemyTank> enemies, Map map) {
         Vector<Brick> bricks = map.getBricks();
         Vector<Iron> irons = map.getIrons();
         Vector<Water> waters = map.getWaters();
