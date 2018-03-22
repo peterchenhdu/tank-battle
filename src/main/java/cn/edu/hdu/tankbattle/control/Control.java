@@ -40,7 +40,7 @@ public class Control {
 
     private Boolean isHitting(Bullet bullet, Stuff stuff) {
         return (Math.abs(bullet.getX() - stuff.getX()) <= (stuff.getWidth() + bullet.getWidth()) / 2 &&
-            Math.abs(bullet.getY() - stuff.getY()) <= (stuff.getWidth() + bullet.getHeight()) / 2);
+                Math.abs(bullet.getY() - stuff.getY()) <= (stuff.getWidth() + bullet.getHeight()) / 2);
     }
 
     private Boolean isHitting(Bullet bullet1, Bullet bullet2) {
@@ -70,59 +70,43 @@ public class Control {
                     enemyTank.setMyTankDirect(myTank.getDirect()); // 设置敌人坦克的“我的坦克”位置
                     enemyTank.findAndKill(myTank, map); // 让敌人坦克能够发现我的坦克并开炮
 
-                    for (int k = 0; k < enemyTank.getBullets().size(); k++) {
-                        Bullet eb = enemyTank.getBullets().get(k); // 从敌人的子弹容器中取出一颗子弹
+                    enemyTank.getBullets().forEach(eb->{
                         if (isHitting(eb, myTank)) { // 判断是否击中我的坦克
                             this.afterShotTank(eb, myTank, bombs); // 击中我的坦克以后
                         }
-                        for (int l = 0; l < map.getBricks().size(); l++) { // 取出每个砖块对象与子弹比较
-                            Brick brick = map.getBricks().get(l);
-                            if (isHitting(eb, brick)) {// 子弹击中砖块
-                                this.afterShotStuff(eb, brick, bombs, enemyTank);// 击中事物
-                            }
-                        }
-                        for (int l = 0; l < map.getIrons().size(); l++) { // 取出没个铁块对象与子弹比较
-                            Iron iron = map.getIrons().get(l);
-                            if (isHitting(eb, iron)) {
-                                this.afterShotStuff(eb, iron, bombs, enemyTank); // 击中事物
-                            }
-                        }
-                    }
 
-                    for (int k = 0; k < myTank.getBullets().size(); k++) {
-                        Bullet mb = myTank.getBullets().get(k); // 从我的子弹容器中取出一颗子弹
-                        for (int t = 0; t < enemyTank.getBullets().size(); t++) {
-                            // 判断是否击中敌人坦克的子弹
-                            if (isHitting(mb, enemyTank.getBullets().get(t))) {
-                                // 子弹死亡、坦克也死亡
-                                mb.setLive(false);
-                                enemyTank.getBullets().get(t).setLive(false);
-                                myTank.getBullets().remove(mb);
-                                enemyTank.getBullets().remove(
-                                        enemyTank.getBullets().get(t));
-                                // 产生爆炸
-                                Bomb bomb = new Bomb(mb.getX(), mb.getY());
-                                bomb.setL(20);
-                                bombs.add(bomb);
-                            }
-                        }
+                        map.getBricks().stream().filter(brick -> isHitting(eb, brick))
+                                .forEach(brick -> afterShotStuff(eb, brick, bombs, enemyTank));
+
+                        map.getIrons().stream().filter(iron -> isHitting(eb, iron))
+                                .forEach(iron -> afterShotStuff(eb, iron, bombs, enemyTank));
+                    });
+
+                    myTank.getBullets().forEach(mb -> {
+                        enemyTank.getBullets().stream().filter(eb -> isHitting(mb, eb))
+                                .forEach(eb -> {
+                                    mb.setLive(false);
+                                    eb.setLive(false);
+                                    //myTank.getBullets().remove(mb);
+                                    //enemyTank.getBullets().remove(eb);
+                                    Bomb bomb = new Bomb(mb.getX(), mb.getY());
+                                    bomb.setL(20);
+                                    bombs.add(bomb);
+                                });
+
                         // 判断是否击中敌人坦克
                         if (isHitting(mb, enemyTank)) { // 判断是否击中敌人的坦克
                             this.afterShotTank(mb, enemyTank, bombs); // 击中以后
                         }
-                        for (int l = 0; l < map.getBricks().size(); l++) { // 取出每个砖块对象与子弹比较
-                            Brick brick = map.getBricks().get(l);
-                            if (isHitting(mb, brick)) {// 子弹击中砖块
-                                this.afterShotStuff(mb, brick, bombs, myTank);
-                            }
-                        }
-                        for (int t = 0; t < map.getIrons().size(); t++) {
-                            Iron iron = map.getIrons().get(t);
-                            if (isHitting(mb, iron)) {// 子弹击中砖块
-                                this.afterShotStuff(mb, iron, bombs, myTank);
-                            }
-                        }
-                    }
+
+                        map.getBricks().stream().filter(brick -> isHitting(mb, brick))
+                                .forEach(brick -> afterShotStuff(mb, brick, bombs, myTank));
+
+                        map.getIrons().stream().filter(iron -> isHitting(mb, iron))
+                                .forEach(iron -> afterShotStuff(mb, iron, bombs, myTank));
+                    });
+
+
                 })
         );
     }
