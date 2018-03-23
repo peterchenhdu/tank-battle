@@ -59,10 +59,9 @@ public class UpdateTask implements Runnable {
                     control.cleanAndCreate(resource.getMyTanks(),
                             resource.getEnemies(), resource.getMap(),
                             resource.getBombs()); // 从容器中移除死亡的对象
-                    control.judge(resource.getMyTanks(), resource.getEnemies(),
-                            resource.getMap(), resource.getBombs()); // 判断子弹是否击中坦克
-                    control.judgeOverlap(resource.getMyTanks(),
-                            resource.getEnemies(), resource.getMap()); // 判断坦克间是否出现重叠
+                    control.refreshState();
+                    control.doBulletEvent();
+                    control.doOverlapJudge(); // 判断坦克间是否出现重叠
                     control.myTankEvent(resource);
 
                 }

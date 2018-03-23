@@ -48,31 +48,44 @@ public class Control {
                 Math.abs(bullet1.getY() - bullet2.getY()) <= bullet1.getHeight());
     }
 
-    /**
-     * 判断子弹击中情况 坦克属性初始化等
-     *
-     * @param myTanks 我的坦克容器
-     * @param enemies 敌人坦克容器
-     * @param map     地图对象
-     * @param bombs   爆炸容器
-     * @return 无
-     */
-    public void judge(Vector<MyTank> myTanks, Vector<EnemyTank> enemies, Map map, Vector<Bomb> bombs) {
-        RealTimeGameData data = context.getGameData();
 
-        if (data.getMyTankNum() == 0) {
+    public void refreshState(){
+        GameResource resource = context.getGameData().getGameResource();
+        Vector<EnemyTank> enemies = resource.getEnemies();
+        Vector<MyTank> myTanks = resource.getMyTanks();
+
+        if(!myTanks.isEmpty()){
+            enemies.forEach(enemyTank -> {
+                enemyTank.setMyTankDirect(myTanks.get(0).getDirect());
+            });
+        }
+
+
+    }
+
+    /**
+     * Bullets Event...
+     */
+    public void doBulletEvent() {
+        GameResource resource = context.getGameData().getGameResource();
+
+        Vector<MyTank> myTanks = resource.getMyTanks();
+        Vector<EnemyTank> enemies = resource.getEnemies();
+        Vector<Bomb> bombs = resource.getBombs();
+        Map map = resource.getMap();
+
+        if (myTanks.isEmpty()) {
             enemies.forEach(enemyTank -> enemyTank.setShot(false));
         }
 
         myTanks.forEach(myTank ->
                 enemies.forEach(enemyTank -> {
 
-                    enemyTank.setMyTankDirect(myTank.getDirect()); // 设置敌人坦克的“我的坦克”位置
                     enemyTank.findAndKill(myTank, map); // 让敌人坦克能够发现我的坦克并开炮
 
-                    enemyTank.getBullets().forEach(eb->{
-                        if (isHitting(eb, myTank)) { // 判断是否击中我的坦克
-                            this.afterShotTank(eb, myTank, bombs); // 击中我的坦克以后
+                    enemyTank.getBullets().forEach(eb -> {
+                        if (isHitting(eb, myTank)) {
+                            this.afterShotTank(eb, myTank, bombs);
                         }
 
                         map.getBricks().stream().filter(brick -> isHitting(eb, brick))
@@ -87,16 +100,14 @@ public class Control {
                                 .forEach(eb -> {
                                     mb.setLive(false);
                                     eb.setLive(false);
-                                    //myTank.getBullets().remove(mb);
-                                    //enemyTank.getBullets().remove(eb);
                                     Bomb bomb = new Bomb(mb.getX(), mb.getY());
                                     bomb.setL(20);
                                     bombs.add(bomb);
                                 });
 
-                        // 判断是否击中敌人坦克
-                        if (isHitting(mb, enemyTank)) { // 判断是否击中敌人的坦克
-                            this.afterShotTank(mb, enemyTank, bombs); // 击中以后
+
+                        if (isHitting(mb, enemyTank)) {
+                            this.afterShotTank(mb, enemyTank, bombs);
                         }
 
                         map.getBricks().stream().filter(brick -> isHitting(mb, brick))
@@ -112,44 +123,34 @@ public class Control {
     }
 
     /**
-     * 判断是否重叠
-     *
-     * @param myTanks 我的坦克容量
-     * @param enemies 敌人坦克容量
-     * @param map     地图对象
+     * doOverlapJudge
      */
-    public void judgeOverlap(Vector<MyTank> myTanks, Vector<EnemyTank> enemies, Map map) {
+    public void doOverlapJudge() {
+        GameResource resource = context.getGameData().getGameResource();
+        Vector<MyTank> myTanks = resource.getMyTanks();
+        Vector<EnemyTank> enemies = resource.getEnemies();
+        Map map = resource.getMap();
         Vector<Brick> bricks = map.getBricks();
         Vector<Iron> irons = map.getIrons();
         Vector<Water> waters = map.getWaters();
-        for (int i = 0; i < myTanks.size(); i++) {
-            MyTank myTank = myTanks.get(i);
-            // 先初始化，让我的坦克不重叠
+
+        myTanks.stream().forEach(myTank-> {
             myTank.setOverlapNo(false);
             myTank.setOverlapYes(false);
 
             if (myTank.isOverlap_(enemies)) { // 判断我的坦克是否与敌人坦克重叠
                 myTank.setOverlapYes(true);
             }
-            for (int j = 0; j < bricks.size(); j++) { // 判断我的坦克是否与砖块重叠
-                if (myTanks.get(i).Overlap(bricks.get(j), 20 + 10)) {
-                    myTanks.get(i).setOverlapYes(true);
-                    break;
-                }
-            }
-            for (int j = 0; j < irons.size(); j++) { // 判断我的坦克是否与铁块重叠
-                if (myTanks.get(i).Overlap(irons.get(j), 20 + 10)) {
-                    myTanks.get(i).setOverlapNo(true);
-                    break;
-                }
-            }
-            for (int j = 0; j < waters.size(); j++) { // 判断我的坦克是否与河流重叠
-                if (myTanks.get(i).Overlap(waters.get(j), 20 + 10)) {
-                    myTanks.get(i).setOverlapNo(true);
-                    break;
-                }
-            }
-        }
+
+            bricks.stream().filter(brick->myTank.Overlap(brick, 20 + 10))
+                    .forEach(brick->myTank.setOverlapYes(true));
+
+            irons.stream().filter(iron->myTank.Overlap(iron, 20 + 10))
+                    .forEach(iron->myTank.setOverlapNo(true));
+
+            waters.stream().filter(water->myTank.Overlap(water, 20 + 10))
+                    .forEach(water->myTank.setOverlapNo(true));
+        });
 
         for (int i = 0; i < enemies.size(); i++) {
             EnemyTank enemyTank = enemies.get(i);
