@@ -134,7 +134,7 @@ public class Control {
         Vector<Iron> irons = map.getIrons();
         Vector<Water> waters = map.getWaters();
 
-        myTanks.stream().forEach(myTank-> {
+        myTanks.stream().forEach(myTank -> {
             myTank.setOverlapNo(false);
             myTank.setOverlapYes(false);
 
@@ -142,61 +142,60 @@ public class Control {
                 myTank.setOverlapYes(true);
             }
 
-            bricks.stream().filter(brick->myTank.Overlap(brick, 20 + 10))
-                    .forEach(brick->myTank.setOverlapYes(true));
+            bricks.stream().filter(brick -> myTank.Overlap(brick, 20 + 10))
+                    .forEach(brick -> myTank.setOverlapYes(true));
 
-            irons.stream().filter(iron->myTank.Overlap(iron, 20 + 10))
-                    .forEach(iron->myTank.setOverlapNo(true));
+            irons.stream().filter(iron -> myTank.Overlap(iron, 20 + 10))
+                    .forEach(iron -> myTank.setOverlapNo(true));
 
-            waters.stream().filter(water->myTank.Overlap(water, 20 + 10))
-                    .forEach(water->myTank.setOverlapNo(true));
+            waters.stream().filter(water -> myTank.Overlap(water, 20 + 10))
+                    .forEach(water -> myTank.setOverlapNo(true));
         });
 
-        for (int i = 0; i < enemies.size(); i++) {
-            EnemyTank enemyTank = enemies.get(i);
-            // 先初始化，让敌人坦克不重叠，前面无东西挡住
+        enemies.stream().forEach(enemyTank -> {
             enemyTank.setOverlapNo(false);
             enemyTank.setOverlapYes(false);
-            enemyTank.setFrontInfomation(-1); // 没有东西挡住
+            enemyTank.setFrontInfomation(-1);
 
             if (enemyTank.isOverlap_(enemies, myTanks)) {
                 enemyTank.setOverlapYes(true);
             }
 
-            for (int j = 0; j < bricks.size(); j++) {
-                if (enemyTank.Overlap(bricks.get(j), 20 + 10)) {
-                    // 判断前面挡住砖块是否能被子弹打掉，能的话，就开炮
-                    if ((Math.abs(bricks.get(j).getX() - enemyTank.getX()) <= 10 && (enemyTank
-                            .getDirect() == EnemyTank.SOUTH || enemyTank
-                            .getDirect() == EnemyTank.NORTH))
-                            || (Math.abs(bricks.get(j).getY()
-                            - enemyTank.getY()) <= 10 && (enemyTank
-                            .getDirect() == EnemyTank.EAST || enemyTank
-                            .getDirect() == EnemyTank.WEST))) {
-                        enemyTank.setFrontInfomation(Stuff.BRICK);
-                        enemyTank.setOverlapYes(true);
-                        enemyTank.setShot(true);
-                    } else {
-                        enemyTank.setOverlapNo(true);
-                    }
-                }
-            }
-            for (int j = 0; j < irons.size(); j++) {
-                if (enemyTank.Overlap(irons.get(j), 20 + 10)) {
-                    enemyTank.setFrontInfomation(Stuff.IRON); // 挡住的东西是铁块
-                    enemyTank.setOverlapNo(true);
-                    break;
-                }
-            }
 
-            for (int j = 0; j < waters.size(); j++) {
-                if (enemyTank.Overlap(waters.get(j), 20 + 10)) {
-                    enemyTank.setFrontInfomation(Stuff.WATER);
-                    enemyTank.setOverlapNo(true);
-                    break;
-                }
-            }
-        }
+            bricks.stream().filter(brick -> enemyTank.Overlap(brick, 20 + 10))
+                    .forEach(brick -> {
+                        if ((Math.abs(brick.getX() - enemyTank.getX()) <= 10 && (enemyTank
+                                .getDirect() == EnemyTank.SOUTH || enemyTank
+                                .getDirect() == EnemyTank.NORTH))
+                                || (Math.abs(brick.getY()
+                                - enemyTank.getY()) <= 10 && (enemyTank
+                                .getDirect() == EnemyTank.EAST || enemyTank
+                                .getDirect() == EnemyTank.WEST))) {
+                            enemyTank.setFrontInfomation(Stuff.BRICK);
+                            enemyTank.setOverlapYes(true);
+                            enemyTank.setShot(true);
+                        } else {
+                            enemyTank.setOverlapNo(true);
+                        }
+
+                    });
+
+            irons.stream().filter(iron -> enemyTank.Overlap(iron, 20 + 10))
+                    .forEach(iron -> {
+                        enemyTank.setFrontInfomation(Stuff.IRON);
+                        enemyTank.setOverlapNo(true);
+                    });
+
+            waters.stream().filter(water -> enemyTank.Overlap(water, 20 + 10))
+                    .forEach(water -> {
+                        enemyTank.setOverlapNo(true);
+                        enemyTank.setOverlapNo(true);
+                    });
+
+        });
+
+
+
     }
 
     /**
