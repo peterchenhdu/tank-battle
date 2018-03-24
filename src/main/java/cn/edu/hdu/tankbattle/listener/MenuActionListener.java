@@ -71,7 +71,17 @@ public class MenuActionListener implements ActionListener {
                 if (gameData.isStop()) {
                     // 先恢复
                     commond.gameEventStop(resource);
-                } else {
+                }
+
+                int select = JOptionPane.showConfirmDialog(null,
+                        "确认重来", "选择确认",
+                        JOptionPane.OK_CANCEL_OPTION);
+                if (select == JOptionPane.OK_OPTION) {
+                    if (gameData.isStart()) {
+                        // 恢复游戏
+                        commond.gameEventStop(resource);
+                    }
+                    context.startLevel(gameData.getLevel());
                 }
             }
         } else if ("first".equals(e.getActionCommand())) {
@@ -87,9 +97,7 @@ public class MenuActionListener implements ActionListener {
                         // 恢复游戏
                         commond.gameEventStop(resource);
                     }
-                    context.startGame();
-                    gameData.setLevel(1);
-                    //this.setVisible(true);
+                    context.startLevel(1);
                 } else {
                     if (gameData.isStart()) {
                         // 恢复游戏
@@ -113,9 +121,7 @@ public class MenuActionListener implements ActionListener {
                         // 恢复游戏
                         commond.gameEventStop(resource);
                     }
-                    context.startGame();
-                    gameData.setLevel(2);
-                    //this.setVisible(true);
+                    context.startLevel(2);
                 } else {
                     if (gameData.isStart()) {
                         // 恢复游戏
@@ -139,9 +145,8 @@ public class MenuActionListener implements ActionListener {
                         // 恢复游戏
                         commond.gameEventStop(resource);
                     }
-                    context.startGame();
-                    gameData.getGameResource().setMap(LevelEnum.getByLevel(3).getMap());
-                    gameData.setLevel(3);
+                    context.startLevel(3);
+
                     //this.setVisible(true);
                 } else {
                     if (gameData.isStart()) {
@@ -166,9 +171,8 @@ public class MenuActionListener implements ActionListener {
                         // 恢复游戏
                         commond.gameEventStop(resource);
                     }
-                    context.startGame();
-                    gameData.setLevel(4);
-                    //this.setVisible(true);
+                    context.startLevel(4);
+
                 } else {
                     if (gameData.isStart()) {
                         // 恢复游戏
@@ -192,9 +196,7 @@ public class MenuActionListener implements ActionListener {
                         // 恢复游戏
                         commond.gameEventStop(resource);
                     }
-                    context.startGame();
-                    gameData.setLevel(5);
-                    //this.setVisible(true);
+                    context.startLevel(5);
                 } else {
                     if (gameData.isStart()) {
                         // 恢复游戏

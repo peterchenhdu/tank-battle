@@ -27,6 +27,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Vector;
 
 /**
  * Class Description...
@@ -72,7 +73,7 @@ public class GameContext {
     public void init() {
         logger.info("GameContext...");
 
-        initGameData();
+        initGameData(1);
 
 
         //创建Frame
@@ -98,8 +99,7 @@ public class GameContext {
     }
 
 
-
-    public void initGameData() {
+    public void initGameData(int level) {
 
         GameResource resource = new GameResource();
 
@@ -116,7 +116,7 @@ public class GameContext {
             resource.getMyTanks().add(myTank);
         }
 
-        resource.setMap(LevelEnum.getByLevel(1).getMap());
+        resource.setMap(LevelEnum.getByLevel(level).getMap());
 
         gameData = new RealTimeGameData();
         gameData.setGameResource(resource);
@@ -125,8 +125,35 @@ public class GameContext {
         gameData.setMyBulletNum(GameConstants.MY_TANK_INIT_BULLET_NUM);
         gameData.setBeKilled(0);
         gameData.setDy(600);
+        gameData.setLevel(level);
+        logger.info("init Game Data...");
+    }
 
 
+    public void reset(int level){
+        GameResource resource = gameData.getGameResource();
+        resource.reset();
+
+        for (int i = 0; i < GameConstants.INIT_ENEMY_TANK_IN_MAP_NUM; i++) {
+            EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, Tank.SOUTH);
+            enemy.setLocation(i);
+            resource.getEnemies().add(enemy);
+        }
+        for (int i = 0; i < 1; i++) {
+            MyTank myTank = new MyTank(300, 620, Tank.NORTH);
+            resource.getMyTanks().add(myTank);
+        }
+
+        resource.setMap(LevelEnum.getByLevel(level).getMap());
+
+        gameData = new RealTimeGameData();
+        gameData.setGameResource(resource);
+        gameData.setEnemyTankNum(GameConstants.INIT_ENEMY_TANK_NUM);
+        gameData.setMyTankNum(GameConstants.INIT_MY_TANK_NUM);
+        gameData.setMyBulletNum(GameConstants.MY_TANK_INIT_BULLET_NUM);
+        gameData.setBeKilled(0);
+        gameData.setDy(600);
+        gameData.setLevel(level);
         logger.info("init Game Data...");
     }
 
@@ -135,6 +162,11 @@ public class GameContext {
         gameData.setStart(Boolean.TRUE);
         gameData.getGameResource().getEnemies().forEach(t -> t.setActivate(Boolean.TRUE));
         gameData.getGameResource().getMyTanks().forEach(t -> t.setActivate(Boolean.TRUE));
+    }
+
+    public void startLevel(int level) {
+        reset(level);
+        this.startGame();
     }
 
     public GameFrame getGameFrame() {

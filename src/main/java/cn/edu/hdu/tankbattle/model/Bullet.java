@@ -5,6 +5,7 @@
 package cn.edu.hdu.tankbattle.model;
 
 import cn.edu.hdu.tankbattle.constant.GameConstants;
+import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
 
 /**
  * Bullet...
@@ -83,7 +84,7 @@ public class Bullet implements Runnable {
      * 子弹向前移动
      */
     public void bulletRun() {
-        while (true) {
+        while (isLive) {
             switch (direct) { // 选择子弹的方向
                 case NORTH:
                     this.setY(this.getY() - this.getSpeed());
@@ -98,16 +99,13 @@ public class Bullet implements Runnable {
                     this.setX(this.getX() + this.getSpeed());
                     break;
             }
+
             if (x < 5 || x > GameConstants.GAME_PANEL_WIDTH - 5 || y < 5
                     || y > GameConstants.GAME_PANEL_HEIGHT - 5) { // 判断子弹是否碰到边界
                 this.isLive = false; // 子弹死亡
-                break;
             }
-            try {
-                Thread.sleep(36); // 每隔25毫秒移动一次
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
+            GameTimeUnit.sleepMillis(36);
         }
     }
 
