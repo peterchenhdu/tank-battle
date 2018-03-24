@@ -5,10 +5,9 @@
 package cn.edu.hdu.tankbattle.listener;
 
 import cn.edu.hdu.tankbattle.context.GameContext;
-import cn.edu.hdu.tankbattle.control.Control;
+import cn.edu.hdu.tankbattle.service.GameEventService;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.dto.GameResource;
-import cn.edu.hdu.tankbattle.model.MyTank;
 import cn.edu.hdu.tankbattle.model.Tank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,7 +24,7 @@ import java.awt.event.KeyListener;
 @Component
 public class MainFrameKeyListener implements KeyListener {
     @Autowired
-    private Control control;
+    private GameEventService control;
 
     @Autowired
     private GameContext context;

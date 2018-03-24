@@ -2,7 +2,7 @@
  * Copyright (c) 2011-2025 PiChen.
  */
 
-package cn.edu.hdu.tankbattle.control;
+package cn.edu.hdu.tankbattle.service;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -11,7 +11,9 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
+import cn.edu.hdu.tankbattle.constant.GameConstants;
 import cn.edu.hdu.tankbattle.context.GameContext;
+import cn.edu.hdu.tankbattle.dto.GameResource;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.model.Bomb;
 import cn.edu.hdu.tankbattle.model.Brick;
@@ -35,8 +37,9 @@ import org.springframework.stereotype.Component;
  * @since 2011-02-10 19:29
  */
 @Component
-public class Drawer {
-
+public class PaintService {
+    @Autowired
+    private GameContext context;
     /**
      * 画出东西（包括坦克、障碍物。。）
      *
@@ -414,5 +417,68 @@ public class Drawer {
                     400, 40, 40, tgp);
         }
         g.drawString("我的坦克子弹数目:" + data.getMyBulletNum(), 620, 500);
+    }
+
+
+    public void rePaintPanel(GamePanel panel, Graphics g) {
+
+        RealTimeGameData data = context.getGameData();
+        GameResource resource = data.getGameResource();
+        if (data.isStart()) {
+            g.setColor(Color.black);
+            g.fillRect(0, 0, GameConstants.GAME_PANEL_WIDTH, GameConstants.GAME_PANEL_HEIGHT);
+            g.fillRect(280, 600, 40, 40);
+            this.drawMap(g, resource.getMap(), panel);
+            this.drawMyTank(g, resource.getMyTanks(), panel); // 画出我的坦克（包括子弹）
+            this.drawEnemyTank(g, resource.getEnemies(), panel); // 画出敌人坦克（包括子弹）
+            this.drawBomb(g, resource.getBombs(), panel); // 画出爆炸
+            this.drawRight(g, panel, data);
+
+            if (data.getMyTankNum() == 0) { // 如果我的坦克数量为0
+                g.drawImage(TankGameImages.gameOver, 250, data.getDy(), 100,
+                        100, panel);
+            }
+
+            if (data.getEnemyTankNum() == 0) { // 如果敌人坦克的数量为0
+                g.drawImage(TankGameImages.gameWin, 250, data.getDy(), 100,
+                        100, panel);
+            }
+            if (data.getDy() == 250) {
+                g.fillRect(0, 0, 800, 600);
+                g.setColor(Color.BLUE);
+                if (data.getMyTankNum() == 0) {
+                    g.drawString("失败了！！！", 300, 220);
+                } else {
+                    g.drawString("挑战成功，请稍等...", 300, 220);
+                }
+                g.drawString(
+                        ("敌人坦克死亡数量:" + (8 - data.getEnemyTankNum())),
+                        300, 260);
+                g.drawString("我的坦克死亡总数量:" + data.getBeKilled(), 300,
+                        280);
+                g.drawString(
+                        "我的炮弹消耗总数量:"
+                                + (GameConstants.MY_TANK_INIT_BULLET_NUM - data
+                                .getMyBulletNum()), 300, 300);
+                g.drawString("敌人坦克剩余数量:" + data.getEnemyTankNum(), 300,
+                        320);
+                g.drawString("我的坦克剩余总数量:" + data.getMyTankNum(), 300,
+                        340);
+                g.drawString("我的炮弹剩余总数量:" + data.getMyBulletNum(), 300,
+                        360);
+            }
+        } else {
+            g.drawImage(TankGameImages.startImage, 0, 0, 800, 700, panel);
+            g.drawImage(TankGameImages.font, 0, data.getKy(), panel);
+            if (data.isIconSmile()) {
+                g.drawImage(TankGameImages.yct_smile1, data.getKx(), 45,
+                        panel);
+                data.setIconSmile(false);
+            } else {
+                g.drawImage(TankGameImages.yct_smile2, data.getKx(), 45,
+                        panel);
+                data.setIconSmile(true);
+            }
+        }
     }
 }

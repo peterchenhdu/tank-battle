@@ -4,7 +4,7 @@
 
 package cn.edu.hdu.tankbattle.listener;
 
-import cn.edu.hdu.tankbattle.control.CommandService;
+import cn.edu.hdu.tankbattle.service.CommandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

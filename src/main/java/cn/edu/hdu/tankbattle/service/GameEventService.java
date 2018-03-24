@@ -2,9 +2,8 @@
  * Copyright (c) 2011-2025 PiChen.
  */
 
-package cn.edu.hdu.tankbattle.control;
+package cn.edu.hdu.tankbattle.service;
 
-import java.util.ListIterator;
 import java.util.Vector;
 
 import cn.edu.hdu.tankbattle.context.GameContext;
@@ -22,6 +21,7 @@ import cn.edu.hdu.tankbattle.model.Tank;
 import cn.edu.hdu.tankbattle.model.Water;
 import cn.edu.hdu.tankbattle.model.map.Map;
 import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
+import cn.edu.hdu.tankbattle.thread.executor.TaskExecutor;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,11 +33,12 @@ import org.springframework.stereotype.Component;
  * @since 2011-02-10 19:29
  */
 @Component
-public class Control {
+public class GameEventService {
 
     @Autowired
     private GameContext context;
-
+    @Autowired
+    private TaskExecutor threadTaskExecutor;
 
     private Boolean isHitting(Bullet bullet, Stuff stuff) {
         return (Math.abs(bullet.getX() - stuff.getX()) <= (stuff.getWidth() + bullet.getWidth()) / 2 &&
@@ -251,6 +252,7 @@ public class Control {
                             -20, Tank.SOUTH); // 创建一个敌人坦克对象
                     enemyTank.setLocation(r);
                     enemyTank.setActivate(Boolean.TRUE);
+                    threadTaskExecutor.startSingleTankTask(enemyTank);
                     enemies.add(enemyTank); // 将该坦克加入敌人坦克容器中
                 }
                 break;

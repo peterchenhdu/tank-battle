@@ -9,7 +9,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 
-import cn.edu.hdu.tankbattle.control.PanelPainter;
+import cn.edu.hdu.tankbattle.service.PaintService;
 import org.apache.commons.logging.LogFactory;
 
 /**
@@ -22,11 +22,11 @@ public class GamePanel extends JPanel {
 
 
     private static final long serialVersionUID = 2933760710140135907L;
-    private PanelPainter painter;
+    private PaintService paintService;
 
-    public GamePanel(PanelPainter painter) {
+    public GamePanel(PaintService paintService) {
         super();
-        this.painter = painter;
+        this.paintService = paintService;
     }
 
     /*
@@ -35,7 +35,7 @@ public class GamePanel extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        this.painter.paint(this, g);
+        this.paintService.rePaintPanel(this, g);
         LogFactory.getLog(this.getClass()).debug("paint...");
     }
 }

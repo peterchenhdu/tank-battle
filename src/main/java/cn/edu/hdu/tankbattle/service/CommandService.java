@@ -2,7 +2,7 @@
  * Copyright (c) 2011-2025 PiChen.
  */
 
-package cn.edu.hdu.tankbattle.control;
+package cn.edu.hdu.tankbattle.service;
 
 import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.dto.GameResource;
@@ -22,7 +22,7 @@ import javax.swing.*;
 @Service
 public class CommandService {
     @Autowired
-    private Control commond;
+    private GameEventService commond;
 
     @Autowired
     private GameContext context;

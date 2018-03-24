@@ -5,8 +5,8 @@
 package cn.edu.hdu.tankbattle.context;
 
 import cn.edu.hdu.tankbattle.constant.GameConstants;
-import cn.edu.hdu.tankbattle.control.Control;
-import cn.edu.hdu.tankbattle.control.PanelPainter;
+import cn.edu.hdu.tankbattle.service.GameEventService;
+import cn.edu.hdu.tankbattle.service.PaintService;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.enums.LevelEnum;
 import cn.edu.hdu.tankbattle.model.EnemyTank;
@@ -61,10 +61,10 @@ public class GameContext {
     @Autowired
     private MenuActionListener menuActionListener;
     @Autowired
-    private Control control;
+    private GameEventService control;
 
     @Autowired
-    private PanelPainter painter;
+    private PaintService paintService;
     @Autowired
     private ThreadPoolTaskExecutor taskExecutor;
     @Autowired
@@ -82,7 +82,7 @@ public class GameContext {
         //创建MenuBar
         this.tankBattleMenuBar = new TankBattleMenuBar(menuActionListener);
         //创建Panel
-        this.gamePanel = new GamePanel(painter);
+        this.gamePanel = new GamePanel(paintService);
 
         //设置Frame的MenuBar
         this.gameFrame.setJMenuBar(this.tankBattleMenuBar);
@@ -95,7 +95,7 @@ public class GameContext {
 
         logger.info("execute UpdateTask...");
         taskExecutor.execute(new UpdateTask(this));
-        threadTaskExecutor.startEnemyTankThreads();
+
         logger.info("game start success...");
 
     }
@@ -128,6 +128,7 @@ public class GameContext {
         gameData.setBeKilled(0);
         gameData.setDy(600);
         gameData.setLevel(level);
+        threadTaskExecutor.startEnemyTankThreads();
         logger.info("init Game Data...");
     }
 
@@ -156,6 +157,7 @@ public class GameContext {
         gameData.setBeKilled(0);
         gameData.setDy(600);
         gameData.setLevel(level);
+        threadTaskExecutor.startEnemyTankThreads();
         logger.info("init Game Data...");
     }
 
@@ -187,7 +189,7 @@ public class GameContext {
         return gameData;
     }
 
-    public Control getControl() {
+    public GameEventService getControl() {
         return control;
     }
 
