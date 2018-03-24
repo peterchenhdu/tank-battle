@@ -50,12 +50,12 @@ public class Control {
     }
 
 
-    public void refreshState(){
+    public void refreshState() {
         GameResource resource = context.getGameData().getGameResource();
         Vector<EnemyTank> enemies = resource.getEnemies();
         Vector<MyTank> myTanks = resource.getMyTanks();
 
-        if(!myTanks.isEmpty()){
+        if (!myTanks.isEmpty()) {
             enemies.forEach(enemyTank -> {
                 enemyTank.setMyTankDirect(myTanks.get(0).getDirect());
             });
@@ -196,7 +196,6 @@ public class Control {
         });
 
 
-
     }
 
     /**
@@ -212,12 +211,11 @@ public class Control {
         Map map = resource.getMap();
 
 
-
         for (int i = 0; i < myTanks.size(); i++) {
             MyTank myTank = myTanks.get(i);
             Vector<Bullet> mb = myTank.getBullets();
             // 清除我的坦克死亡的子弹
-            mb.removeIf(b->!b.isLive());
+            mb.removeIf(b -> !b.isLive());
 
             // 清除我的死亡的坦克
             if (!myTank.isLive()) {
@@ -237,7 +235,7 @@ public class Control {
             EnemyTank enemy = enemies.get(i);
             Vector<Bullet> eb = enemy.getBullets();
             // 清除敌人坦克的死亡的子弹
-            eb.removeIf(b->!b.isLive());
+            eb.removeIf(b -> !b.isLive());
 
             // 清除死亡的敌人坦克，并创建新的坦克
             if (!enemy.isLive()) {
@@ -261,9 +259,9 @@ public class Control {
         }
 
 
-        bombs.removeIf(bomb->!bomb.isLive());
+        bombs.removeIf(bomb -> !bomb.isLive());
 
-        map.getBricks().removeIf(brick->!brick.isLive());
+        map.getBricks().removeIf(brick -> !brick.isLive());
 
     }
 

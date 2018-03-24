@@ -38,11 +38,11 @@ public class MainFrameKeyListener implements KeyListener {
             control.gameEventStop(resource);
         }
 
-        resource.getMyTanks().forEach(myTank->{
+        resource.getMyTanks().forEach(myTank -> {
             if (!myTank.isLive()) {
                 data.keyPressedDirect(false, false, false, false);
             } else {
-                if ((e.getKeyCode() == KeyEvent.VK_UP) ) {
+                if ((e.getKeyCode() == KeyEvent.VK_UP)) {
                     myTank.setDirect(Tank.NORTH);
                     data.keyPressedDirect(true, false, false, false);
 

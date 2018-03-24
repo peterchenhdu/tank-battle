@@ -264,7 +264,7 @@ public class EnemyTank extends Tank implements Runnable {
     public void enemyGoEast() {
         for (; ; ) {
             GameTimeUnit.sleepMillis(36);
-            if (!this.isOverlapNo()  && !this.isOverlapYes()) {
+            if (!this.isOverlapNo() && !this.isOverlapYes()) {
                 this.goEast();
             }
             if (this.getMyTankLocation() != Tank.EAST) {

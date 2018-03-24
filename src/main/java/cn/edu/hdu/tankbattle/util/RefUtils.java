@@ -36,7 +36,6 @@ public class RefUtils {
     }
 
 
-
     private RefUtils() {
         throw new IllegalStateException("Utility class");
     }

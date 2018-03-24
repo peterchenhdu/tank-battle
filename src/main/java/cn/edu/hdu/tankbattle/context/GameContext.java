@@ -130,7 +130,7 @@ public class GameContext {
     }
 
 
-    public void reset(int level){
+    public void reset(int level) {
         GameResource resource = gameData.getGameResource();
         resource.reset();
 

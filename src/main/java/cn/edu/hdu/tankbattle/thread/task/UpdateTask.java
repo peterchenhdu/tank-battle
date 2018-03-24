@@ -64,7 +64,7 @@ public class UpdateTask implements Runnable {
 
                 }
             } else {
-                if (gameData.getKy() == 21 && gameData.getKx() <= 654){
+                if (gameData.getKy() == 21 && gameData.getKx() <= 654) {
                     gameData.setKx(gameData.getKx() + 2);
                 }
                 control.fontMove(panel);

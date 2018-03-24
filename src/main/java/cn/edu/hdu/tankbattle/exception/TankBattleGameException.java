@@ -11,7 +11,7 @@ package cn.edu.hdu.tankbattle.exception;
  * @since 2018/3/24 10:43
  */
 public class TankBattleGameException extends RuntimeException {
-    public TankBattleGameException(String message){
+    public TankBattleGameException(String message) {
         super(message);
     }
 }
