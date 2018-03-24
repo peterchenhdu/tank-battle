@@ -16,16 +16,16 @@ import java.awt.event.ActionListener;
 public class HelpMenu extends JMenu {
     public HelpMenu(ActionListener listener) {
         super("游戏帮助");
-        JMenuItem gameHelp = new JMenuItem("游戏帮助");
-        JMenuItem aboutGame = new JMenuItem("关于游戏");
+        JMenuItem help = new JMenuItem("游戏帮助");
+        JMenuItem about = new JMenuItem("关于游戏");
 
-        gameHelp.setActionCommand("gameHelp");
-        aboutGame.setActionCommand("aboutGame");
+        help.setActionCommand("help");
+        about.setActionCommand("about");
 
-        gameHelp.addActionListener(listener);
-        aboutGame.addActionListener(listener);
+        help.addActionListener(listener);
+        about.addActionListener(listener);
 
-        this.add(gameHelp);
-        this.add(aboutGame);
+        this.add(help);
+        this.add(about);
     }
 }

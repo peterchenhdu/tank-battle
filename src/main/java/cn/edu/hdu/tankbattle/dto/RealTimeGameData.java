@@ -75,6 +75,14 @@ public class RealTimeGameData {
      */
     private int kx = 0;
 
+
+    public void keyPressedDirect(Boolean up, Boolean down, Boolean left, Boolean right) {
+        this.up = up;
+        this.down = down;
+        this.left = left;
+        this.right = right;
+    }
+
     public int getEnemyTankNum() {
         return enemyTankNum;
     }

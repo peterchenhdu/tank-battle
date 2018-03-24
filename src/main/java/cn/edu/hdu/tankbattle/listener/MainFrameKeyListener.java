@@ -32,59 +32,39 @@ public class MainFrameKeyListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-
         RealTimeGameData data = context.getGameData();
         GameResource resource = data.getGameResource();
-        for (int i = 0; i < resource.getMyTanks().size(); i++) {
-            MyTank myTank = resource.getMyTanks().get(i);
+        if (e.getKeyCode() == KeyEvent.VK_P) { // 暂停
+            control.gameEventStop(resource);
+        }
 
+        resource.getMyTanks().forEach(myTank->{
             if (!myTank.isLive()) {
-                data.setUp(false);
-                data.setDown(false);
-                data.setLeft(false);
-                data.setRight(false);
-            }
+                data.keyPressedDirect(false, false, false, false);
+            } else {
+                if ((e.getKeyCode() == KeyEvent.VK_UP) ) {
+                    myTank.setDirect(Tank.NORTH);
+                    data.keyPressedDirect(true, false, false, false);
 
-            if ((e.getKeyCode() == KeyEvent.VK_UP) && myTank.isLive()) {
-                myTank.setDirect(Tank.NORTH);
-                data.setUp(true);
-                data.setDown(false);
-                data.setLeft(false);
-                data.setRight(false);
-            } else if ((e.getKeyCode() == KeyEvent.VK_DOWN) && myTank.isLive()) {
-                myTank.setDirect(Tank.SOUTH);
-                data.setUp(false);
-                data.setDown(true);
-                data.setLeft(false);
-                data.setRight(false);
-            } else if ((e.getKeyCode() == KeyEvent.VK_LEFT) && myTank.isLive()
-                    && myTank.getY() <= 580) {
-                myTank.setDirect(Tank.WEST);
-                data.setUp(false);
-                data.setDown(false);
-                data.setLeft(true);
-                data.setRight(false);
-            } else if ((e.getKeyCode() == KeyEvent.VK_RIGHT) && myTank.isLive()
-                    && myTank.getY() <= 580) {
-                myTank.setDirect(Tank.EAST);
-                data.setUp(false);
-                data.setDown(false);
-                data.setLeft(false);
-                data.setRight(true);
-            }
-            if (e.getKeyCode() == KeyEvent.VK_X && myTank.isLive()
-                    && myTank.getY() <= 580) {
-                if (myTank.getBullets().size() <= 1
-                        && data.getMyBulletNum() > 0) { // 最多颗子弹
-                    data
-                            .setMyBulletNum(data.getMyBulletNum() - 1);
-                    myTank.shot(myTank); // 这时才会往容器中添加子弹对象
+                } else if ((e.getKeyCode() == KeyEvent.VK_DOWN) && myTank.getY() <= 580) {
+                    myTank.setDirect(Tank.SOUTH);
+                    data.keyPressedDirect(false, true, false, false);
+                } else if ((e.getKeyCode() == KeyEvent.VK_LEFT) && myTank.getY() <= 580) {
+                    myTank.setDirect(Tank.WEST);
+                    data.keyPressedDirect(false, false, true, false);
+                } else if ((e.getKeyCode() == KeyEvent.VK_RIGHT) && myTank.getY() <= 580) {
+                    myTank.setDirect(Tank.EAST);
+                    data.keyPressedDirect(false, false, false, true);
+                }
+                if (e.getKeyCode() == KeyEvent.VK_X && myTank.getY() <= 580) {
+                    if (myTank.getBullets().size() <= 1 && data.getMyBulletNum() > 0) {
+                        data.setMyBulletNum(data.getMyBulletNum() - 1);
+                        myTank.shot(myTank); // 这时才会往容器中添加子弹对象
+                    }
                 }
             }
-            if (e.getKeyCode() == KeyEvent.VK_P) { // 暂停
-                control.gameEventStop(resource);
-            }
-        }
+        });
+
     }
 
     @Override
