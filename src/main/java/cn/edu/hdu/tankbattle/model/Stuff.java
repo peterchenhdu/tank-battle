@@ -36,10 +36,7 @@ public abstract class Stuff {
      * 东西第一个类型属性
      */
     private StuffTypeEnum type;
-    /**
-     * 东西第二个类型属性
-     */
-    private int type2;
+
     /**
      * 是否活着
      */
@@ -116,13 +113,7 @@ public abstract class Stuff {
         this.color = color;
     }
 
-    public int getType2() {
-        return type2;
-    }
 
-    public void setType2(int type2) {
-        this.type2 = type2;
-    }
 
     public void setBlood(int blood) {
         this.blood = blood;

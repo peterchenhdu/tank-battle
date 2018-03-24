@@ -56,7 +56,10 @@ public class Tank extends Stuff {
     private int speedVector;
 
     private Boolean isActivate = Boolean.FALSE;
-
+    /**
+     * 东西第二个类型属性
+     */
+    private int type2;
     /**
      * 坦克的构造方法
      *
@@ -268,5 +271,12 @@ public class Tank extends Stuff {
 
     public void setActivate(Boolean activate) {
         isActivate = activate;
+    }
+    public int getType2() {
+        return type2;
+    }
+
+    public void setType2(int type2) {
+        this.type2 = type2;
     }
 }

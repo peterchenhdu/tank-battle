@@ -55,18 +55,19 @@ public class PaintService {
         switch (stuff.getType()) {
             //枚举的switch，有意思，不需要+StuffTypeEnum.TANK
             case TANK:
+                Tank tank = (Tank)stuff;
                 switch (stuff.getDirect()) { // 判断所朝的方向
                     case NORTH:
-                        this.drawNorth(g, stuff, panel);
+                        this.drawNorth(g, tank, panel);
                         break;
                     case SOUTH:
-                        this.drawSouth(g, stuff, panel);
+                        this.drawSouth(g, tank, panel);
                         break;
                     case WEST:
-                        this.drawWest(g, stuff, panel);
+                        this.drawWest(g, tank, panel);
                         break;
                     case EAST:
-                        this.drawEast(g, stuff, panel);
+                        this.drawEast(g, tank, panel);
                         break;
                 }
                 break;
@@ -204,7 +205,7 @@ public class PaintService {
      * @param tank  东西对象
      * @param panel 被画的那个面板
      */
-    public void drawNorth(Graphics g, Stuff tank, JPanel panel) {
+    public void drawNorth(Graphics g, Tank tank, JPanel panel) {
 
 //        int x = tank.getX();
 //        int y = tank.getY(); //0.设置画笔颜色
@@ -257,7 +258,7 @@ public class PaintService {
      * @param tank  东西对象
      * @param panel 被画的那个面板
      */
-    public void drawSouth(Graphics g, Stuff tank, JPanel panel) {
+    public void drawSouth(Graphics g, Tank tank, JPanel panel) {
 
 //        int x = tank.getX();
 //        int y = tank.getY();
@@ -308,7 +309,7 @@ public class PaintService {
      * @param tank  东西对象
      * @param panel 被画的那个面板
      */
-    public void drawWest(Graphics g, Stuff tank, JPanel panel) {
+    public void drawWest(Graphics g, Tank tank, JPanel panel) {
 
 //        int x = tank.getX();
 //        int y = tank.getY();
@@ -358,7 +359,7 @@ public class PaintService {
      * @param tank  东西对象
      * @param panel 被画的那个面板
      */
-    public void drawEast(Graphics g, Stuff tank, JPanel panel) {
+    public void drawEast(Graphics g, Tank tank, JPanel panel) {
 
 //        int x = tank.getX();
 //        int y = tank.getY();
