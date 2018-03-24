@@ -49,12 +49,15 @@ public class MainFrameKeyListener implements KeyListener {
                 } else if ((e.getKeyCode() == KeyEvent.VK_DOWN) && myTank.getY() <= 580) {
                     myTank.setDirect(Tank.SOUTH);
                     data.keyPressedDirect(false, true, false, false);
+
                 } else if ((e.getKeyCode() == KeyEvent.VK_LEFT) && myTank.getY() <= 580) {
                     myTank.setDirect(Tank.WEST);
                     data.keyPressedDirect(false, false, true, false);
+
                 } else if ((e.getKeyCode() == KeyEvent.VK_RIGHT) && myTank.getY() <= 580) {
                     myTank.setDirect(Tank.EAST);
                     data.keyPressedDirect(false, false, false, true);
+
                 }
                 if (e.getKeyCode() == KeyEvent.VK_X && myTank.getY() <= 580) {
                     if (myTank.getBullets().size() <= 1 && data.getMyBulletNum() > 0) {

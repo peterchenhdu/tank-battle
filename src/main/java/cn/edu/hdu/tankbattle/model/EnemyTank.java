@@ -60,12 +60,8 @@ public class EnemyTank extends Tank implements Runnable {
         this.setColor(Color.red);
         this.setBlood(10);
         this.setSpeedVector(0); // 设为0表示没有保存坦克的速度，按下暂停时速度就不会是0
-        Thread threadTank = new Thread(this); // 创建敌人坦克线程
-        threadTank.start(); // 启动线程
-        // 定时器 每隔0.5秒打一发子弹
-        MyTimerTask task = new MyTimerTask(this);
         timer = new Timer();
-        timer.schedule(task, 0, 500);
+
     }
 
     @Override
@@ -457,23 +453,3 @@ public class EnemyTank extends Tank implements Runnable {
 //    }
 }
 
-/**
- * MyTimerTask...
- *
- * @author chenpi
- * @since 2011-02-10 19:29
- */
-class MyTimerTask extends TimerTask {
-    EnemyTank tank;
-
-    public MyTimerTask(EnemyTank tank) {
-        this.tank = tank;
-    }
-
-    @Override
-    public void run() {
-        if (tank.getSpeedVector() == 0 && tank.isShot() && tank.activate())
-            tank.shot(tank);
-    }
-
-}

@@ -12,7 +12,7 @@ import cn.edu.hdu.tankbattle.enums.LevelEnum;
 import cn.edu.hdu.tankbattle.model.EnemyTank;
 import cn.edu.hdu.tankbattle.model.MyTank;
 import cn.edu.hdu.tankbattle.model.Tank;
-import cn.edu.hdu.tankbattle.model.map.*;
+import cn.edu.hdu.tankbattle.thread.executor.TaskExecutor;
 import cn.edu.hdu.tankbattle.thread.task.UpdateTask;
 import cn.edu.hdu.tankbattle.listener.MainFrameKeyListener;
 import cn.edu.hdu.tankbattle.listener.MenuActionListener;
@@ -27,7 +27,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.Vector;
 
 /**
  * Class Description...
@@ -68,6 +67,8 @@ public class GameContext {
     private PanelPainter painter;
     @Autowired
     private ThreadPoolTaskExecutor taskExecutor;
+    @Autowired
+    private TaskExecutor threadTaskExecutor;
 
     @PostConstruct
     public void init() {
@@ -94,6 +95,7 @@ public class GameContext {
 
         logger.info("execute UpdateTask...");
         taskExecutor.execute(new UpdateTask(this));
+        threadTaskExecutor.startEnemyTankThreads();
         logger.info("game start success...");
 
     }
