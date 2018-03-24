@@ -4,6 +4,7 @@
 
 package cn.edu.hdu.tankbattle.control;
 
+import java.util.ListIterator;
 import java.util.Vector;
 
 import cn.edu.hdu.tankbattle.context.GameContext;
@@ -199,27 +200,25 @@ public class Control {
     }
 
     /**
-     * 移走已经死亡的坦克和子弹，创建要创建的坦克
-     *
-     * @param myTanks 我的坦克容量
-     * @param enemies 敌人坦克容量
-     * @param map     地图对象
-     * @param bombs   爆炸对象
+     * cleanAndCreate
      */
-    public void cleanAndCreate(Vector<MyTank> myTanks, Vector<EnemyTank> enemies,
-                               Map map, Vector<Bomb> bombs) {
-
+    public void cleanAndCreate() {
         RealTimeGameData data = context.getGameData();
+        GameResource resource = data.getGameResource();
+
+        Vector<MyTank> myTanks = resource.getMyTanks();
+        Vector<EnemyTank> enemies = resource.getEnemies();
+        Vector<Bomb> bombs = resource.getBombs();
+        Map map = resource.getMap();
+
+
+
         for (int i = 0; i < myTanks.size(); i++) {
             MyTank myTank = myTanks.get(i);
             Vector<Bullet> mb = myTank.getBullets();
             // 清除我的坦克死亡的子弹
-            for (int j = 0; j < mb.size(); j++) {
-                Bullet b = mb.get(j);
-                if (!b.isLive()) {
-                    mb.remove(b);
-                }
-            }
+            mb.removeIf(b->!b.isLive());
+
             // 清除我的死亡的坦克
             if (!myTank.isLive()) {
                 myTanks.remove(myTank);
@@ -238,12 +237,8 @@ public class Control {
             EnemyTank enemy = enemies.get(i);
             Vector<Bullet> eb = enemy.getBullets();
             // 清除敌人坦克的死亡的子弹
-            for (int j = 0; j < eb.size(); j++) {
-                Bullet b = eb.get(j);
-                if (!b.isLive()) {
-                    eb.remove(b);
-                }
-            }
+            eb.removeIf(b->!b.isLive());
+
             // 清除死亡的敌人坦克，并创建新的坦克
             if (!enemy.isLive()) {
                 enemy.getTimer().cancel(); // 取消定时发射子弹
@@ -264,18 +259,12 @@ public class Control {
 
             }
         }
-        // 清除死亡的炸弹
-        for (int i = 0; i < bombs.size(); i++) {
-            if (!bombs.get(i).isLive()) {
-                bombs.remove(bombs.get(i));
-            }
-        }
-        // 清除死亡的砖块
-        for (int i = 0; i < map.getBricks().size(); i++) {
-            if (!map.getBricks().get(i).isLive()) {
-                map.getBricks().remove(map.getBricks().get(i));
-            }
-        }
+
+
+        bombs.removeIf(bomb->!bomb.isLive());
+
+        map.getBricks().removeIf(brick->!brick.isLive());
+
     }
 
     /**

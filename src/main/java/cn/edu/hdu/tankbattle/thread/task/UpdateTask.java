@@ -56,9 +56,7 @@ public class UpdateTask implements Runnable {
                     }
                 }
                 if (!gameData.isStop() && gameData.getDy() == 600) {
-                    control.cleanAndCreate(resource.getMyTanks(),
-                            resource.getEnemies(), resource.getMap(),
-                            resource.getBombs()); // 从容器中移除死亡的对象
+                    control.cleanAndCreate(); // 从容器中移除死亡的对象
                     control.refreshState();
                     control.doBulletEvent();
                     control.doOverlapJudge(); // 判断坦克间是否出现重叠
