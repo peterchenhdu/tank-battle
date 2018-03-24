@@ -29,6 +29,7 @@ import cn.edu.hdu.tankbattle.model.map.Map;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * Draw...
@@ -36,10 +37,11 @@ import org.springframework.stereotype.Component;
  * @author chenpi
  * @since 2011-02-10 19:29
  */
-@Component
+@Service
 public class PaintService {
     @Autowired
     private GameContext context;
+
     /**
      * 画出东西（包括坦克、障碍物。。）
      *

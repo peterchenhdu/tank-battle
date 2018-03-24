@@ -61,7 +61,7 @@ public class MainFrameKeyListener implements KeyListener {
                 if (e.getKeyCode() == KeyEvent.VK_X && myTank.getY() <= 580) {
                     if (myTank.getBullets().size() <= 1 && data.getMyBulletNum() > 0) {
                         data.setMyBulletNum(data.getMyBulletNum() - 1);
-                        myTank.shot(myTank); // 这时才会往容器中添加子弹对象
+                        control.shot(myTank);
                     }
                 }
             }

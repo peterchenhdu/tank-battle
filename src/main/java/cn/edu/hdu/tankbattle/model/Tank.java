@@ -71,31 +71,6 @@ public class Tank extends Stuff {
         this.setHeight(40);
     }
 
-    /**
-     * 射击，发射一颗子弹
-     *
-     * @param tank 坦克对象，注意，是自己，不是敌人，呵呵
-     */
-    public void shot(Tank tank) {
-        Bullet bullet = null;
-        switch (tank.getDirect()) { // 选择坦克的方向
-            case NORTH:
-                bullet = new Bullet(tank.getX(), tank.getY() - 20, NORTH);
-                break;
-            case SOUTH:
-                bullet = new Bullet(tank.getX(), tank.getY() + 20, SOUTH);
-                break;
-            case WEST:
-                bullet = new Bullet(tank.getX() - 20, tank.getY(), WEST);
-                break;
-            case EAST:
-                bullet = new Bullet(tank.getX() + 20, tank.getY(), EAST);
-                break;
-        }
-        tank.getBullets().add(bullet);
-        Thread t = new Thread(bullet);
-        t.start();
-    }
 
     /**
      * 坦克往北走

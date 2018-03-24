@@ -22,9 +22,11 @@ import cn.edu.hdu.tankbattle.model.Water;
 import cn.edu.hdu.tankbattle.model.map.Map;
 import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
 import cn.edu.hdu.tankbattle.thread.executor.TaskExecutor;
+import cn.edu.hdu.tankbattle.thread.task.BulletRunTask;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.stereotype.Service;
 
 /**
  * Control...
@@ -32,13 +34,17 @@ import org.springframework.stereotype.Component;
  * @author chenpi
  * @since 2011-02-10 19:29
  */
-@Component
+@Service
 public class GameEventService {
 
     @Autowired
     private GameContext context;
     @Autowired
     private TaskExecutor threadTaskExecutor;
+    @Autowired
+    private ThreadPoolTaskExecutor taskExecutor;
+    @Autowired
+    private EnemyTankEventService enemyTankEventService;
 
     private Boolean isHitting(Bullet bullet, Stuff stuff) {
         return (Math.abs(bullet.getX() - stuff.getX()) <= (stuff.getWidth() + bullet.getWidth()) / 2 &&
@@ -83,7 +89,7 @@ public class GameEventService {
         myTanks.forEach(myTank ->
                 enemies.forEach(enemyTank -> {
 
-                    enemyTank.findAndKill(myTank, map); // 让敌人坦克能够发现我的坦克并开炮
+                    enemyTankEventService.findAndKill(enemyTank, myTank, map); // 让敌人坦克能够发现我的坦克并开炮
 
                     enemyTank.getBullets().forEach(eb -> {
                         if (isHitting(eb, myTank)) {
@@ -159,7 +165,7 @@ public class GameEventService {
             enemyTank.setOverlapYes(false);
             enemyTank.setFrontInfomation(-1);
 
-            if (enemyTank.isOverlap_(enemies, myTanks)) {
+            if (enemyTankEventService.isOverlap_(enemyTank, enemies, myTanks)) {
                 enemyTank.setOverlapYes(true);
             }
 
@@ -252,7 +258,7 @@ public class GameEventService {
                             -20, Tank.SOUTH); // 创建一个敌人坦克对象
                     enemyTank.setLocation(r);
                     enemyTank.setActivate(Boolean.TRUE);
-                    threadTaskExecutor.startSingleTankTask(enemyTank);
+                    threadTaskExecutor.startSingleEnemyTankTask(enemyTank);
                     enemies.add(enemyTank); // 将该坦克加入敌人坦克容器中
                 }
                 break;
@@ -468,6 +474,31 @@ public class GameEventService {
             ky = ky + 3;// 最后，字体的图片停留在（0，21）的地方
         }
         data.setKy(ky);
+    }
+
+    /**
+     * 射击，发射一颗子弹
+     *
+     * @param tank 坦克对象，注意，是自己，不是敌人，呵呵
+     */
+    public void shot(Tank tank) {
+        Bullet bullet = null;
+        switch (tank.getDirect()) { // 选择坦克的方向
+            case Tank.NORTH:
+                bullet = new Bullet(tank.getX(), tank.getY() - 20, Tank.NORTH);
+                break;
+            case Tank.SOUTH:
+                bullet = new Bullet(tank.getX(), tank.getY() + 20, Tank.SOUTH);
+                break;
+            case Tank.WEST:
+                bullet = new Bullet(tank.getX() - 20, tank.getY(), Tank.WEST);
+                break;
+            case Tank.EAST:
+                bullet = new Bullet(tank.getX() + 20, tank.getY(), Tank.EAST);
+                break;
+        }
+        tank.getBullets().add(bullet);
+        taskExecutor.execute(new BulletRunTask(bullet));
     }
 
 

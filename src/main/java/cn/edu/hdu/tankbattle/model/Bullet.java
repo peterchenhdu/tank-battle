@@ -4,8 +4,6 @@
 
 package cn.edu.hdu.tankbattle.model;
 
-import cn.edu.hdu.tankbattle.constant.GameConstants;
-import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
 
 /**
  * Bullet...
@@ -13,7 +11,7 @@ import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
  * @author chenpi
  * @since 2011-02-10 19:29
  */
-public class Bullet implements Runnable {
+public class Bullet {
     /**
      * 方向北
      */
@@ -33,7 +31,7 @@ public class Bullet implements Runnable {
     /**
      * 子弹的速度
      */
-    private int speed = 4;
+    private int speed = 6;
     /**
      * 子弹的x坐标
      */
@@ -71,43 +69,9 @@ public class Bullet implements Runnable {
         this.direct = direct;
         this.width = 4;
         this.height = 4;
-        Thread threadBullet = new Thread(this); // 创建子弹线程
-        threadBullet.start();
+
     }
 
-    @Override
-    public void run() {
-        this.bulletRun(); // 子弹开始移动
-    }
-
-    /**
-     * 子弹向前移动
-     */
-    public void bulletRun() {
-        while (isLive) {
-            switch (direct) { // 选择子弹的方向
-                case NORTH:
-                    this.setY(this.getY() - this.getSpeed());
-                    break;
-                case SOUTH:
-                    this.setY(this.getY() + this.getSpeed());
-                    break;
-                case WEST:
-                    this.setX(this.getX() - this.getSpeed());
-                    break;
-                case EAST:
-                    this.setX(this.getX() + this.getSpeed());
-                    break;
-            }
-
-            if (x < 5 || x > GameConstants.GAME_PANEL_WIDTH - 5 || y < 5
-                    || y > GameConstants.GAME_PANEL_HEIGHT - 5) { // 判断子弹是否碰到边界
-                this.isLive = false; // 子弹死亡
-            }
-
-            GameTimeUnit.sleepMillis(36);
-        }
-    }
 
     public int getX() {
         return x;
