@@ -227,7 +227,7 @@ public class GameEventService {
             mb.removeIf(b -> !b.isLive());
 
             // 清除我的死亡的坦克
-            if (!myTank.isLive()) {
+            if (!myTank.getLive()) {
                 myTanks.remove(myTank);
                 data.setMyTankNum(data.getMyTankNum() - 1);
                 data.setBeKilled(data.getBeKilled() + 1);
@@ -247,7 +247,7 @@ public class GameEventService {
             eb.removeIf(b -> !b.isLive());
 
             // 清除死亡的敌人坦克，并创建新的坦克
-            if (!enemy.isLive()) {
+            if (!enemy.getLive()) {
                 enemy.getTimer().cancel(); // 取消定时发射子弹
                 int r;
 
@@ -271,7 +271,7 @@ public class GameEventService {
 
         bombs.removeIf(bomb -> !bomb.isLive());
 
-        map.getBricks().removeIf(brick -> !brick.isLive());
+        map.getBricks().removeIf(brick -> !brick.getLive());
 
     }
 

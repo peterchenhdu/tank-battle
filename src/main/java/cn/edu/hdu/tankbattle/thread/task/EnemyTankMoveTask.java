@@ -159,7 +159,7 @@ public class EnemyTankMoveTask implements Runnable {
                     break;
             }
             GameTimeUnit.sleepMillis(216); // 改变一个方向的话，不要让他很快
-            if (!tank.isLive()) { // 如果坦克死亡的话 该坦克线程结束
+            if (!tank.getLive()) { // 如果坦克死亡的话 该坦克线程结束
                 break;
             }
         }

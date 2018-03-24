@@ -7,7 +7,6 @@ package cn.edu.hdu.tankbattle.model;
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
 
-import java.awt.Color;
 
 /**
  * Stuff...
@@ -19,19 +18,19 @@ public abstract class Stuff {
     /**
      * x坐标
      */
-    private int x;
+    private Integer x;
     /**
      * y坐标
      */
-    private int y;
+    private Integer y;
     /**
      * 宽度
      */
-    private int width;
+    private Integer width;
     /**
      * 长度
      */
-    private int height;
+    private Integer height;
     /**
      * 东西第一个类型属性
      */
@@ -40,45 +39,58 @@ public abstract class Stuff {
     /**
      * 是否活着
      */
-    private boolean isLive = true;
+    private Boolean isLive;
     /**
      * 方向
      */
     private DirectionEnum direct;
     /**
-     * 颜色
-     */
-    private Color color;
-    /**
      * 血量
      */
-    private int blood;
+    private Integer blood;
 
     /**
-     * 东西类构造方法
+     * Stuff
      *
-     * @param x 事物对象的x坐标
-     * @param y 事物对象的y坐标
+     * @param x x
+     * @param y y
      */
-    public Stuff(int x, int y) {
+    public Stuff(Integer x, Integer y) {
         this.x = x;
         this.y = y;
+        this.isLive = Boolean.TRUE;
     }
 
-    public int getX() {
+    public Integer getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(Integer x) {
         this.x = x;
     }
 
-    public int getY() {
+    public Integer getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(Integer y) {
         this.y = y;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
     }
 
     public StuffTypeEnum getType() {
@@ -89,12 +101,12 @@ public abstract class Stuff {
         this.type = type;
     }
 
-    public boolean isLive() {
+    public Boolean getLive() {
         return isLive;
     }
 
-    public void setLive(boolean isLive) {
-        this.isLive = isLive;
+    public void setLive(Boolean live) {
+        isLive = live;
     }
 
     public DirectionEnum getDirect() {
@@ -105,37 +117,11 @@ public abstract class Stuff {
         this.direct = direct;
     }
 
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-
-
-    public void setBlood(int blood) {
-        this.blood = blood;
-    }
-
-    public int getBlood() {
+    public Integer getBlood() {
         return blood;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
+    public void setBlood(Integer blood) {
+        this.blood = blood;
     }
 }

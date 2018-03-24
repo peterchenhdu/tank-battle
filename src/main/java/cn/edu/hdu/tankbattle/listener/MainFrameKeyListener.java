@@ -39,7 +39,7 @@ public class MainFrameKeyListener implements KeyListener {
         }
 
         resource.getMyTanks().forEach(myTank -> {
-            if (!myTank.isLive()) {
+            if (!myTank.getLive()) {
                 data.keyPressedDirect(false, false, false, false);
             } else {
                 if ((e.getKeyCode() == KeyEvent.VK_UP)) {
