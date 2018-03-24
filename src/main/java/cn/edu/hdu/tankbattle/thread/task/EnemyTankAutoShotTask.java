@@ -15,11 +15,11 @@ import java.util.TimerTask;
  * @author chenpi
  * @since 2011-02-10 19:29
  */
-public class BulletShotTask extends TimerTask {
+public class EnemyTankAutoShotTask extends TimerTask {
     EnemyTank tank;
     GameEventService gameEventService;
 
-    public BulletShotTask(EnemyTank tank, GameEventService gameEventService) {
+    public EnemyTankAutoShotTask(EnemyTank tank, GameEventService gameEventService) {
         this.tank = tank;
         this.gameEventService = gameEventService;
     }

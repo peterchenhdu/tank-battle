@@ -15,10 +15,10 @@ import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
  * @author chenpi
  * @since 2018/3/24 20:08
  */
-public class BulletRunTask implements Runnable {
+public class BulletMoveTask implements Runnable {
     private Bullet bullet;
 
-    public BulletRunTask(Bullet bullet) {
+    public BulletMoveTask(Bullet bullet) {
         this.bullet = bullet;
     }
 
@@ -26,16 +26,16 @@ public class BulletRunTask implements Runnable {
     public void run() {
         while (bullet.isLive()) {
             switch (bullet.getDirect()) { // 选择子弹的方向
-                case Bullet.NORTH:
+                case NORTH:
                     bullet.setY(bullet.getY() - bullet.getSpeed());
                     break;
-                case Bullet.SOUTH:
+                case SOUTH:
                     bullet.setY(bullet.getY() + bullet.getSpeed());
                     break;
-                case Bullet.WEST:
+                case WEST:
                     bullet.setX(bullet.getX() - bullet.getSpeed());
                     break;
-                case Bullet.EAST:
+                case EAST:
                     bullet.setX(bullet.getX() + bullet.getSpeed());
                     break;
             }

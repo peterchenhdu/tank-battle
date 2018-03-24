@@ -10,6 +10,7 @@ import java.util.TimerTask;
 import java.util.Vector;
 
 import cn.edu.hdu.tankbattle.constant.GameConstants;
+import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 import cn.edu.hdu.tankbattle.model.map.Map;
 import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
 
@@ -27,11 +28,11 @@ public class EnemyTank extends Tank {
     /**
      * 我的坦克在敌人坦克的相对位置，正北方‘正南方’正西方‘正东方，-1为不知道
      */
-    private int myTankLocation = -1;
+    private DirectionEnum myTankLocation = DirectionEnum.INVALID;
     /**
      * 我的坦克方向
      */
-    private int myTankDirect = Tank.NORTH;
+    private DirectionEnum myTankDirect = DirectionEnum.NORTH;
     /**
      * 定时器
      */
@@ -52,11 +53,11 @@ public class EnemyTank extends Tank {
      * @param y
      * @param direct
      */
-    public EnemyTank(int x, int y, int direct) {
+    public EnemyTank(int x, int y, DirectionEnum direct) {
         super(x, y, direct);
         this.setSpeed(4);
         this.setType2(Tank.ENEMY);
-        this.setDirect(Tank.NORTH);
+        this.setDirect(DirectionEnum.NORTH);
         this.setColor(Color.red);
         this.setBlood(10);
         this.setSpeedVector(0); // 设为0表示没有保存坦克的速度，按下暂停时速度就不会是0
@@ -81,13 +82,6 @@ public class EnemyTank extends Tank {
         this.timer = timer;
     }
 
-    public int getMyTankLocation() {
-        return myTankLocation;
-    }
-
-    public void setMyTankLocation(int myTankLocation) {
-        this.myTankLocation = myTankLocation;
-    }
 
     public boolean isShot() {
         return isShot;
@@ -97,13 +91,20 @@ public class EnemyTank extends Tank {
         this.isShot = isShot;
     }
 
-    public int getMyTankDirect() {
+    public DirectionEnum getMyTankLocation() {
+        return myTankLocation;
+    }
+
+    public void setMyTankLocation(DirectionEnum myTankLocation) {
+        this.myTankLocation = myTankLocation;
+    }
+
+    public DirectionEnum getMyTankDirect() {
         return myTankDirect;
     }
 
-    public void setMyTankDirect(int myTankDirect) {
+    public void setMyTankDirect(DirectionEnum myTankDirect) {
         this.myTankDirect = myTankDirect;
     }
-
 }
 

@@ -5,6 +5,8 @@
 package cn.edu.hdu.tankbattle.model;
 
 
+import cn.edu.hdu.tankbattle.enums.DirectionEnum;
+
 /**
  * Bullet...
  *
@@ -43,7 +45,7 @@ public class Bullet {
     /**
      * 子弹的方向
      */
-    private int direct;
+    private DirectionEnum direct;
     /**
      * 子弹是否存活
      */
@@ -63,7 +65,7 @@ public class Bullet {
      * @param y      子弹y坐标
      * @param direct 子弹的方向
      */
-    public Bullet(int x, int y, int direct) {
+    public Bullet(int x, int y, DirectionEnum direct) {
         this.x = x;
         this.y = y;
         this.direct = direct;
@@ -97,11 +99,11 @@ public class Bullet {
         this.speed = speed;
     }
 
-    public int getDirect() {
+    public DirectionEnum getDirect() {
         return direct;
     }
 
-    public void setDirect(int direct) {
+    public void setDirect(DirectionEnum direct) {
         this.direct = direct;
     }
 

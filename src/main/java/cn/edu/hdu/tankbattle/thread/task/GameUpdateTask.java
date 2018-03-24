@@ -19,13 +19,13 @@ import org.slf4j.LoggerFactory;
  * @author chenpi
  * @since 2011-02-10 19:29
  */
-public class UpdateTask implements Runnable {
+public class GameUpdateTask implements Runnable {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private GameContext gameContext;
 
 
-    public UpdateTask(GameContext gameContext) {
+    public GameUpdateTask(GameContext gameContext) {
         this.gameContext = gameContext;
     }
 

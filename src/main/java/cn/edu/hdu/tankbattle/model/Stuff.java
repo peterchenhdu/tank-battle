@@ -4,6 +4,9 @@
 
 package cn.edu.hdu.tankbattle.model;
 
+import cn.edu.hdu.tankbattle.enums.DirectionEnum;
+import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
+
 import java.awt.Color;
 
 /**
@@ -12,43 +15,7 @@ import java.awt.Color;
  * @author chenpi
  * @since 2011-02-10 19:29
  */
-public class Stuff {
-    /**
-     * 砖块
-     */
-    public static final int BRICK = 0;
-    /**
-     * 铁块
-     */
-    public static final int IRON = 1;
-    /**
-     * 水池
-     */
-    public static final int WATER = 2;
-    /**
-     * 坦克
-     */
-    public static final int TANK = 3;
-    /**
-     * 地图
-     */
-    public static final int MAP = 4;
-    /**
-     * 方向北
-     */
-    public static final int NORTH = 0;
-    /**
-     * 方向南
-     */
-    public static final int SOUTH = 1;
-    /**
-     * 方向西
-     */
-    public static final int WEST = 2;
-    /**
-     * 方向东
-     */
-    public static final int EAST = 3;
+public abstract class Stuff {
     /**
      * x坐标
      */
@@ -68,7 +35,7 @@ public class Stuff {
     /**
      * 东西第一个类型属性
      */
-    private int type;
+    private StuffTypeEnum type;
     /**
      * 东西第二个类型属性
      */
@@ -80,7 +47,7 @@ public class Stuff {
     /**
      * 方向
      */
-    private int direct;
+    private DirectionEnum direct;
     /**
      * 颜色
      */
@@ -117,11 +84,11 @@ public class Stuff {
         this.y = y;
     }
 
-    public int getType() {
+    public StuffTypeEnum getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(StuffTypeEnum type) {
         this.type = type;
     }
 
@@ -133,11 +100,11 @@ public class Stuff {
         this.isLive = isLive;
     }
 
-    public int getDirect() {
+    public DirectionEnum getDirect() {
         return direct;
     }
 
-    public void setDirect(int direct) {
+    public void setDirect(DirectionEnum direct) {
         this.direct = direct;
     }
 

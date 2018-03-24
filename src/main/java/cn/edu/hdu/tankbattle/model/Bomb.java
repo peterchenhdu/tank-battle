@@ -30,7 +30,7 @@ public class Bomb {
     /**
      * 炸弹是否活着
      */
-    boolean isLive = true;
+    private boolean isLive = true;
 
     /**
      * 炸弹的构造函数

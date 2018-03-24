@@ -4,6 +4,8 @@
 
 package cn.edu.hdu.tankbattle.model;
 
+import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
+
 /**
  * Iron...
  *
@@ -19,7 +21,7 @@ public class Iron extends Stuff {
      */
     public Iron(int x, int y) {
         super(x, y);
-        this.setType(IRON);
+        this.setType(StuffTypeEnum.IRON);
         this.setWidth(20);
         this.setHeight(20);
     }

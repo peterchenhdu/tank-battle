@@ -8,6 +8,8 @@ import java.awt.Color;
 import java.util.Vector;
 
 import cn.edu.hdu.tankbattle.constant.GameConstants;
+import cn.edu.hdu.tankbattle.enums.DirectionEnum;
+import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
 
 /**
  * Tank...
@@ -35,7 +37,7 @@ public class Tank extends Stuff {
     /**
      * 挡住坦克前面的东西
      */
-    private int frontInfomation = -1;
+    private StuffTypeEnum frontInfomation = StuffTypeEnum.INVALID;
     /**
      * 坦克的子弹容量
      */
@@ -62,11 +64,11 @@ public class Tank extends Stuff {
      * @param y      坦克的y坐标
      * @param direct 坦克的方向
      */
-    public Tank(int x, int y, int direct) {
+    public Tank(int x, int y, DirectionEnum direct) {
         super(x, y);
         this.setDirect(direct);
         this.bullets = new Vector<Bullet>();
-        this.setType(Stuff.TANK);
+        this.setType(StuffTypeEnum.TANK);
         this.setWidth(40);
         this.setHeight(40);
     }
@@ -76,11 +78,11 @@ public class Tank extends Stuff {
      * 坦克往北走
      */
     public void goNorth() {
-        this.setDirect(NORTH);
+        this.setDirect(DirectionEnum.NORTH);
         if (this.getY() > 20) {
             this.setY(this.getY() - this.speed);
         } else {
-            this.setFrontInfomation(Stuff.IRON);
+            this.setFrontInfomation(StuffTypeEnum.IRON);
         }
     }
 
@@ -88,11 +90,11 @@ public class Tank extends Stuff {
      * 坦克往南走
      */
     public void goSouth() {
-        this.setDirect(SOUTH);
+        this.setDirect(DirectionEnum.SOUTH);
         if (this.getY() < GameConstants.GAME_PANEL_HEIGHT - 20) {
             this.setY(this.getY() + this.speed);
         } else {
-            this.setFrontInfomation(Stuff.IRON); // 碰到边界就相当于碰到铁块
+            this.setFrontInfomation(StuffTypeEnum.IRON); // 碰到边界就相当于碰到铁块
         }
     }
 
@@ -100,11 +102,11 @@ public class Tank extends Stuff {
      * 坦克往西走
      */
     public void goWest() {
-        this.setDirect(WEST);
+        this.setDirect(DirectionEnum.WEST);
         if (this.getX() > 20 && this.getY() <= GameConstants.GAME_PANEL_HEIGHT - 20) {
             this.setX(this.getX() - this.speed);
         } else {
-            this.setFrontInfomation(Stuff.IRON);
+            this.setFrontInfomation(StuffTypeEnum.IRON);
         }
     }
 
@@ -112,12 +114,12 @@ public class Tank extends Stuff {
      * 坦克往东走
      */
     public void goEast() {
-        this.setDirect(EAST);
+        this.setDirect(DirectionEnum.EAST);
         if (this.getX() < GameConstants.GAME_PANEL_WIDTH - 20
                 && this.getY() <= GameConstants.GAME_PANEL_HEIGHT - 20) {
             this.setX(this.getX() + this.speed);
         } else {
-            this.setFrontInfomation(Stuff.IRON);
+            this.setFrontInfomation(StuffTypeEnum.IRON);
         }
     }
 
@@ -127,7 +129,7 @@ public class Tank extends Stuff {
      * @param where 方向
      */
 
-    public void go(int where) {
+    public void go(DirectionEnum where) {
         switch (where) {
             case NORTH:
                 this.goNorth();
@@ -167,7 +169,7 @@ public class Tank extends Stuff {
         boolean b = false;
         int x = stuff.getX();
         int y = stuff.getY();
-        if (this.getDirect() == Tank.NORTH) {
+        if (this.getDirect() == DirectionEnum.NORTH) {
             this.setY(this.getY() - this.getSpeed()); // 先假设该坦克往前移动一步
             if (Math.abs(this.getY() - y) < length
                     && Math.abs(this.getX() - x) < length) { // 如果在远离，此时他想逃出重叠，所以就设b为false，让它能够动
@@ -177,7 +179,7 @@ public class Tank extends Stuff {
                 this.setY(this.getY() + this.getSpeed());
             }
         }
-        if (this.getDirect() == Tank.SOUTH) {
+        if (this.getDirect() == DirectionEnum.SOUTH) {
             this.setY(this.getY() + this.getSpeed()); // 先假设该坦克往前移动一步
             if (Math.abs(this.getY() - y) < length
                     && Math.abs(this.getX() - x) < length) {
@@ -185,7 +187,7 @@ public class Tank extends Stuff {
             }
             this.setY(this.getY() - this.getSpeed());
         }
-        if (this.getDirect() == Tank.EAST) {
+        if (this.getDirect() == DirectionEnum.EAST) {
             this.setX(this.getX() + this.getSpeed());
             if (Math.abs(this.getY() - y) < length
                     && Math.abs(this.getX() - x) < length) {
@@ -193,7 +195,7 @@ public class Tank extends Stuff {
             }
             this.setX(this.getX() - this.getSpeed());
         }
-        if (this.getDirect() == Tank.WEST) {
+        if (this.getDirect() == DirectionEnum.WEST) {
             this.setX(this.getX() - this.getSpeed());
             if (Math.abs(this.getY() - y) < length
                     && Math.abs(this.getX() - x) < length) {
@@ -252,11 +254,11 @@ public class Tank extends Stuff {
         this.isOverlapYes = isOverlapYes;
     }
 
-    public int getFrontInfomation() {
+    public StuffTypeEnum getFrontInfomation() {
         return frontInfomation;
     }
 
-    public void setFrontInfomation(int frontInfomation) {
+    public void setFrontInfomation(StuffTypeEnum frontInfomation) {
         this.frontInfomation = frontInfomation;
     }
 

@@ -15,6 +15,8 @@ import cn.edu.hdu.tankbattle.constant.GameConstants;
 import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.dto.GameResource;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
+import cn.edu.hdu.tankbattle.enums.DirectionEnum;
+import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
 import cn.edu.hdu.tankbattle.model.Bomb;
 import cn.edu.hdu.tankbattle.model.Brick;
 import cn.edu.hdu.tankbattle.model.Bullet;
@@ -51,46 +53,47 @@ public class PaintService {
      */
     public void drawStuff(Graphics g, Stuff stuff, JPanel panel) {
         switch (stuff.getType()) {
-            case Stuff.TANK:
+            //枚举的switch，有意思，不需要+StuffTypeEnum.TANK
+            case TANK:
                 switch (stuff.getDirect()) { // 判断所朝的方向
-                    case Stuff.NORTH:
+                    case NORTH:
                         this.drawNorth(g, stuff, panel);
                         break;
-                    case Stuff.SOUTH:
+                    case SOUTH:
                         this.drawSouth(g, stuff, panel);
                         break;
-                    case Stuff.WEST:
+                    case WEST:
                         this.drawWest(g, stuff, panel);
                         break;
-                    case Stuff.EAST:
+                    case EAST:
                         this.drawEast(g, stuff, panel);
                         break;
                 }
                 break;
-            case Stuff.BRICK:
+            case BRICK:
 
 //                g.setColor(new Color(216, 90, 49));
 //                g.fill3DRect(stuff.getX() - 20, stuff.getY() - 20, 40, 40, false);
 
-                g.drawImage(TankGameImages.stuffImg[Stuff.BRICK],
+                g.drawImage(TankGameImages.stuffImg[StuffTypeEnum.BRICK.getKey()],
                         stuff.getX() - 10, stuff.getY() - 10, 20, 20, panel);
                 break;
-            case Stuff.IRON:
+            case IRON:
 
 //                g.setColor(new Color(225, 225, 225));
 //                g.fill3DRect(stuff.getX() - 20,
 //                        stuff.getY() - 20, 40, 40, false);
 
-                g.drawImage(TankGameImages.stuffImg[Stuff.IRON], stuff.getX() - 10,
+                g.drawImage(TankGameImages.stuffImg[StuffTypeEnum.IRON.getKey()], stuff.getX() - 10,
                         stuff.getY() - 10, 20, 20, panel);
                 break;
-            case Stuff.WATER:
+            case WATER:
 
 //                g.setColor(new Color(65, 64, 253));
 //                g.fillRect(stuff.getX() - 20,
 //                        stuff.getY() - 20, 40, 40);
 
-                g.drawImage(TankGameImages.stuffImg[Stuff.WATER],
+                g.drawImage(TankGameImages.stuffImg[StuffTypeEnum.WATER.getKey()],
                         stuff.getX() - 10, stuff.getY() - 10, 20, 20, panel);
                 break;
         }
@@ -238,9 +241,9 @@ public class PaintService {
         Image image;
         if (tank.getType2() == Tank.MY) {
             g.setColor(Color.green);
-            image = TankGameImages.myTankImg[Stuff.NORTH];// 初始化图片
+            image = TankGameImages.myTankImg[DirectionEnum.NORTH.getKey()];// 初始化图片
         } else {
-            image = TankGameImages.enemyTankImg[Stuff.NORTH];
+            image = TankGameImages.enemyTankImg[DirectionEnum.NORTH.getKey()];
             g.setColor(Color.gray);
         }
         g.drawImage(image, tank.getX() - 20, tank.getY() - 20, 40, 40, panel);
@@ -289,9 +292,9 @@ public class PaintService {
         Image image;
         if (tank.getType2() == Tank.MY) {
             g.setColor(Color.green);
-            image = TankGameImages.myTankImg[Stuff.SOUTH];// 初始化图片
+            image = TankGameImages.myTankImg[DirectionEnum.SOUTH.getKey()];// 初始化图片
         } else {
-            image = TankGameImages.enemyTankImg[Stuff.SOUTH];
+            image = TankGameImages.enemyTankImg[DirectionEnum.SOUTH.getKey()];
             g.setColor(Color.gray);
         }
         g.drawImage(image, tank.getX() - 20, tank.getY() - 20, 40, 40, panel);
@@ -338,10 +341,10 @@ public class PaintService {
 
         Image image;
         if (tank.getType2() == Tank.MY) {
-            image = TankGameImages.myTankImg[Stuff.WEST];// 初始化图片
+            image = TankGameImages.myTankImg[DirectionEnum.WEST.getKey()];// 初始化图片
             g.setColor(Color.green);
         } else {
-            image = TankGameImages.enemyTankImg[Stuff.WEST];
+            image = TankGameImages.enemyTankImg[DirectionEnum.WEST.getKey()];
             g.setColor(Color.gray);
         }
         g.drawImage(image, tank.getX() - 20, tank.getY() - 20, 40, 40, panel);
@@ -388,10 +391,10 @@ public class PaintService {
 
         Image image;
         if (tank.getType2() == Tank.MY) {
-            image = TankGameImages.myTankImg[Stuff.EAST];// 初始化图片
+            image = TankGameImages.myTankImg[DirectionEnum.EAST.getKey()];// 初始化图片
             g.setColor(Color.green);
         } else {
-            image = TankGameImages.enemyTankImg[Stuff.EAST];
+            image = TankGameImages.enemyTankImg[DirectionEnum.EAST.getKey()];
             g.setColor(Color.gray);
         }
         g.drawImage(image, tank.getX() - 20, tank.getY() - 20, 40, 40, panel);
@@ -407,15 +410,15 @@ public class PaintService {
     public void drawRight(Graphics g, GamePanel tgp, RealTimeGameData data) {
         for (int i = 0; i < data.getEnemyTankNum(); i++) {
             if (i >= 4) {
-                g.drawImage(TankGameImages.enemyTankImg[Stuff.NORTH],
+                g.drawImage(TankGameImages.enemyTankImg[DirectionEnum.NORTH.getKey()],
                         402 + 50 * i, 100, 40, 40, tgp);
             } else {
-                g.drawImage(TankGameImages.enemyTankImg[Stuff.NORTH],
+                g.drawImage(TankGameImages.enemyTankImg[DirectionEnum.NORTH.getKey()],
                         602 + 50 * i, 20, 40, 40, tgp);
             }
         }
         for (int j = 0; j < data.getMyTankNum(); j++) {
-            g.drawImage(TankGameImages.myTankImg[Stuff.NORTH], 602 + 50 * j,
+            g.drawImage(TankGameImages.myTankImg[DirectionEnum.NORTH.getKey()], 602 + 50 * j,
                     400, 40, 40, tgp);
         }
         g.drawString("我的坦克子弹数目:" + data.getMyBulletNum(), 620, 500);

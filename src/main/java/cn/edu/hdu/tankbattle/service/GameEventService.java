@@ -8,7 +8,9 @@ import java.util.Vector;
 
 import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
+import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 import cn.edu.hdu.tankbattle.enums.LevelEnum;
+import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
 import cn.edu.hdu.tankbattle.model.Bomb;
 import cn.edu.hdu.tankbattle.model.Brick;
 import cn.edu.hdu.tankbattle.model.Bullet;
@@ -22,7 +24,7 @@ import cn.edu.hdu.tankbattle.model.Water;
 import cn.edu.hdu.tankbattle.model.map.Map;
 import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
 import cn.edu.hdu.tankbattle.thread.executor.TaskExecutor;
-import cn.edu.hdu.tankbattle.thread.task.BulletRunTask;
+import cn.edu.hdu.tankbattle.thread.task.BulletMoveTask;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -44,7 +46,7 @@ public class GameEventService {
     @Autowired
     private ThreadPoolTaskExecutor taskExecutor;
     @Autowired
-    private EnemyTankEventService enemyTankEventService;
+    private TankEventService enemyTankEventService;
 
     private Boolean isHitting(Bullet bullet, Stuff stuff) {
         return (Math.abs(bullet.getX() - stuff.getX()) <= (stuff.getWidth() + bullet.getWidth()) / 2 &&
@@ -89,7 +91,7 @@ public class GameEventService {
         myTanks.forEach(myTank ->
                 enemies.forEach(enemyTank -> {
 
-                    enemyTankEventService.findAndKill(enemyTank, myTank, map); // 让敌人坦克能够发现我的坦克并开炮
+                    enemyTankEventService.enemyFindAndKill(enemyTank, myTank, map); // 让敌人坦克能够发现我的坦克并开炮
 
                     enemyTank.getBullets().forEach(eb -> {
                         if (isHitting(eb, myTank)) {
@@ -146,7 +148,7 @@ public class GameEventService {
             myTank.setOverlapNo(false);
             myTank.setOverlapYes(false);
 
-            if (myTank.isOverlap_(enemies)) { // 判断我的坦克是否与敌人坦克重叠
+            if (myTank.isOverlap(enemies)) { // 判断我的坦克是否与敌人坦克重叠
                 myTank.setOverlapYes(true);
             }
 
@@ -163,9 +165,9 @@ public class GameEventService {
         enemies.stream().forEach(enemyTank -> {
             enemyTank.setOverlapNo(false);
             enemyTank.setOverlapYes(false);
-            enemyTank.setFrontInfomation(-1);
+            enemyTank.setFrontInfomation(StuffTypeEnum.INVALID);
 
-            if (enemyTankEventService.isOverlap_(enemyTank, enemies, myTanks)) {
+            if (enemyTankEventService.isOverlap(enemyTank, enemies, myTanks)) {
                 enemyTank.setOverlapYes(true);
             }
 
@@ -173,13 +175,13 @@ public class GameEventService {
             bricks.stream().filter(brick -> enemyTank.Overlap(brick, 20 + 10))
                     .forEach(brick -> {
                         if ((Math.abs(brick.getX() - enemyTank.getX()) <= 10 && (enemyTank
-                                .getDirect() == EnemyTank.SOUTH || enemyTank
-                                .getDirect() == EnemyTank.NORTH))
+                                .getDirect() == DirectionEnum.SOUTH || enemyTank
+                                .getDirect() == DirectionEnum.NORTH))
                                 || (Math.abs(brick.getY()
                                 - enemyTank.getY()) <= 10 && (enemyTank
-                                .getDirect() == EnemyTank.EAST || enemyTank
-                                .getDirect() == EnemyTank.WEST))) {
-                            enemyTank.setFrontInfomation(Stuff.BRICK);
+                                .getDirect() == DirectionEnum.EAST || enemyTank
+                                .getDirect() == DirectionEnum.WEST))) {
+                            enemyTank.setFrontInfomation(StuffTypeEnum.BRICK);
                             enemyTank.setOverlapYes(true);
                             enemyTank.setShot(true);
                         } else {
@@ -190,7 +192,7 @@ public class GameEventService {
 
             irons.stream().filter(iron -> enemyTank.Overlap(iron, 20 + 10))
                     .forEach(iron -> {
-                        enemyTank.setFrontInfomation(Stuff.IRON);
+                        enemyTank.setFrontInfomation(StuffTypeEnum.IRON);
                         enemyTank.setOverlapNo(true);
                     });
 
@@ -232,7 +234,7 @@ public class GameEventService {
 
                 if (data.getMyTankNum() >= 1) { // 如果还有我的坦克就创建一个，刚开始面板上就创建了一个我的坦克，所以大于等于
                     // 1
-                    MyTank myTankTemp = new MyTank(300, 620, Tank.NORTH); // 创建一个我的坦克
+                    MyTank myTankTemp = new MyTank(300, 620, DirectionEnum.NORTH); // 创建一个我的坦克
                     myTanks.add(myTankTemp);
                 }
             }
@@ -255,7 +257,7 @@ public class GameEventService {
                 enemies.remove(enemy); // 敌人坦克死亡后马上产生一个新的敌人坦克
                 if (data.getEnemyTankNum() >= 5) { // 如果还有敌人坦克，刚开始时面板上就创建了3个，所以大于等于3
                     EnemyTank enemyTank = new EnemyTank((r) * 140 + 20,
-                            -20, Tank.SOUTH); // 创建一个敌人坦克对象
+                            -20, DirectionEnum.SOUTH); // 创建一个敌人坦克对象
                     enemyTank.setLocation(r);
                     enemyTank.setActivate(Boolean.TRUE);
                     threadTaskExecutor.startSingleEnemyTankTask(enemyTank);
@@ -309,14 +311,14 @@ public class GameEventService {
                                Tank tank) {
         Bomb bomb;
         switch (stuff.getType()) {
-            case Stuff.BRICK: // 砖块
+            case BRICK: // 砖块
                 bullet.setLive(false);
                 stuff.setLive(false);
                 bomb = new Bomb(stuff.getX(), stuff.getY());
                 bomb.setL(40);
                 bombs.add(bomb);
                 break;
-            case Stuff.IRON: // 铁块
+            case IRON: // 铁块
                 bomb = new Bomb(bullet.getX(), bullet.getY());
                 bullet.setLive(false);
                 bomb.setL(20);
@@ -354,7 +356,7 @@ public class GameEventService {
         resource.setMap(LevelEnum.getByLevel(data.getLevel()).getMap());
 
         for (int i = 0; i < 5; i++) {
-            EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, Tank.SOUTH); // 创建一个敌人坦克对象
+            EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, DirectionEnum.SOUTH); // 创建一个敌人坦克对象
             enemy.setActivate(Boolean.TRUE);
             enemy.setLocation(i);
             resource.getEnemies().add(enemy); // 将该坦克加入敌人坦克容器中 //将该子弹加入该坦克的子弹容器中
@@ -484,21 +486,21 @@ public class GameEventService {
     public void shot(Tank tank) {
         Bullet bullet = null;
         switch (tank.getDirect()) { // 选择坦克的方向
-            case Tank.NORTH:
-                bullet = new Bullet(tank.getX(), tank.getY() - 20, Tank.NORTH);
+            case NORTH:
+                bullet = new Bullet(tank.getX(), tank.getY() - 20, DirectionEnum.NORTH);
                 break;
-            case Tank.SOUTH:
-                bullet = new Bullet(tank.getX(), tank.getY() + 20, Tank.SOUTH);
+            case SOUTH:
+                bullet = new Bullet(tank.getX(), tank.getY() + 20, DirectionEnum.SOUTH);
                 break;
-            case Tank.WEST:
-                bullet = new Bullet(tank.getX() - 20, tank.getY(), Tank.WEST);
+            case WEST:
+                bullet = new Bullet(tank.getX() - 20, tank.getY(), DirectionEnum.WEST);
                 break;
-            case Tank.EAST:
-                bullet = new Bullet(tank.getX() + 20, tank.getY(), Tank.EAST);
+            case EAST:
+                bullet = new Bullet(tank.getX() + 20, tank.getY(), DirectionEnum.EAST);
                 break;
         }
         tank.getBullets().add(bullet);
-        taskExecutor.execute(new BulletRunTask(bullet));
+        taskExecutor.execute(new BulletMoveTask(bullet));
     }
 
 

@@ -5,6 +5,7 @@
 package cn.edu.hdu.tankbattle.context;
 
 import cn.edu.hdu.tankbattle.constant.GameConstants;
+import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 import cn.edu.hdu.tankbattle.service.GameEventService;
 import cn.edu.hdu.tankbattle.service.PaintService;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
@@ -13,7 +14,7 @@ import cn.edu.hdu.tankbattle.model.EnemyTank;
 import cn.edu.hdu.tankbattle.model.MyTank;
 import cn.edu.hdu.tankbattle.model.Tank;
 import cn.edu.hdu.tankbattle.thread.executor.TaskExecutor;
-import cn.edu.hdu.tankbattle.thread.task.UpdateTask;
+import cn.edu.hdu.tankbattle.thread.task.GameUpdateTask;
 import cn.edu.hdu.tankbattle.listener.MainFrameKeyListener;
 import cn.edu.hdu.tankbattle.listener.MenuActionListener;
 import cn.edu.hdu.tankbattle.dto.GameResource;
@@ -94,7 +95,7 @@ public class GameContext {
         this.gameFrame.setVisible(true);
 
         logger.info("execute UpdateTask...");
-        taskExecutor.execute(new UpdateTask(this));
+        taskExecutor.execute(new GameUpdateTask(this));
 
         logger.info("game start success...");
 
@@ -109,12 +110,12 @@ public class GameContext {
         resource.reset();
 
         for (int i = 0; i < GameConstants.INIT_ENEMY_TANK_IN_MAP_NUM; i++) {
-            EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, Tank.SOUTH);
+            EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, DirectionEnum.SOUTH);
             enemy.setLocation(i);
             resource.getEnemies().add(enemy);
         }
         for (int i = 0; i < 1; i++) {
-            MyTank myTank = new MyTank(300, 620, Tank.NORTH);
+            MyTank myTank = new MyTank(300, 620, DirectionEnum.NORTH);
             resource.getMyTanks().add(myTank);
         }
 
@@ -138,12 +139,12 @@ public class GameContext {
         resource.reset();
 
         for (int i = 0; i < GameConstants.INIT_ENEMY_TANK_IN_MAP_NUM; i++) {
-            EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, Tank.SOUTH);
+            EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, DirectionEnum.SOUTH);
             enemy.setLocation(i);
             resource.getEnemies().add(enemy);
         }
         for (int i = 0; i < 1; i++) {
-            MyTank myTank = new MyTank(300, 620, Tank.NORTH);
+            MyTank myTank = new MyTank(300, 620, DirectionEnum.NORTH);
             resource.getMyTanks().add(myTank);
         }
 

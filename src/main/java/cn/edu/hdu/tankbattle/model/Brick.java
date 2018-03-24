@@ -4,6 +4,8 @@
 
 package cn.edu.hdu.tankbattle.model;
 
+import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
+
 /**
  * Brick...
  *
@@ -19,7 +21,7 @@ public class Brick extends Stuff {
      */
     public Brick(int x, int y) {
         super(x, y);
-        this.setType(Stuff.BRICK);
+        this.setType(StuffTypeEnum.BRICK);
         this.setWidth(20);
         this.setHeight(20);
     }

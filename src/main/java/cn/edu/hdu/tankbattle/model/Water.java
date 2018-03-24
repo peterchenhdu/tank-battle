@@ -4,6 +4,8 @@
 
 package cn.edu.hdu.tankbattle.model;
 
+import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
+
 /**
  * Water...
  *
@@ -20,7 +22,7 @@ public class Water extends Stuff {
 
     public Water(int x, int y) {
         super(x, y);
-        this.setType(WATER);
+        this.setType(StuffTypeEnum.WATER);
         this.setWidth(20);
         this.setHeight(20);
     }

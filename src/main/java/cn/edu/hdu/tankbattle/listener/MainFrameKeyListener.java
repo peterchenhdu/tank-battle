@@ -5,6 +5,7 @@
 package cn.edu.hdu.tankbattle.listener;
 
 import cn.edu.hdu.tankbattle.context.GameContext;
+import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 import cn.edu.hdu.tankbattle.service.GameEventService;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.dto.GameResource;
@@ -42,19 +43,19 @@ public class MainFrameKeyListener implements KeyListener {
                 data.keyPressedDirect(false, false, false, false);
             } else {
                 if ((e.getKeyCode() == KeyEvent.VK_UP)) {
-                    myTank.setDirect(Tank.NORTH);
+                    myTank.setDirect(DirectionEnum.NORTH);
                     data.keyPressedDirect(true, false, false, false);
 
                 } else if ((e.getKeyCode() == KeyEvent.VK_DOWN) && myTank.getY() <= 580) {
-                    myTank.setDirect(Tank.SOUTH);
+                    myTank.setDirect(DirectionEnum.SOUTH);
                     data.keyPressedDirect(false, true, false, false);
 
                 } else if ((e.getKeyCode() == KeyEvent.VK_LEFT) && myTank.getY() <= 580) {
-                    myTank.setDirect(Tank.WEST);
+                    myTank.setDirect(DirectionEnum.WEST);
                     data.keyPressedDirect(false, false, true, false);
 
                 } else if ((e.getKeyCode() == KeyEvent.VK_RIGHT) && myTank.getY() <= 580) {
-                    myTank.setDirect(Tank.EAST);
+                    myTank.setDirect(DirectionEnum.EAST);
                     data.keyPressedDirect(false, false, false, true);
 
                 }
