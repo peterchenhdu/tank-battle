@@ -31,7 +31,7 @@ public class RefUtils {
             Method func = obj.getClass().getMethod(methodName, parameterTypes);
             return func.invoke(obj, args);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            throw new TankBattleGameException("vgc.sys.exception");
+            throw new TankBattleGameException("executeByMethodName exception");
         }
     }
 
