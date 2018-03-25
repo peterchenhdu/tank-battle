@@ -8,8 +8,7 @@ import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 import cn.edu.hdu.tankbattle.service.GameEventService;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
-import cn.edu.hdu.tankbattle.dto.GameResource;
-import cn.edu.hdu.tankbattle.model.Tank;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,12 +32,11 @@ public class MainFrameKeyListener implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         RealTimeGameData data = context.getGameData();
-        GameResource resource = data.getGameResource();
         if (e.getKeyCode() == KeyEvent.VK_P) { // 暂停
-            control.gameEventStop(resource);
+            control.gameEventStop(data);
         }
 
-        resource.getMyTanks().forEach(myTank -> {
+        data.getMyTanks().forEach(myTank -> {
             if (!myTank.getLive()) {
                 data.keyPressedDirect(false, false, false, false);
             } else {

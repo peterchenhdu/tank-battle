@@ -15,22 +15,6 @@ import cn.edu.hdu.tankbattle.enums.DirectionEnum;
  */
 public class Bullet {
     /**
-     * 方向北
-     */
-    public static final int NORTH = 0;
-    /**
-     * 方向南
-     */
-    public static final int SOUTH = 1;
-    /**
-     * 方向西
-     */
-    public static final int WEST = 2;
-    /**
-     * 方向东
-     */
-    public static final int EAST = 3;
-    /**
      * 子弹的速度
      */
     private int speed = 6;

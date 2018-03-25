@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 
 import cn.edu.hdu.tankbattle.constant.GameConstants;
 import cn.edu.hdu.tankbattle.context.GameContext;
-import cn.edu.hdu.tankbattle.dto.GameResource;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
@@ -56,7 +55,7 @@ public class PaintService {
         switch (stuff.getType()) {
             //枚举的switch，有意思，不需要+StuffTypeEnum.TANK
             case TANK:
-                Tank tank = (Tank)stuff;
+                Tank tank = (Tank) stuff;
                 switch (stuff.getDirect()) { // 判断所朝的方向
                     case NORTH:
                         this.drawNorth(g, tank, panel);
@@ -430,15 +429,14 @@ public class PaintService {
     public void rePaintPanel(GamePanel panel, Graphics g) {
 
         RealTimeGameData data = context.getGameData();
-        GameResource resource = data.getGameResource();
         if (data.isStart()) {
             g.setColor(Color.black);
             g.fillRect(0, 0, GameConstants.GAME_PANEL_WIDTH, GameConstants.GAME_PANEL_HEIGHT);
             g.fillRect(280, 600, 40, 40);
-            this.drawMap(g, resource.getMap(), panel);
-            this.drawMyTank(g, resource.getMyTanks(), panel); // 画出我的坦克（包括子弹）
-            this.drawEnemyTank(g, resource.getEnemies(), panel); // 画出敌人坦克（包括子弹）
-            this.drawBomb(g, resource.getBombs(), panel); // 画出爆炸
+            this.drawMap(g, data.getMap(), panel);
+            this.drawMyTank(g, data.getMyTanks(), panel); // 画出我的坦克（包括子弹）
+            this.drawEnemyTank(g, data.getEnemies(), panel); // 画出敌人坦克（包括子弹）
+            this.drawBomb(g, data.getBombs(), panel); // 画出爆炸
             this.drawRight(g, panel, data);
 
             if (data.getMyTankNum() == 0) { // 如果我的坦克数量为0

@@ -40,7 +40,7 @@ public class EnemyTankMoveTask implements Runnable {
                             enemyTankEventService.enemyGoWest(tank);
                         }
                         // 如果我的坦克在敌人坦克的正东方
-                        if (DirectionEnum.EAST.equals(tank.getMyTankLocation()) ) {
+                        if (DirectionEnum.EAST.equals(tank.getMyTankLocation())) {
                             tank.setDirect(DirectionEnum.EAST);
                             enemyTankEventService.enemyGoEast(tank);
                         }

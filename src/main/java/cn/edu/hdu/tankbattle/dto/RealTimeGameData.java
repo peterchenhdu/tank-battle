@@ -4,6 +4,13 @@
 
 package cn.edu.hdu.tankbattle.dto;
 
+import cn.edu.hdu.tankbattle.model.Bomb;
+import cn.edu.hdu.tankbattle.model.EnemyTank;
+import cn.edu.hdu.tankbattle.model.MyTank;
+import cn.edu.hdu.tankbattle.model.map.Map;
+
+import java.util.Vector;
+
 /**
  * Class Description...
  *
@@ -11,7 +18,22 @@ package cn.edu.hdu.tankbattle.dto;
  * @since 2018/3/20 23:01
  */
 public class RealTimeGameData {
-    private GameResource gameResource;
+    /**
+     * 我的坦克容量
+     */
+    private Vector<MyTank> myTanks = new Vector<>();
+    /**
+     * 敌人坦克容量
+     */
+    private Vector<EnemyTank> enemies = new Vector<>();
+    /**
+     * 炸弹容量
+     */
+    private Vector<Bomb> bombs = new Vector<>();
+    /**
+     * 坦克游戏地图对象
+     */
+    private Map map;
 
     /**
      * 敌人坦克总的数量
@@ -81,6 +103,13 @@ public class RealTimeGameData {
         this.down = down;
         this.left = left;
         this.right = right;
+    }
+
+    public void reset() {
+        myTanks.clear();
+        enemies.clear();
+        bombs.clear();
+        map = null;
     }
 
     public int getEnemyTankNum() {
@@ -203,18 +232,41 @@ public class RealTimeGameData {
         this.kx = kx;
     }
 
-    public GameResource getGameResource() {
-        return gameResource;
+    public Vector<MyTank> getMyTanks() {
+        return myTanks;
     }
 
-    public void setGameResource(GameResource gameResource) {
-        this.gameResource = gameResource;
+    public void setMyTanks(Vector<MyTank> myTanks) {
+        this.myTanks = myTanks;
+    }
+
+    public Vector<EnemyTank> getEnemies() {
+        return enemies;
+    }
+
+    public void setEnemies(Vector<EnemyTank> enemies) {
+        this.enemies = enemies;
+    }
+
+    public Vector<Bomb> getBombs() {
+        return bombs;
+    }
+
+    public void setBombs(Vector<Bomb> bombs) {
+        this.bombs = bombs;
+    }
+
+    public Map getMap() {
+        return map;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
     }
 
     @Override
     public String toString() {
         return "RealTimeGameData{" +
-                "gameResource=" + gameResource +
                 ", enemyTankNum=" + enemyTankNum +
                 ", myTankNum=" + myTankNum +
                 ", beKilled=" + beKilled +
@@ -232,4 +284,6 @@ public class RealTimeGameData {
                 ", kx=" + kx +
                 '}';
     }
+
+
 }

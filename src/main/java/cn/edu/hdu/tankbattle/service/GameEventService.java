@@ -15,7 +15,6 @@ import cn.edu.hdu.tankbattle.model.Bomb;
 import cn.edu.hdu.tankbattle.model.Brick;
 import cn.edu.hdu.tankbattle.model.Bullet;
 import cn.edu.hdu.tankbattle.model.EnemyTank;
-import cn.edu.hdu.tankbattle.dto.GameResource;
 import cn.edu.hdu.tankbattle.model.Iron;
 import cn.edu.hdu.tankbattle.model.MyTank;
 import cn.edu.hdu.tankbattle.model.Stuff;
@@ -61,7 +60,7 @@ public class GameEventService {
 
 
     public void refreshState() {
-        GameResource resource = context.getGameData().getGameResource();
+        RealTimeGameData resource = context.getGameData();
         Vector<EnemyTank> enemies = resource.getEnemies();
         Vector<MyTank> myTanks = resource.getMyTanks();
 
@@ -78,7 +77,7 @@ public class GameEventService {
      * Bullets Event...
      */
     public void doBulletEvent() {
-        GameResource resource = context.getGameData().getGameResource();
+        RealTimeGameData resource = context.getGameData();
 
         Vector<MyTank> myTanks = resource.getMyTanks();
         Vector<EnemyTank> enemies = resource.getEnemies();
@@ -137,7 +136,7 @@ public class GameEventService {
      * doOverlapJudge
      */
     public void doOverlapJudge() {
-        GameResource resource = context.getGameData().getGameResource();
+        RealTimeGameData resource = context.getGameData();
         Vector<MyTank> myTanks = resource.getMyTanks();
         Vector<EnemyTank> enemies = resource.getEnemies();
         Map map = resource.getMap();
@@ -213,12 +212,11 @@ public class GameEventService {
      */
     public void cleanAndCreate() {
         RealTimeGameData data = context.getGameData();
-        GameResource resource = data.getGameResource();
 
-        Vector<MyTank> myTanks = resource.getMyTanks();
-        Vector<EnemyTank> enemies = resource.getEnemies();
-        Vector<Bomb> bombs = resource.getBombs();
-        Map map = resource.getMap();
+        Vector<MyTank> myTanks = data.getMyTanks();
+        Vector<EnemyTank> enemies = data.getEnemies();
+        Vector<Bomb> bombs = data.getBombs();
+        Map map = data.getMap();
 
 
         for (int i = 0; i < myTanks.size(); i++) {
@@ -332,7 +330,7 @@ public class GameEventService {
      *
      * @param resource .getMyTanks() 我的坦克容量
      */
-    public void myTankEvent(GameResource resource) {
+    public void myTankEvent(RealTimeGameData resource) {
         RealTimeGameData data = context.getGameData();
         for (int i = 0; i < resource.getMyTanks().size(); i++) {
             MyTank myTank = resource.getMyTanks().get(i);
@@ -351,7 +349,7 @@ public class GameEventService {
     /**
      * 下一关
      */
-    public void nextGame(GameResource resource) {
+    public void nextGame(RealTimeGameData resource) {
         RealTimeGameData data = context.getGameData();
 
         resource.setMap(LevelEnum.getByLevel(data.getLevel()).getMap());
@@ -377,7 +375,7 @@ public class GameEventService {
      *
      * @param resource .getEnemies() 敌人坦克容量
      */
-    public void gameEventStop(GameResource resource) {
+    public void gameEventStop(RealTimeGameData resource) {
         RealTimeGameData data = context.getGameData();
 
         for (int i = 0; i < resource.getMyTanks().size(); i++) {

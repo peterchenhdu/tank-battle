@@ -5,7 +5,6 @@
 package cn.edu.hdu.tankbattle.service;
 
 import cn.edu.hdu.tankbattle.context.GameContext;
-import cn.edu.hdu.tankbattle.dto.GameResource;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.util.RefUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,24 +32,22 @@ public class CommandService {
 
     public void stop() {
         RealTimeGameData gameData = context.getGameData();
-        GameResource resource = gameData.getGameResource();
-        commond.gameEventStop(resource);
+        commond.gameEventStop(gameData);
     }
 
     public void start() {
         RealTimeGameData gameData = context.getGameData();
-        GameResource resource = gameData.getGameResource();
         if (!gameData.isStart()) { // 还没开始
             context.startGame();// 已经开始了
             //this.setVisible(true);
         } else if (!gameData.isStop()
                 && gameData.getMyTankNum() != 0) {
             // 暂停
-            commond.gameEventStop(resource);
+            commond.gameEventStop(gameData);
             JOptionPane.showMessageDialog(null, "游戏已经开始", "提示",
                     JOptionPane.INFORMATION_MESSAGE);
             // 恢复游戏
-            commond.gameEventStop(resource);
+            commond.gameEventStop(gameData);
         } else if (gameData.isStop()) {
             JOptionPane.showMessageDialog(null, "游戏已经开始", "提示",
                     JOptionPane.INFORMATION_MESSAGE);
@@ -62,9 +59,8 @@ public class CommandService {
 
     public void exit() {
         RealTimeGameData gameData = context.getGameData();
-        GameResource resource = gameData.getGameResource();
         // 暂停游戏
-        commond.gameEventStop(resource);
+        commond.gameEventStop(gameData);
         int select = JOptionPane.showConfirmDialog(null, "退出游戏吗？", "退出确认",
                 JOptionPane.YES_NO_OPTION);
         if (select == JOptionPane.OK_OPTION) {
@@ -72,17 +68,16 @@ public class CommandService {
             System.exit(0);
         } else {
             // 恢复游戏
-            commond.gameEventStop(resource);
+            commond.gameEventStop(gameData);
         }
     }
 
     public void again() {
         RealTimeGameData gameData = context.getGameData();
-        GameResource resource = gameData.getGameResource();
         if (gameData.isStart()) {
             if (gameData.isStop()) {
                 // 先恢复
-                commond.gameEventStop(resource);
+                commond.gameEventStop(gameData);
             }
 
             int select = JOptionPane.showConfirmDialog(null,
@@ -91,7 +86,7 @@ public class CommandService {
             if (select == JOptionPane.OK_OPTION) {
                 if (gameData.isStart()) {
                     // 恢复游戏
-                    commond.gameEventStop(resource);
+                    commond.gameEventStop(gameData);
                 }
                 context.startLevel(gameData.getLevel());
             }
@@ -120,10 +115,9 @@ public class CommandService {
 
     public void selectLevel(int level) {
         RealTimeGameData gameData = context.getGameData();
-        GameResource resource = gameData.getGameResource();
         if (gameData.isStart()) {
             if (!gameData.isStop()) {// 暂停游戏
-                commond.gameEventStop(resource);
+                commond.gameEventStop(gameData);
             }
             int select = JOptionPane.showConfirmDialog(null,
                     "您选择的是第" + level + "关，点击确定开始游戏", "选择确认",
@@ -131,13 +125,13 @@ public class CommandService {
             if (select == JOptionPane.OK_OPTION) {
                 if (gameData.isStart()) {
                     // 恢复游戏
-                    commond.gameEventStop(resource);
+                    commond.gameEventStop(gameData);
                 }
                 context.startLevel(level);
             } else {
                 if (gameData.isStart()) {
                     // 恢复游戏
-                    commond.gameEventStop(resource);
+                    commond.gameEventStop(gameData);
                 }
             }
         } else {

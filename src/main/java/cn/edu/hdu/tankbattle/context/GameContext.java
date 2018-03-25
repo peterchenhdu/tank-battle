@@ -12,12 +12,10 @@ import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.enums.LevelEnum;
 import cn.edu.hdu.tankbattle.model.EnemyTank;
 import cn.edu.hdu.tankbattle.model.MyTank;
-import cn.edu.hdu.tankbattle.model.Tank;
 import cn.edu.hdu.tankbattle.thread.executor.TaskExecutor;
 import cn.edu.hdu.tankbattle.thread.task.GameUpdateTask;
 import cn.edu.hdu.tankbattle.listener.MainFrameKeyListener;
 import cn.edu.hdu.tankbattle.listener.MenuActionListener;
-import cn.edu.hdu.tankbattle.dto.GameResource;
 import cn.edu.hdu.tankbattle.view.frame.GameFrame;
 import cn.edu.hdu.tankbattle.view.menubar.TankBattleMenuBar;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
@@ -103,26 +101,21 @@ public class GameContext {
 
 
     public void initGameData(int level) {
-
-        GameResource resource = new GameResource();
-
-
-        resource.reset();
+        gameData = new RealTimeGameData();
 
         for (int i = 0; i < GameConstants.INIT_ENEMY_TANK_IN_MAP_NUM; i++) {
             EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, DirectionEnum.SOUTH);
             enemy.setLocation(i);
-            resource.getEnemies().add(enemy);
+            gameData.getEnemies().add(enemy);
         }
         for (int i = 0; i < 1; i++) {
             MyTank myTank = new MyTank(300, 620, DirectionEnum.NORTH);
-            resource.getMyTanks().add(myTank);
+            gameData.getMyTanks().add(myTank);
         }
 
-        resource.setMap(LevelEnum.getByLevel(level).getMap());
+        gameData.setMap(LevelEnum.getByLevel(level).getMap());
 
-        gameData = new RealTimeGameData();
-        gameData.setGameResource(resource);
+
         gameData.setEnemyTankNum(GameConstants.INIT_ENEMY_TANK_NUM);
         gameData.setMyTankNum(GameConstants.INIT_MY_TANK_NUM);
         gameData.setMyBulletNum(GameConstants.MY_TANK_INIT_BULLET_NUM);
@@ -135,23 +128,22 @@ public class GameContext {
 
 
     public void reset(int level) {
-        GameResource resource = gameData.getGameResource();
-        resource.reset();
+        gameData = new RealTimeGameData();
+        gameData.reset();
 
         for (int i = 0; i < GameConstants.INIT_ENEMY_TANK_IN_MAP_NUM; i++) {
             EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, DirectionEnum.SOUTH);
             enemy.setLocation(i);
-            resource.getEnemies().add(enemy);
+            gameData.getEnemies().add(enemy);
         }
         for (int i = 0; i < 1; i++) {
             MyTank myTank = new MyTank(300, 620, DirectionEnum.NORTH);
-            resource.getMyTanks().add(myTank);
+            gameData.getMyTanks().add(myTank);
         }
 
-        resource.setMap(LevelEnum.getByLevel(level).getMap());
+        gameData.setMap(LevelEnum.getByLevel(level).getMap());
 
-        gameData = new RealTimeGameData();
-        gameData.setGameResource(resource);
+
         gameData.setEnemyTankNum(GameConstants.INIT_ENEMY_TANK_NUM);
         gameData.setMyTankNum(GameConstants.INIT_MY_TANK_NUM);
         gameData.setMyBulletNum(GameConstants.MY_TANK_INIT_BULLET_NUM);
@@ -165,8 +157,8 @@ public class GameContext {
 
     public void startGame() {
         gameData.setStart(Boolean.TRUE);
-        gameData.getGameResource().getEnemies().forEach(t -> t.setActivate(Boolean.TRUE));
-        gameData.getGameResource().getMyTanks().forEach(t -> t.setActivate(Boolean.TRUE));
+        gameData.getEnemies().forEach(t -> t.setActivate(Boolean.TRUE));
+        gameData.getMyTanks().forEach(t -> t.setActivate(Boolean.TRUE));
     }
 
     public void startLevel(int level) {

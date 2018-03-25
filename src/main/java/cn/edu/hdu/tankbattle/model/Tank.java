@@ -53,6 +53,7 @@ public class Tank extends Stuff {
      * 东西第二个类型属性
      */
     private TankTypeEnum tankType;
+
     /**
      * 坦克的构造方法
      *
@@ -153,7 +154,6 @@ public class Tank extends Stuff {
                 this.goWest();
         }
     }
-
 
 
     public int getSpeed() {

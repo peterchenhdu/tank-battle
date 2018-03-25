@@ -7,7 +7,6 @@ package cn.edu.hdu.tankbattle.thread.task;
 import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.service.GameEventService;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
-import cn.edu.hdu.tankbattle.dto.GameResource;
 import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 import org.slf4j.Logger;
@@ -34,7 +33,6 @@ public class GameUpdateTask implements Runnable {
         GamePanel panel = gameContext.getGamePanel();
         RealTimeGameData gameData = gameContext.getGameData();
         GameEventService control = gameContext.getControl();
-        GameResource resource = gameData.getGameResource();
         // 每隔30毫秒重画
         while (true) {
             GameTimeUnit.sleepMillis(30);
@@ -52,7 +50,7 @@ public class GameUpdateTask implements Runnable {
                     if (gameData.getMyTankNum() >= 1 && gameData.getLevel() <= 4) {
                         gameData.setLevel(gameData.getLevel() + 1);
                         gameData.setDy(600);
-                        control.nextGame(resource);
+                        control.nextGame(gameData);
                     }
                 }
                 if (!gameData.isStop() && gameData.getDy() == 600) {
@@ -60,7 +58,7 @@ public class GameUpdateTask implements Runnable {
                     control.refreshState();
                     control.doBulletEvent();
                     control.doOverlapJudge(); // 判断坦克间是否出现重叠
-                    control.myTankEvent(resource);
+                    control.myTankEvent(gameData);
 
                 }
             } else {
