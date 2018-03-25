@@ -30,17 +30,5 @@ public class MyTank extends Tank {
         this.setBlood(10);
     }
 
-    /**
-     * 判断是否重叠
-     *
-     * @param enemies 敌人坦克容量
-     * @return 是否重叠
-     */
-    public boolean isOverlap(Vector<EnemyTank> enemies) {
-        for (int i = 0; i < enemies.size(); i++) { // 依次取出每个敌人坦克
-            if (this.Overlap(enemies.get(i), 40))// 如果这两辆坦克重叠
-                return true; // 则返回真
-        }
-        return false; // 不重叠返回假
-    }
+
 }

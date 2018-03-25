@@ -161,53 +161,7 @@ public class Tank extends Stuff {
         }
     }
 
-    /**
-     * 判断坦克是否与另一个事物重叠
-     *
-     * @param stuff  东西对象
-     * @param length 两者之间的最短距离
-     * @return 是否重叠
-     */
-    public boolean Overlap(Stuff stuff, int length) {
-        boolean b = false;
-        int x = stuff.getX();
-        int y = stuff.getY();
-        if (this.getDirect() == DirectionEnum.NORTH) {
-            this.setY(this.getY() - this.getSpeed()); // 先假设该坦克往前移动一步
-            if (Math.abs(this.getY() - y) < length
-                    && Math.abs(this.getX() - x) < length) { // 如果在远离，此时他想逃出重叠，所以就设b为false，让它能够动
-                b = true;
-                this.setY(this.getY() + this.getSpeed());
-            } else {
-                this.setY(this.getY() + this.getSpeed());
-            }
-        }
-        if (this.getDirect() == DirectionEnum.SOUTH) {
-            this.setY(this.getY() + this.getSpeed()); // 先假设该坦克往前移动一步
-            if (Math.abs(this.getY() - y) < length
-                    && Math.abs(this.getX() - x) < length) {
-                b = true;
-            }
-            this.setY(this.getY() - this.getSpeed());
-        }
-        if (this.getDirect() == DirectionEnum.EAST) {
-            this.setX(this.getX() + this.getSpeed());
-            if (Math.abs(this.getY() - y) < length
-                    && Math.abs(this.getX() - x) < length) {
-                b = true;
-            }
-            this.setX(this.getX() - this.getSpeed());
-        }
-        if (this.getDirect() == DirectionEnum.WEST) {
-            this.setX(this.getX() - this.getSpeed());
-            if (Math.abs(this.getY() - y) < length
-                    && Math.abs(this.getX() - x) < length) {
-                b = true;
-            }
-            this.setX(this.getX() + this.getSpeed());
-        }
-        return b;
-    }
+
 
     public int getSpeed() {
         return speed;

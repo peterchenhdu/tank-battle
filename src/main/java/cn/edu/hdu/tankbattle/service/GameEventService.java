@@ -46,7 +46,8 @@ public class GameEventService {
     @Autowired
     private ThreadPoolTaskExecutor taskExecutor;
     @Autowired
-    private TankEventService enemyTankEventService;
+    private TankEventService tankEventService;
+
 
     private Boolean isHitting(Bullet bullet, Stuff stuff) {
         return (Math.abs(bullet.getX() - stuff.getX()) <= (stuff.getWidth() + bullet.getWidth()) / 2 &&
@@ -91,7 +92,7 @@ public class GameEventService {
         myTanks.forEach(myTank ->
                 enemies.forEach(enemyTank -> {
 
-                    enemyTankEventService.enemyFindAndKill(enemyTank, myTank, map); // 让敌人坦克能够发现我的坦克并开炮
+                    tankEventService.enemyFindAndKill(enemyTank, myTank, map); // 让敌人坦克能够发现我的坦克并开炮
 
                     enemyTank.getBullets().forEach(eb -> {
                         if (isHitting(eb, myTank)) {
@@ -148,17 +149,17 @@ public class GameEventService {
             myTank.setOverlapNo(false);
             myTank.setOverlapYes(false);
 
-            if (myTank.isOverlap(enemies)) { // 判断我的坦克是否与敌人坦克重叠
+            if (tankEventService.isMyTankOverlap(myTank, enemies)) { // 判断我的坦克是否与敌人坦克重叠
                 myTank.setOverlapYes(true);
             }
 
-            bricks.stream().filter(brick -> myTank.Overlap(brick, 20 + 10))
+            bricks.stream().filter(brick -> tankEventService.isTankOverlap(myTank, brick, 20 + 10))
                     .forEach(brick -> myTank.setOverlapYes(true));
 
-            irons.stream().filter(iron -> myTank.Overlap(iron, 20 + 10))
+            irons.stream().filter(iron -> tankEventService.isTankOverlap(myTank, iron, 20 + 10))
                     .forEach(iron -> myTank.setOverlapNo(true));
 
-            waters.stream().filter(water -> myTank.Overlap(water, 20 + 10))
+            waters.stream().filter(water -> tankEventService.isTankOverlap(myTank, water, 20 + 10))
                     .forEach(water -> myTank.setOverlapNo(true));
         });
 
@@ -167,12 +168,12 @@ public class GameEventService {
             enemyTank.setOverlapYes(false);
             enemyTank.setFrontInfomation(StuffTypeEnum.INVALID);
 
-            if (enemyTankEventService.isOverlap(enemyTank, enemies, myTanks)) {
+            if (tankEventService.isOverlap(enemyTank, enemies, myTanks)) {
                 enemyTank.setOverlapYes(true);
             }
 
 
-            bricks.stream().filter(brick -> enemyTank.Overlap(brick, 20 + 10))
+            bricks.stream().filter(brick -> tankEventService.isTankOverlap(enemyTank, brick, 20 + 10))
                     .forEach(brick -> {
                         if ((Math.abs(brick.getX() - enemyTank.getX()) <= 10 && (enemyTank
                                 .getDirect() == DirectionEnum.SOUTH || enemyTank
@@ -190,13 +191,13 @@ public class GameEventService {
 
                     });
 
-            irons.stream().filter(iron -> enemyTank.Overlap(iron, 20 + 10))
+            irons.stream().filter(iron -> tankEventService.isTankOverlap(enemyTank, iron, 20 + 10))
                     .forEach(iron -> {
                         enemyTank.setFrontInfomation(StuffTypeEnum.IRON);
                         enemyTank.setOverlapNo(true);
                     });
 
-            waters.stream().filter(water -> enemyTank.Overlap(water, 20 + 10))
+            waters.stream().filter(water -> tankEventService.isTankOverlap(enemyTank, water, 20 + 10))
                     .forEach(water -> {
                         enemyTank.setOverlapNo(true);
                         enemyTank.setOverlapNo(true);

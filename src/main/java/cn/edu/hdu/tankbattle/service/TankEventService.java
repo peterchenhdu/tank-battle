@@ -5,10 +5,7 @@
 package cn.edu.hdu.tankbattle.service;
 
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
-import cn.edu.hdu.tankbattle.model.EnemyTank;
-import cn.edu.hdu.tankbattle.model.Iron;
-import cn.edu.hdu.tankbattle.model.MyTank;
-import cn.edu.hdu.tankbattle.model.Tank;
+import cn.edu.hdu.tankbattle.model.*;
 import cn.edu.hdu.tankbattle.model.map.Map;
 import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
 import org.springframework.stereotype.Service;
@@ -25,6 +22,68 @@ import java.util.Vector;
 public class TankEventService {
 
     /**
+     * 判断坦克是否与另一个事物重叠
+     *
+     * @param stuff  东西对象
+     * @param length 两者之间的最短距离
+     * @return 是否重叠
+     */
+    public boolean isTankOverlap(Tank tank, Stuff stuff, int length) {
+        boolean b = false;
+        int x = stuff.getX();
+        int y = stuff.getY();
+        if (tank.getDirect() == DirectionEnum.NORTH) {
+            tank.setY(tank.getY() - tank.getSpeed()); // 先假设该坦克往前移动一步
+            if (Math.abs(tank.getY() - y) < length
+                    && Math.abs(tank.getX() - x) < length) { // 如果在远离，此时他想逃出重叠，所以就设b为false，让它能够动
+                b = true;
+                tank.setY(tank.getY() + tank.getSpeed());
+            } else {
+                tank.setY(tank.getY() + tank.getSpeed());
+            }
+        }
+        if (tank.getDirect() == DirectionEnum.SOUTH) {
+            tank.setY(tank.getY() + tank.getSpeed()); // 先假设该坦克往前移动一步
+            if (Math.abs(tank.getY() - y) < length
+                    && Math.abs(tank.getX() - x) < length) {
+                b = true;
+            }
+            tank.setY(tank.getY() - tank.getSpeed());
+        }
+        if (tank.getDirect() == DirectionEnum.EAST) {
+            tank.setX(tank.getX() + tank.getSpeed());
+            if (Math.abs(tank.getY() - y) < length
+                    && Math.abs(tank.getX() - x) < length) {
+                b = true;
+            }
+            tank.setX(tank.getX() - tank.getSpeed());
+        }
+        if (tank.getDirect() == DirectionEnum.WEST) {
+            tank.setX(tank.getX() - tank.getSpeed());
+            if (Math.abs(tank.getY() - y) < length
+                    && Math.abs(tank.getX() - x) < length) {
+                b = true;
+            }
+            tank.setX(tank.getX() + tank.getSpeed());
+        }
+        return b;
+    }
+
+    /**
+     * 判断是否重叠
+     *
+     * @param enemies 敌人坦克容量
+     * @return 是否重叠
+     */
+    public boolean isMyTankOverlap(MyTank tank, Vector<EnemyTank> enemies) {
+        for (int i = 0; i < enemies.size(); i++) { // 依次取出每个敌人坦克
+            if (isTankOverlap(tank, enemies.get(i), 40))// 如果这两辆坦克重叠
+                return true; // 则返回真
+        }
+        return false; // 不重叠返回假
+    }
+
+    /**
      * 判断自己跟别的坦克是否重叠
      *
      * @param enemys  敌人坦克容量
@@ -34,14 +93,14 @@ public class TankEventService {
     public boolean isOverlap(EnemyTank enemy, Vector<EnemyTank> enemys, Vector<MyTank> myTanks) {
         for (int i = 0; i < enemys.size(); i++) { // 依次取出每一个敌人坦克
             if (enemy != enemys.get(i)) {
-                if (enemy.Overlap(enemys.get(i), 40)) { // 判断这两辆坦克是否重叠
+                if (isTankOverlap(enemy, enemys.get(i), 40)) { // 判断这两辆坦克是否重叠
                     enemy.setOverlapNo(true);
                     return true; // 一旦有重叠则返回真
                 }
             }
         }
         for (int j = 0; j < myTanks.size(); j++) { // 依次取出每个我的坦克
-            if (enemy.Overlap(myTanks.get(j), 40)) { // 判断这两辆坦克是否重叠
+            if (isTankOverlap(enemy, myTanks.get(j), 40)) { // 判断这两辆坦克是否重叠
                 enemy.setOverlapYes(true); // 面对我的坦克，敌人坦克开炮过去
                 return true; // 一旦有重叠则返回真
             }
