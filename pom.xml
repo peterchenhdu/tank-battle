@@ -46,7 +46,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>cn.edu.hdu.tankbattle.StartGame</mainClass>
+                            <mainClass>cn.edu.hdu.tankbattle.TankBattleApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
