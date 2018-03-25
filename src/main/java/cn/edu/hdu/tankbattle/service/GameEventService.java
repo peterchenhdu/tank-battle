@@ -166,7 +166,7 @@ public class GameEventService {
         enemies.stream().forEach(enemyTank -> {
             enemyTank.setOverlapNo(false);
             enemyTank.setOverlapYes(false);
-            enemyTank.setFrontInfomation(StuffTypeEnum.INVALID);
+            enemyTank.setFrontStuff(StuffTypeEnum.INVALID);
 
             if (tankEventService.isOverlap(enemyTank, enemies, myTanks)) {
                 enemyTank.setOverlapYes(true);
@@ -182,7 +182,7 @@ public class GameEventService {
                                 - enemyTank.getY()) <= 10 && (enemyTank
                                 .getDirect() == DirectionEnum.EAST || enemyTank
                                 .getDirect() == DirectionEnum.WEST))) {
-                            enemyTank.setFrontInfomation(StuffTypeEnum.BRICK);
+                            enemyTank.setFrontStuff(StuffTypeEnum.BRICK);
                             enemyTank.setOverlapYes(true);
                             enemyTank.setShot(true);
                         } else {
@@ -193,7 +193,7 @@ public class GameEventService {
 
             irons.stream().filter(iron -> tankEventService.isTankOverlap(enemyTank, iron, 20 + 10))
                     .forEach(iron -> {
-                        enemyTank.setFrontInfomation(StuffTypeEnum.IRON);
+                        enemyTank.setFrontStuff(StuffTypeEnum.IRON);
                         enemyTank.setOverlapNo(true);
                     });
 

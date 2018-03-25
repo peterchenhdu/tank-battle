@@ -11,6 +11,7 @@ import java.util.Vector;
 
 import cn.edu.hdu.tankbattle.constant.GameConstants;
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
+import cn.edu.hdu.tankbattle.enums.TankTypeEnum;
 import cn.edu.hdu.tankbattle.model.map.Map;
 import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
 
@@ -56,7 +57,7 @@ public class EnemyTank extends Tank {
     public EnemyTank(int x, int y, DirectionEnum direct) {
         super(x, y, direct);
         this.setSpeed(4);
-        this.setType2(Tank.ENEMY);
+        this.setTankType(TankTypeEnum.ENEMY);
         this.setDirect(DirectionEnum.NORTH);
         this.setColor(Color.red);
         this.setBlood(10);

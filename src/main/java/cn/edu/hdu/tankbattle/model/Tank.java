@@ -10,6 +10,7 @@ import java.util.Vector;
 import cn.edu.hdu.tankbattle.constant.GameConstants;
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
+import cn.edu.hdu.tankbattle.enums.TankTypeEnum;
 
 /**
  * Tank...
@@ -18,14 +19,6 @@ import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
  * @since 2011-02-10 19:29
  */
 public class Tank extends Stuff {
-    /**
-     * 我的坦克
-     */
-    public static final int MY = 0;
-    /**
-     * 敌人坦克
-     */
-    public static final int ENEMY = 1;
     /**
      * 坦克的颜色
      */
@@ -37,7 +30,7 @@ public class Tank extends Stuff {
     /**
      * 挡住坦克前面的东西
      */
-    private StuffTypeEnum frontInfomation = StuffTypeEnum.INVALID;
+    private StuffTypeEnum frontStuff = StuffTypeEnum.INVALID;
     /**
      * 坦克的子弹容量
      */
@@ -59,7 +52,7 @@ public class Tank extends Stuff {
     /**
      * 东西第二个类型属性
      */
-    private int type2;
+    private TankTypeEnum tankType;
     /**
      * 坦克的构造方法
      *
@@ -70,7 +63,7 @@ public class Tank extends Stuff {
     public Tank(int x, int y, DirectionEnum direct) {
         super(x, y);
         this.setDirect(direct);
-        this.bullets = new Vector<Bullet>();
+        this.bullets = new Vector<>();
         this.setType(StuffTypeEnum.TANK);
         this.setWidth(40);
         this.setHeight(40);
@@ -85,7 +78,7 @@ public class Tank extends Stuff {
         if (this.getY() > 20) {
             this.setY(this.getY() - this.speed);
         } else {
-            this.setFrontInfomation(StuffTypeEnum.IRON);
+            this.setFrontStuff(StuffTypeEnum.IRON);
         }
     }
 
@@ -97,7 +90,7 @@ public class Tank extends Stuff {
         if (this.getY() < GameConstants.GAME_PANEL_HEIGHT - 20) {
             this.setY(this.getY() + this.speed);
         } else {
-            this.setFrontInfomation(StuffTypeEnum.IRON); // 碰到边界就相当于碰到铁块
+            this.setFrontStuff(StuffTypeEnum.IRON); // 碰到边界就相当于碰到铁块
         }
     }
 
@@ -109,7 +102,7 @@ public class Tank extends Stuff {
         if (this.getX() > 20 && this.getY() <= GameConstants.GAME_PANEL_HEIGHT - 20) {
             this.setX(this.getX() - this.speed);
         } else {
-            this.setFrontInfomation(StuffTypeEnum.IRON);
+            this.setFrontStuff(StuffTypeEnum.IRON);
         }
     }
 
@@ -122,7 +115,7 @@ public class Tank extends Stuff {
                 && this.getY() <= GameConstants.GAME_PANEL_HEIGHT - 20) {
             this.setX(this.getX() + this.speed);
         } else {
-            this.setFrontInfomation(StuffTypeEnum.IRON);
+            this.setFrontStuff(StuffTypeEnum.IRON);
         }
     }
 
@@ -211,12 +204,12 @@ public class Tank extends Stuff {
         this.isOverlapYes = isOverlapYes;
     }
 
-    public StuffTypeEnum getFrontInfomation() {
-        return frontInfomation;
+    public StuffTypeEnum getFrontStuff() {
+        return frontStuff;
     }
 
-    public void setFrontInfomation(StuffTypeEnum frontInfomation) {
-        this.frontInfomation = frontInfomation;
+    public void setFrontStuff(StuffTypeEnum frontStuff) {
+        this.frontStuff = frontStuff;
     }
 
     public Boolean activate() {
@@ -226,11 +219,12 @@ public class Tank extends Stuff {
     public void setActivate(Boolean activate) {
         isActivate = activate;
     }
-    public int getType2() {
-        return type2;
+
+    public TankTypeEnum getTankType() {
+        return tankType;
     }
 
-    public void setType2(int type2) {
-        this.type2 = type2;
+    public void setTankType(TankTypeEnum tankType) {
+        this.tankType = tankType;
     }
 }

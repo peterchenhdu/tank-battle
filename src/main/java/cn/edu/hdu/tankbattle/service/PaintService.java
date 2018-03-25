@@ -17,6 +17,7 @@ import cn.edu.hdu.tankbattle.dto.GameResource;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
+import cn.edu.hdu.tankbattle.enums.TankTypeEnum;
 import cn.edu.hdu.tankbattle.model.Bomb;
 import cn.edu.hdu.tankbattle.model.Brick;
 import cn.edu.hdu.tankbattle.model.Bullet;
@@ -240,7 +241,7 @@ public class PaintService {
 //                2, 11, false);
 
         Image image;
-        if (tank.getType2() == Tank.MY) {
+        if (tank.getTankType() == TankTypeEnum.MY) {
             g.setColor(Color.green);
             image = TankGameImages.myTankImg[DirectionEnum.NORTH.getKey()];// 初始化图片
         } else {
@@ -291,7 +292,7 @@ public class PaintService {
 //                false);
 
         Image image;
-        if (tank.getType2() == Tank.MY) {
+        if (tank.getTankType() == TankTypeEnum.MY) {
             g.setColor(Color.green);
             image = TankGameImages.myTankImg[DirectionEnum.SOUTH.getKey()];// 初始化图片
         } else {
@@ -341,7 +342,7 @@ public class PaintService {
 //                y - 2, 2, 4, false);
 
         Image image;
-        if (tank.getType2() == Tank.MY) {
+        if (tank.getTankType() == TankTypeEnum.MY) {
             image = TankGameImages.myTankImg[DirectionEnum.WEST.getKey()];// 初始化图片
             g.setColor(Color.green);
         } else {
@@ -391,7 +392,7 @@ public class PaintService {
 //                2, 4, false);
 
         Image image;
-        if (tank.getType2() == Tank.MY) {
+        if (tank.getTankType() == TankTypeEnum.MY) {
             image = TankGameImages.myTankImg[DirectionEnum.EAST.getKey()];// 初始化图片
             g.setColor(Color.green);
         } else {

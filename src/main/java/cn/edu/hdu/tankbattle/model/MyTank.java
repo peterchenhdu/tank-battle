@@ -5,6 +5,7 @@
 package cn.edu.hdu.tankbattle.model;
 
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
+import cn.edu.hdu.tankbattle.enums.TankTypeEnum;
 
 import java.awt.Color;
 import java.util.Vector;
@@ -26,7 +27,7 @@ public class MyTank extends Tank {
     public MyTank(int x, int y, DirectionEnum direct) {
         super(x, y, direct);
         this.setColor(Color.yellow);
-        this.setType2(Tank.MY);
+        this.setTankType(TankTypeEnum.MY);
         this.setBlood(10);
     }
 
