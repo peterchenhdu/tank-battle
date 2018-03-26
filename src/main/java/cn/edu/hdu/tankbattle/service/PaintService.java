@@ -139,15 +139,15 @@ public class PaintService {
      * 画出敌人坦克和子弹
      *
      * @param g      Graphics
-     * @param enemys 敌人坦克容量
+     * @param enemies 敌人坦克容量
      * @param panel  被画的面板
      */
-    public void drawEnemyTank(Graphics g, Vector<EnemyTank> enemys, JPanel panel) {
-        for (int i = 0; i < enemys.size(); i++) {
-            this.drawStuff(g, enemys.get(i), panel); // 画出敌人的坦克
-            for (int j = 0; j < enemys.get(i).getBullets().size(); j++) {
-                if (enemys.get(i).getBullets().get(j) != null) {
-                    Bullet eb = enemys.get(i).getBullets().get(j);
+    public void drawEnemyTank(Graphics g, Vector<EnemyTank> enemies, JPanel panel) {
+        for (int i = 0; i < enemies.size(); i++) {
+            this.drawStuff(g, enemies.get(i), panel); // 画出敌人的坦克
+            for (int j = 0; j < enemies.get(i).getBullets().size(); j++) {
+                if (enemies.get(i).getBullets().get(j) != null) {
+                    Bullet eb = enemies.get(i).getBullets().get(j);
                     g.drawImage(TankGameImages.bullet, eb.getX() - 2,
                             eb.getY() - 2, 4, 4, panel);
                 }

@@ -167,7 +167,7 @@ public class GameEventService {
             enemyTank.setOverlapYes(false);
             enemyTank.setFrontStuff(StuffTypeEnum.INVALID);
 
-            if (tankEventService.isOverlap(enemyTank, enemies, myTanks)) {
+            if (tankEventService.isEnemyTankOverlap(enemyTank, enemies, myTanks)) {
                 enemyTank.setOverlapYes(true);
             }
 

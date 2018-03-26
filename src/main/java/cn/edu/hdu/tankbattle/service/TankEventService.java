@@ -86,14 +86,14 @@ public class TankEventService {
     /**
      * 判断自己跟别的坦克是否重叠
      *
-     * @param enemys  敌人坦克容量
+     * @param enemies  敌人坦克容量
      * @param myTanks 我的坦克容量
      * @return 是否重叠
      */
-    public boolean isOverlap(EnemyTank enemy, Vector<EnemyTank> enemys, Vector<MyTank> myTanks) {
-        for (int i = 0; i < enemys.size(); i++) { // 依次取出每一个敌人坦克
-            if (enemy != enemys.get(i)) {
-                if (isTankOverlap(enemy, enemys.get(i), 40)) { // 判断这两辆坦克是否重叠
+    public boolean isEnemyTankOverlap(EnemyTank enemy, Vector<EnemyTank> enemies, Vector<MyTank> myTanks) {
+        for (int i = 0; i < enemies.size(); i++) { // 依次取出每一个敌人坦克
+            if (enemy != enemies.get(i)) {
+                if (isTankOverlap(enemy, enemies.get(i), 40)) { // 判断这两辆坦克是否重叠
                     enemy.setOverlapNo(true);
                     return true; // 一旦有重叠则返回真
                 }
