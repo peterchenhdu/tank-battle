@@ -1,7 +1,9 @@
 language: java
+
 jdk:
-- oraclejdk8
+  - oraclejdk8
 
 notifications:
   email:
-- 928651551@qq.com
+  - 928651551@qq.com
+
