@@ -119,6 +119,17 @@ public class Tank extends Stuff {
             this.setFrontStuff(StuffTypeEnum.IRON);
         }
     }
+    /**
+     * 坦克往东走
+     */
+    public void moveEast() {
+        if (this.getX() < GameConstants.GAME_PANEL_WIDTH - 20
+                && this.getY() <= GameConstants.GAME_PANEL_HEIGHT - 20) {
+            this.setX(this.getX() + this.speed);
+        } else {
+            this.setFrontStuff(StuffTypeEnum.IRON);
+        }
+    }
 
     /**
      * 坦克往指定的方向走
