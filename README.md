@@ -1,7 +1,8 @@
 # Java坦克大战游戏
 ---
 
-[![build status][travis-image]][travis-url]
+[![Build Status][travis-image]][travis-url]
+[![Coverage Status](https://coveralls.io/repos/github/peterchenhdu/tankbattle/badge.svg?branch=master)](https://coveralls.io/github/peterchenhdu/tankbattle?branch=master)
 
 [travis-image]: https://travis-ci.org/peterchenhdu/tankbattle.svg?branch=master
 [travis-url]: https://travis-ci.org/peterchenhdu/tankbattle
