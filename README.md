@@ -1,5 +1,5 @@
 
-# <img width="30" src="https://raw.githubusercontent.com/peterchenhdu/tankbattle/master/doc/imgs/ICON.gif"> Java坦克大战游戏 <img width="30" src="https://raw.githubusercontent.com/peterchenhdu/tankbattle/master/doc/imgs/ICON.gif">
+# <img width="20" src="https://raw.githubusercontent.com/peterchenhdu/tankbattle/master/doc/imgs/ICON.gif"> Java坦克大战游戏 <img width="20" src="https://raw.githubusercontent.com/peterchenhdu/tankbattle/master/doc/imgs/ICON.gif">
 ---
 
 [![Build Status][travis-image]][travis-url]
