@@ -18,7 +18,6 @@
 
 
 ## 游戏运行效果图
-<img width="800" src="https://raw.githubusercontent.com/peterchenhdu/tankbattle/master/doc/imgs/start.jpg">
 ![start][start-image]
 ![l1][l1-image]
 ![l2][l2-image]
