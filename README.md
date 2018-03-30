@@ -1,6 +1,6 @@
 <p align="center">
   <a href="http://ant.design">
-    <img width="230" src="https://raw.githubusercontent.com/peterchenhdu/tankbattle/master/doc/imgs/ICON.gif">
+    <img width="80" src="https://raw.githubusercontent.com/peterchenhdu/tankbattle/master/doc/imgs/ICON.gif">
   </a>
 </p>
 
