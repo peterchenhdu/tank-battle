@@ -1,4 +1,4 @@
-# Java坦克大战游戏.
+# Java坦克大战游戏，基于Spring Boot，JDK8，Swing组件开发，持续更新中...
 ---
 
 [![build status][travis-image]][travis-url]
