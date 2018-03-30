@@ -9,8 +9,8 @@
 
 
 ## 安装执行
-1、下载源码，在根目录执行maven命令mvn clean package，可在target目录下生成jar包，然后直接CMD下执行命令java -jar xxx.jar即可。<br/>
-2、或者直接用IDE(Eclipse或IDEA)导入源码，找到TankBattleApplication类，执行其main方法即可。<br/>
+###### 1、下载源码，在根目录执行maven命令mvn clean package，可在target目录下生成jar包，然后直接CMD下执行命令java -jar xxx.jar即可。
+###### 2、或者直接用IDE(Eclipse或IDEA)导入源码，找到TankBattleApplication类，执行其main方法即可。<br/>
 
 
 ## 效果图
@@ -31,5 +31,4 @@
 tankbattle is released under the MIT license.
 
 ## 其它说明
-<br/>
 http://www.cnblogs.com/chenpi/p/6106151.html<br/>
