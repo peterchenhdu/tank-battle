@@ -1,20 +1,22 @@
-# 坦克大战游戏 Java版 -tank battle game, write by java.
+# Java坦克大战游戏
 ---
 
-[![build status][travis-image]][travis-url]
+[![Build Status][travis-image]][travis-url]
+[![Coverage Status](https://coveralls.io/repos/github/peterchenhdu/tankbattle/badge.svg?branch=master)](https://coveralls.io/github/peterchenhdu/tankbattle?branch=master)
+[![Dependency Status](https://www.versioneye.com/user/projects/5abdf5830fb24f4489395ea5/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5abdf5830fb24f4489395ea5)
 
 [travis-image]: https://travis-ci.org/peterchenhdu/tankbattle.svg?branch=master
 [travis-url]: https://travis-ci.org/peterchenhdu/tankbattle
 
-
+## 介绍
+###### 基于Spring Boot，JDK8，Swing组件开发，持续更新中...
 
 ## 安装执行
-1、执行maven命令clean package，可在target目录下生成jar包，直接执行jar包即可。<br/>
-clean package<br/>
-2、或者直接用eclipse导入源码，找到StartGame类，右键run as Java Application..如发现“找不到或无法加载主类”，请清理下工程。<br/>
+###### 1、下载源码，在根目录执行maven命令mvn clean package，可在target目录下生成jar包，然后直接CMD下执行命令java -jar xxx.jar即可。
+###### 2、或者直接用IDE(Eclipse或IDEA)导入源码，找到TankBattleApplication类，执行其main方法即可。
 
 
-## 效果图
+## 游戏运行效果图
 ![start][start-image]
 ![l1][l1-image]
 ![l2][l2-image]
@@ -29,10 +31,7 @@ clean package<br/>
 
 ## License
 
-tankbattle is released under the MIT license.
+TankBattle Game is released under the MIT license.
 
-## Others
-<br/>
-http://pichenhdu.iteye.com/blog/903096<br/>
-<br/>
-http://www.cnblogs.com/chenpi/p/6106151.html<br/>
+## 其它说明
+http://www.cnblogs.com/chenpi/p/6106151.html
