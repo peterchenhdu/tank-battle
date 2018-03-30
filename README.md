@@ -10,7 +10,7 @@
 [travis-url]: https://travis-ci.org/peterchenhdu/tankbattle
 
 ## 介绍
-###### 基于Spring Boot，JDK8，Swing组件开发，持续更新中...
+###### Java坦克大战游戏，基于Spring Boot，JDK8，Swing组件开发，有一些Bug，还在持续更新完善中...
 
 ## 安装执行
 ###### 1、下载源码，在根目录执行maven命令mvn clean package，可在target目录下生成jar包，然后直接CMD下执行命令java -jar xxx.jar即可。
