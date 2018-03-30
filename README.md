@@ -3,6 +3,7 @@
 
 [![Build Status][travis-image]][travis-url]
 [![Coverage Status](https://coveralls.io/repos/github/peterchenhdu/tankbattle/badge.svg?branch=master)](https://coveralls.io/github/peterchenhdu/tankbattle?branch=master)
+[![Dependency Status](https://www.versioneye.com/user/projects/5abdf5830fb24f4489395ea5/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5abdf5830fb24f4489395ea5)
 
 [travis-image]: https://travis-ci.org/peterchenhdu/tankbattle.svg?branch=master
 [travis-url]: https://travis-ci.org/peterchenhdu/tankbattle
