@@ -24,11 +24,11 @@
 ![l3][l3-image]
 ![l4][l4-image]
 
-[start-image]: https://github.com/peterchenhdu/tankbattle/blob/master/doc/imgs/start.jpg
-[l1-image]: https://github.com/peterchenhdu/tankbattle/blob/master/doc/imgs/level1.jpg
-[l2-image]: https://github.com/peterchenhdu/tankbattle/blob/master/doc/imgs/level2.jpg
-[l3-image]: https://github.com/peterchenhdu/tankbattle/blob/master/doc/imgs/level3.jpg
-[l4-image]: https://github.com/peterchenhdu/tankbattle/blob/master/doc/imgs/level4.jpg
+[start-image]: https://raw.githubusercontent.com/peterchenhdu/tankbattle/master/doc/imgs/start.jpg
+[l1-image]: https://raw.githubusercontent.com/peterchenhdu/tankbattle/master/doc/imgs/level1.jpg
+[l2-image]: https://raw.githubusercontent.com/peterchenhdu/tankbattle/master/doc/imgs/level2.jpg
+[l3-image]: https://raw.githubusercontent.com/peterchenhdu/tankbattle/master/doc/imgs/level3.jpg
+[l4-image]: https://raw.githubusercontent.com/peterchenhdu/tankbattle/master/doc/imgs/level4.jpg
 
 ## License
 
