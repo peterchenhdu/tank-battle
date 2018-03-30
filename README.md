@@ -4,7 +4,7 @@
   </a>
 </p>
 
-# Java坦克大战游戏
+# <img width="80" src="https://raw.githubusercontent.com/peterchenhdu/tankbattle/master/doc/imgs/ICON.gif">Java坦克大战游戏
 ---
 
 [![Build Status][travis-image]][travis-url]
