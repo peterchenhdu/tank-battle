@@ -116,7 +116,7 @@ public class GameContext {
         }
 
         gameData.setMap(LevelEnum.getByLevel(level).getMap());
-        //gameData.setMap(new Map(MapParser.getXmlMap()));
+        //gameData.setMap(new Map(MapParser.getMapFromXml()));
 
 
         gameData.setEnemyTankNum(GameConstants.INIT_ENEMY_TANK_NUM);
