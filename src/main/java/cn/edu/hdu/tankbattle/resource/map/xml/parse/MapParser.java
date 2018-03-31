@@ -92,18 +92,12 @@ public class MapParser {
             waters.appendChild(water);
         }
 
-        //step8:把刚刚建立的根节点添加到document对象中
         document.appendChild(rootElement);
-        //step9:获得一个TransformerFactory对象
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        //step10:获得一个Transformer对象
         Transformer transformer = transformerFactory.newTransformer();
-        //step11:把document对象用一个DOMSource对象包装起来
         Source xmlSource = new DOMSource(document);
         System.out.println(xmlSource);
-        //step12:建立一个存储目标对象
-        Result outputTarget = new StreamResult(new File("map1.xml"));
-        //step13:生成相应的xml文件
+        Result outputTarget = new StreamResult(new File("map.xml"));
         transformer.transform(xmlSource, outputTarget);
     }
 
