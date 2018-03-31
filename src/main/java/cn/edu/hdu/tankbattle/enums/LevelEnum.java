@@ -4,7 +4,7 @@
 
 package cn.edu.hdu.tankbattle.enums;
 
-import cn.edu.hdu.tankbattle.model.map.*;
+import cn.edu.hdu.tankbattle.resource.map.*;
 
 /**
  * Class Description...

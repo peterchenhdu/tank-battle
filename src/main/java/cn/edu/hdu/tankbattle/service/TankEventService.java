@@ -5,8 +5,8 @@
 package cn.edu.hdu.tankbattle.service;
 
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
-import cn.edu.hdu.tankbattle.model.*;
-import cn.edu.hdu.tankbattle.model.map.Map;
+import cn.edu.hdu.tankbattle.entity.*;
+import cn.edu.hdu.tankbattle.resource.map.Map;
 import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
 import org.springframework.stereotype.Service;
 

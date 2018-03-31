@@ -6,8 +6,7 @@ package cn.edu.hdu.tankbattle.thread.task;
 
 import cn.edu.hdu.tankbattle.constant.GameConstants;
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
-import cn.edu.hdu.tankbattle.model.EnemyTank;
-import cn.edu.hdu.tankbattle.model.Tank;
+import cn.edu.hdu.tankbattle.entity.EnemyTank;
 import cn.edu.hdu.tankbattle.service.TankEventService;
 import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
 

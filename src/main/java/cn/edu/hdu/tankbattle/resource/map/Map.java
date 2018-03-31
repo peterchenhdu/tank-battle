@@ -2,13 +2,14 @@
  * Copyright (c) 2011-2025 PiChen.
  */
 
-package cn.edu.hdu.tankbattle.model.map;
+package cn.edu.hdu.tankbattle.resource.map;
 
 import java.util.Vector;
 
-import cn.edu.hdu.tankbattle.model.Brick;
-import cn.edu.hdu.tankbattle.model.Iron;
-import cn.edu.hdu.tankbattle.model.Water;
+import cn.edu.hdu.tankbattle.entity.Brick;
+import cn.edu.hdu.tankbattle.entity.Iron;
+import cn.edu.hdu.tankbattle.entity.Water;
+import cn.edu.hdu.tankbattle.resource.map.xml.XmlMap;
 
 /**
  * map...
@@ -17,27 +18,30 @@ import cn.edu.hdu.tankbattle.model.Water;
  * @since 2011-02-10 19:29
  */
 public class Map {
-    /**
-     * 地图上的砖块
-     */
+
     private Vector<Brick> bricks;
-    /**
-     * 地图上的铁块
-     */
+
     private Vector<Iron> irons;
-    /**
-     * 地图上的水
-     */
+
     private Vector<Water> waters;
 
-    /**
-     * 构造方法
-     */
+
     public Map() {
         // TODO Auto-generated constructor stub
-        bricks = new Vector<Brick>();
-        irons = new Vector<Iron>();
-        waters = new Vector<Water>();
+        bricks = new Vector<>();
+        irons = new Vector<>();
+        waters = new Vector<>();
+    }
+
+    public Map(XmlMap xmlMap) {
+        bricks = new Vector<>();
+        irons = new Vector<>();
+        waters = new Vector<>();
+
+        xmlMap.getBricks().getBricks().forEach(b->bricks.add(new Brick(b.getX(), b.getY())));
+        xmlMap.getIrons().getIrons().forEach(i->irons.add(new Iron(i.getX(), i.getY())));
+        xmlMap.getWaters().getWaters().forEach(w->waters.add(new Water(w.getX(),w.getY())));
+
     }
 
     public Vector<Brick> getBricks() {

@@ -2,13 +2,12 @@
  * Copyright (c) 2011-2025 PiChen.
  */
 
-package cn.edu.hdu.tankbattle.model;
+package cn.edu.hdu.tankbattle.entity;
 
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 import cn.edu.hdu.tankbattle.enums.TankTypeEnum;
 
 import java.awt.Color;
-import java.util.Vector;
 
 /**
  * MyTank...

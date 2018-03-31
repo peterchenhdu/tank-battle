@@ -6,12 +6,14 @@ package cn.edu.hdu.tankbattle.context;
 
 import cn.edu.hdu.tankbattle.constant.GameConstants;
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
+import cn.edu.hdu.tankbattle.resource.map.Map;
+import cn.edu.hdu.tankbattle.resource.map.xml.parse.MapParser;
 import cn.edu.hdu.tankbattle.service.GameEventService;
 import cn.edu.hdu.tankbattle.service.PaintService;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.enums.LevelEnum;
-import cn.edu.hdu.tankbattle.model.EnemyTank;
-import cn.edu.hdu.tankbattle.model.MyTank;
+import cn.edu.hdu.tankbattle.entity.EnemyTank;
+import cn.edu.hdu.tankbattle.entity.MyTank;
 import cn.edu.hdu.tankbattle.thread.executor.TaskExecutor;
 import cn.edu.hdu.tankbattle.thread.task.GameUpdateTask;
 import cn.edu.hdu.tankbattle.listener.MainFrameKeyListener;
@@ -114,6 +116,7 @@ public class GameContext {
         }
 
         gameData.setMap(LevelEnum.getByLevel(level).getMap());
+        //gameData.setMap(new Map(MapParser.getXmlMap()));
 
 
         gameData.setEnemyTankNum(GameConstants.INIT_ENEMY_TANK_NUM);

@@ -2,18 +2,13 @@
  * Copyright (c) 2011-2025 PiChen.
  */
 
-package cn.edu.hdu.tankbattle.model;
+package cn.edu.hdu.tankbattle.entity;
 
 import java.awt.Color;
 import java.util.Timer;
-import java.util.TimerTask;
-import java.util.Vector;
 
-import cn.edu.hdu.tankbattle.constant.GameConstants;
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 import cn.edu.hdu.tankbattle.enums.TankTypeEnum;
-import cn.edu.hdu.tankbattle.model.map.Map;
-import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
 
 /**
  * EnemyTank...

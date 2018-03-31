@@ -4,10 +4,10 @@
 
 package cn.edu.hdu.tankbattle.dto;
 
-import cn.edu.hdu.tankbattle.model.Bomb;
-import cn.edu.hdu.tankbattle.model.EnemyTank;
-import cn.edu.hdu.tankbattle.model.MyTank;
-import cn.edu.hdu.tankbattle.model.map.Map;
+import cn.edu.hdu.tankbattle.entity.Bomb;
+import cn.edu.hdu.tankbattle.entity.EnemyTank;
+import cn.edu.hdu.tankbattle.entity.MyTank;
+import cn.edu.hdu.tankbattle.resource.map.Map;
 
 import java.util.Vector;
 

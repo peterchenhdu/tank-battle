@@ -2,7 +2,7 @@
  * Copyright (c) 2011-2025 PiChen.
  */
 
-package cn.edu.hdu.tankbattle.model.map;
+package cn.edu.hdu.tankbattle.resource.map;
 
 /**
  * map...

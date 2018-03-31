@@ -6,7 +6,7 @@ package cn.edu.hdu.tankbattle.thread.task;
 
 
 import cn.edu.hdu.tankbattle.constant.GameConstants;
-import cn.edu.hdu.tankbattle.model.Bullet;
+import cn.edu.hdu.tankbattle.entity.Bullet;
 import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
 
 /**

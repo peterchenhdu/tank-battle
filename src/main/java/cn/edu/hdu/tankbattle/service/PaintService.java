@@ -17,20 +17,19 @@ import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
 import cn.edu.hdu.tankbattle.enums.TankTypeEnum;
-import cn.edu.hdu.tankbattle.model.Bomb;
-import cn.edu.hdu.tankbattle.model.Brick;
-import cn.edu.hdu.tankbattle.model.Bullet;
-import cn.edu.hdu.tankbattle.model.EnemyTank;
-import cn.edu.hdu.tankbattle.model.Iron;
-import cn.edu.hdu.tankbattle.model.MyTank;
-import cn.edu.hdu.tankbattle.model.Stuff;
-import cn.edu.hdu.tankbattle.model.Tank;
-import cn.edu.hdu.tankbattle.model.TankGameImages;
-import cn.edu.hdu.tankbattle.model.Water;
-import cn.edu.hdu.tankbattle.model.map.Map;
+import cn.edu.hdu.tankbattle.entity.Bomb;
+import cn.edu.hdu.tankbattle.entity.Brick;
+import cn.edu.hdu.tankbattle.entity.Bullet;
+import cn.edu.hdu.tankbattle.entity.EnemyTank;
+import cn.edu.hdu.tankbattle.entity.Iron;
+import cn.edu.hdu.tankbattle.entity.MyTank;
+import cn.edu.hdu.tankbattle.entity.Stuff;
+import cn.edu.hdu.tankbattle.entity.Tank;
+import cn.edu.hdu.tankbattle.resource.TankGameImages;
+import cn.edu.hdu.tankbattle.entity.Water;
+import cn.edu.hdu.tankbattle.resource.map.Map;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 /**
@@ -476,11 +475,11 @@ public class PaintService {
             g.drawImage(TankGameImages.startImage, 0, 0, 800, 700, panel);
             g.drawImage(TankGameImages.font, 0, data.getKy(), panel);
             if (data.isIconSmile()) {
-                g.drawImage(TankGameImages.yct_smile1, data.getKx(), 45,
+                g.drawImage(TankGameImages.yctSmile1, data.getKx(), 45,
                         panel);
                 data.setIconSmile(false);
             } else {
-                g.drawImage(TankGameImages.yct_smile2, data.getKx(), 45,
+                g.drawImage(TankGameImages.yctSmile2, data.getKx(), 45,
                         panel);
                 data.setIconSmile(true);
             }

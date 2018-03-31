@@ -2,13 +2,13 @@
  * Copyright (c) 2011-2025 PiChen.
  */
 
-package cn.edu.hdu.tankbattle.model.map;
+package cn.edu.hdu.tankbattle.resource.map;
 
 import java.util.Vector;
 
-import cn.edu.hdu.tankbattle.model.Brick;
-import cn.edu.hdu.tankbattle.model.Iron;
-import cn.edu.hdu.tankbattle.model.Water;
+import cn.edu.hdu.tankbattle.entity.Brick;
+import cn.edu.hdu.tankbattle.entity.Iron;
+import cn.edu.hdu.tankbattle.entity.Water;
 
 /**
  * map...

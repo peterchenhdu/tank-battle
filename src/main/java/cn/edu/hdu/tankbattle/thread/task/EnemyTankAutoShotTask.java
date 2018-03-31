@@ -4,7 +4,7 @@
 
 package cn.edu.hdu.tankbattle.thread.task;
 
-import cn.edu.hdu.tankbattle.model.EnemyTank;
+import cn.edu.hdu.tankbattle.entity.EnemyTank;
 import cn.edu.hdu.tankbattle.service.GameEventService;
 
 import java.util.TimerTask;

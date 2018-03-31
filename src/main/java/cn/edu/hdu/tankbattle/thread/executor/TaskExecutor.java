@@ -5,7 +5,7 @@
 package cn.edu.hdu.tankbattle.thread.executor;
 
 import cn.edu.hdu.tankbattle.context.GameContext;
-import cn.edu.hdu.tankbattle.model.EnemyTank;
+import cn.edu.hdu.tankbattle.entity.EnemyTank;
 import cn.edu.hdu.tankbattle.service.TankEventService;
 import cn.edu.hdu.tankbattle.service.GameEventService;
 import cn.edu.hdu.tankbattle.thread.task.EnemyTankAutoShotTask;

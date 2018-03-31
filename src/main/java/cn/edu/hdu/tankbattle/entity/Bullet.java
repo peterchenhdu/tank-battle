@@ -2,7 +2,7 @@
  * Copyright (c) 2011-2025 PiChen.
  */
 
-package cn.edu.hdu.tankbattle.model;
+package cn.edu.hdu.tankbattle.entity;
 
 
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
