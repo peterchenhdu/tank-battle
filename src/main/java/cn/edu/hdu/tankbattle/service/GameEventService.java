@@ -91,7 +91,7 @@ public class GameEventService {
         myTanks.forEach(myTank ->
                 enemies.forEach(enemyTank -> {
 
-                    tankEventService.enemyFindAndKill(enemyTank, myTank, map); // 让敌人坦克能够发现我的坦克并开炮
+                    tankEventService.enemyFindAndKill(enemyTank, myTank, map);
 
                     enemyTank.getBullets().forEach(eb -> {
                         if (isHitting(eb, myTank)) {
@@ -148,7 +148,7 @@ public class GameEventService {
             myTank.setOverlapNo(false);
             myTank.setOverlapYes(false);
 
-            if (tankEventService.isMyTankOverlap(myTank, enemies)) { // 判断我的坦克是否与敌人坦克重叠
+            if (tankEventService.isMyTankOverlap(myTank, enemies)) {
                 myTank.setOverlapYes(true);
             }
 
@@ -222,18 +222,16 @@ public class GameEventService {
         for (int i = 0; i < myTanks.size(); i++) {
             MyTank myTank = myTanks.get(i);
             Vector<Bullet> mb = myTank.getBullets();
-            // 清除我的坦克死亡的子弹
             mb.removeIf(b -> !b.isLive());
 
-            // 清除我的死亡的坦克
             if (!myTank.getLive()) {
                 myTanks.remove(myTank);
                 data.setMyTankNum(data.getMyTankNum() - 1);
                 data.setBeKilled(data.getBeKilled() + 1);
 
-                if (data.getMyTankNum() >= 1) { // 如果还有我的坦克就创建一个，刚开始面板上就创建了一个我的坦克，所以大于等于
+                if (data.getMyTankNum() >= 1) {
                     // 1
-                    MyTank myTankTemp = new MyTank(300, 620, DirectionEnum.NORTH); // 创建一个我的坦克
+                    MyTank myTankTemp = new MyTank(300, 620, DirectionEnum.NORTH);
                     myTanks.add(myTankTemp);
                 }
             }
@@ -242,25 +240,23 @@ public class GameEventService {
         for (int i = 0; i < enemies.size(); i++) {
             EnemyTank enemy = enemies.get(i);
             Vector<Bullet> eb = enemy.getBullets();
-            // 清除敌人坦克的死亡的子弹
             eb.removeIf(b -> !b.isLive());
 
-            // 清除死亡的敌人坦克，并创建新的坦克
             if (!enemy.getLive()) {
-                enemy.getTimer().cancel(); // 取消定时发射子弹
+                enemy.getTimer().cancel();
                 int r;
 
 
                 data.setEnemyTankNum(data.getEnemyTankNum() - 1);
-                r = (int) (Math.random() * 5); // 随机选择三个位置中的一个
-                enemies.remove(enemy); // 敌人坦克死亡后马上产生一个新的敌人坦克
-                if (data.getEnemyTankNum() >= 5) { // 如果还有敌人坦克，刚开始时面板上就创建了3个，所以大于等于3
+                r = (int) (Math.random() * 5);
+                enemies.remove(enemy);
+                if (data.getEnemyTankNum() >= 5) {
                     EnemyTank enemyTank = new EnemyTank((r) * 140 + 20,
-                            -20, DirectionEnum.SOUTH); // 创建一个敌人坦克对象
+                            -20, DirectionEnum.SOUTH);
                     enemyTank.setLocation(r);
                     enemyTank.setActivate(Boolean.TRUE);
                     threadTaskExecutor.startSingleEnemyTankTask(enemyTank);
-                    enemies.add(enemyTank); // 将该坦克加入敌人坦克容器中
+                    enemies.add(enemyTank);
                 }
                 break;
 
@@ -282,20 +278,19 @@ public class GameEventService {
      * @param bombs  炸弹容量
      */
     public void afterShotTank(Bullet bullet, Tank tank, Vector<Bomb> bombs) {
-        // 击中，子弹死亡 敌人坦克死亡 爆炸
-        bullet.setLive(false); // 击中坦克的子弹死亡
-        Bomb bomb; // 一颗炸弹
-        if (tank.getBlood() == 1) { // 只剩下最后一滴血
-            tank.setLive(false); // 坦克死亡
-            bomb = new Bomb(tank.getX(), tank.getY()); // 创建炸弹，由坦克中心开始爆炸
-            tank.setBlood(tank.getBlood() - 1); // 坦克的血减1
-            bomb.setL(120); // 爆炸宽度120
+        bullet.setLive(false);
+        Bomb bomb;
+        if (tank.getBlood() == 1) {
+            tank.setLive(false);
+            bomb = new Bomb(tank.getX(), tank.getY());
+            tank.setBlood(tank.getBlood() - 1);
+            bomb.setL(120);
             bombs.add(bomb);
         } else {
-            bomb = new Bomb(bullet.getX(), bullet.getY());// 创建炸弹，由子弹位置开始爆炸
-            tank.setBlood(tank.getBlood() - 1); // 坦克的血量减1
-            bomb.setL(40); // 爆炸宽度40
-            bombs.add(bomb); // 将该炸弹加入炸弹容器中
+            bomb = new Bomb(bullet.getX(), bullet.getY());
+            tank.setBlood(tank.getBlood() - 1);
+            bomb.setL(40);
+            bombs.add(bomb);
         }
     }
 
@@ -355,10 +350,10 @@ public class GameEventService {
         resource.setMap(LevelEnum.getByLevel(data.getLevel()).getMap());
 
         for (int i = 0; i < 5; i++) {
-            EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, DirectionEnum.SOUTH); // 创建一个敌人坦克对象
+            EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, DirectionEnum.SOUTH);
             enemy.setActivate(Boolean.TRUE);
             enemy.setLocation(i);
-            resource.getEnemies().add(enemy); // 将该坦克加入敌人坦克容器中 //将该子弹加入该坦克的子弹容器中
+            resource.getEnemies().add(enemy);
         }
         data.setEnemyTankNum(8);
         for (int i = 0; i < resource.getMyTanks().size(); i++) {
@@ -380,16 +375,16 @@ public class GameEventService {
 
         for (int i = 0; i < resource.getMyTanks().size(); i++) {
             MyTank myTank = resource.getMyTanks().get(i);
-            if (myTank.getSpeedVector() == 0) { // 已经暂停的不能在执行下面的语句
+            if (myTank.getSpeedVector() == 0) {
                 data.setStop(true);
-                myTank.setSpeedVector(myTank.getSpeed()); // 保存当前坦克的速度
-                myTank.setSpeed(0); // 设置当前坦克速度为0
+                myTank.setSpeedVector(myTank.getSpeed());
+                myTank.setSpeed(0);
                 for (int j = 0; j < myTank.getBullets().size(); j++) {
                     myTank.getBullets()
                             .get(j)
                             .setSpeedVector(
                                     myTank.getBullets().get(j).getSpeed());
-                    myTank.getBullets().get(j).setSpeed(0); // 设置子弹为0
+                    myTank.getBullets().get(j).setSpeed(0);
                 }
                 for (int j = 0; j < resource.getEnemies().size(); j++) {
                     resource.getEnemies()
@@ -484,7 +479,7 @@ public class GameEventService {
      */
     public void shot(Tank tank) {
         Bullet bullet = null;
-        switch (tank.getDirect()) { // 选择坦克的方向
+        switch (tank.getDirect()) {
             case NORTH:
                 bullet = new Bullet(tank.getX(), tank.getY() - 20, DirectionEnum.NORTH);
                 break;

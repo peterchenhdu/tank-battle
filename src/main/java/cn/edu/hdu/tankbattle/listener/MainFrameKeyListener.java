@@ -34,13 +34,15 @@ public class MainFrameKeyListener implements KeyListener {
     public void keyPressed(KeyEvent e) {
         RealTimeGameData data = gameContext.getGameData();
 
-        if(Boolean.TRUE.equals(data.getMapMakingFlag()) && e.getKeyCode() == KeyEvent.VK_C){
-            if(data.getCurrentStiff()== StuffTypeEnum.BRICK){
-                data.setCurrentStiff(StuffTypeEnum.IRON);
-            } else if(data.getCurrentStiff()== StuffTypeEnum.IRON){
-                data.setCurrentStiff(StuffTypeEnum.WATER);
+        if (Boolean.TRUE.equals(data.getMapMakingFlag()) && e.getKeyCode() == KeyEvent.VK_C) {
+            if (data.getCurrentStuff() == StuffTypeEnum.BRICK) {
+                data.setCurrentStuff(StuffTypeEnum.IRON);
+            } else if (data.getCurrentStuff() == StuffTypeEnum.IRON) {
+                data.setCurrentStuff(StuffTypeEnum.WATER);
+            } else if (data.getCurrentStuff() == StuffTypeEnum.WATER) {
+                data.setCurrentStuff(StuffTypeEnum.INVALID);
             } else {
-                data.setCurrentStiff(StuffTypeEnum.BRICK);
+                data.setCurrentStuff(StuffTypeEnum.BRICK);
             }
 
         }

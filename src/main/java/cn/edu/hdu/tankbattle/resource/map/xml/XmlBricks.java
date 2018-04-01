@@ -24,6 +24,7 @@ public class XmlBricks {
     public void addBrick(XmlBrick brick) {
         this.bricks.add(brick);
     }
+
     public Vector<XmlBrick> getBricks() {
         return bricks;
     }

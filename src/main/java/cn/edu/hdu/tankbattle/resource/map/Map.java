@@ -38,9 +38,9 @@ public class Map {
         irons = new Vector<>();
         waters = new Vector<>();
 
-        xmlMap.getBricks().getBricks().forEach(b->bricks.add(new Brick(b.getX(), b.getY())));
-        xmlMap.getIrons().getIrons().forEach(i->irons.add(new Iron(i.getX(), i.getY())));
-        xmlMap.getWaters().getWaters().forEach(w->waters.add(new Water(w.getX(),w.getY())));
+        xmlMap.getBricks().getBricks().forEach(b -> bricks.add(new Brick(b.getX(), b.getY())));
+        xmlMap.getIrons().getIrons().forEach(i -> irons.add(new Iron(i.getX(), i.getY())));
+        xmlMap.getWaters().getWaters().forEach(w -> waters.add(new Water(w.getX(), w.getY())));
 
     }
 

@@ -19,87 +19,48 @@ import java.util.Vector;
  * @since 2018/3/20 23:01
  */
 public class RealTimeGameData {
-    /**
-     * 我的坦克容量
-     */
+
     private Vector<MyTank> myTanks = new Vector<>();
-    /**
-     * 敌人坦克容量
-     */
+
     private Vector<EnemyTank> enemies = new Vector<>();
-    /**
-     * 炸弹容量
-     */
+
     private Vector<Bomb> bombs = new Vector<>();
 
     private Boolean mapMakingFlag = Boolean.FALSE;
-    private StuffTypeEnum currentStiff = StuffTypeEnum.BRICK;
+    private StuffTypeEnum currentStuff = StuffTypeEnum.BRICK;
 
-    /**
-     * 坦克游戏地图对象
-     */
+
     private Map map;
 
-    /**
-     * 敌人坦克总的数量
-     */
     private int enemyTankNum;
-    /**
-     * 我的坦克数量
-     */
+
     private int myTankNum;
-    /**
-     * 我的坦克被杀数量
-     */
+
     private int beKilled;
-    /**
-     * 我的子弹数量
-     */
+
     private int myBulletNum;
-    /**
-     * 是否已经开始
-     */
+
     private boolean isStart = false;
-    /**
-     * 是否暂停
-     */
+
     private boolean isStop = false;
-    /**
-     * 是否按了向上的方向键
-     */
+
     private boolean up = false;
-    /**
-     * 是否按了向下的方向键
-     */
+
     private boolean down = false;
-    /**
-     * 是否按了向左的方向键
-     */
+
     private boolean left = false;
-    /**
-     * 是否按了向右的方向键
-     */
+
     private boolean right = false;
-    /**
-     * 游戏关卡
-     */
+
     private int level = 1;
 
-    /**
-     * 动态笑脸的控制flag
-     */
+
     private boolean iconSmile;
-    /**
-     * 游戏失败或成功时的图片的y坐标
-     */
+
     private int dy = 600;
-    /**
-     * 游戏开始的移动文字
-     */
+
     private int ky = 600;
-    /**
-     * 游戏开始的笑脸icon
-     */
+
     private int kx = 0;
 
 
@@ -290,12 +251,12 @@ public class RealTimeGameData {
                 '}';
     }
 
-    public StuffTypeEnum getCurrentStiff() {
-        return currentStiff;
+    public StuffTypeEnum getCurrentStuff() {
+        return currentStuff;
     }
 
-    public void setCurrentStiff(StuffTypeEnum currentStiff) {
-        this.currentStiff = currentStiff;
+    public void setCurrentStuff(StuffTypeEnum currentStuff) {
+        this.currentStuff = currentStuff;
     }
 
     public Boolean getMapMakingFlag() {

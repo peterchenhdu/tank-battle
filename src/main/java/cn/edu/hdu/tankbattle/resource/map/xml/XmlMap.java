@@ -27,17 +27,21 @@ public class XmlMap {
     public void setBricks(XmlBricks bricks) {
         this.bricks = bricks;
     }
+
     @SetNext
     public void setIrons(XmlIrons irons) {
         this.irons = irons;
     }
+
     @SetNext
     public void setWaters(XmlWaters waters) {
         this.waters = waters;
     }
+
     public XmlBricks getBricks() {
         return bricks;
     }
+
     public XmlIrons getIrons() {
         return irons;
     }

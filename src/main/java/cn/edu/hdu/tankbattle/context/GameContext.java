@@ -81,22 +81,15 @@ public class GameContext {
         initGameData(1);
 
 
-        //创建Frame
         this.gameFrame = new GameFrame();
-        //创建MenuBar
         this.tankBattleMenuBar = new TankBattleMenuBar(menuActionListener);
-        //创建Panel
         this.gamePanel = new GamePanel(paintService);
 
-        //设置Frame的MenuBar
         this.gameFrame.setJMenuBar(this.tankBattleMenuBar);
-        //添加Panel到Frame中
         this.gameFrame.add(this.gamePanel);
-        //设置Frame的KeyListener
         this.gameFrame.addKeyListener(mainFrameKeyListener);
         this.gamePanel.addMouseListener(mainFrameMouseListener);
 
-        //设置Frame为可见
         this.gameFrame.setVisible(true);
 
         logger.info("execute UpdateTask...");

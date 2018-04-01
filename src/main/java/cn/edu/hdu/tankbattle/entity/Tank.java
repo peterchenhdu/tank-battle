@@ -119,6 +119,7 @@ public class Tank extends Stuff {
             this.setFrontStuff(StuffTypeEnum.IRON);
         }
     }
+
     /**
      * 坦克往东走
      */

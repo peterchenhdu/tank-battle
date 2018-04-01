@@ -33,9 +33,9 @@ public class TankEventService {
         int x = stuff.getX();
         int y = stuff.getY();
         if (tank.getDirect() == DirectionEnum.NORTH) {
-            tank.setY(tank.getY() - tank.getSpeed()); // 先假设该坦克往前移动一步
+            tank.setY(tank.getY() - tank.getSpeed());
             if (Math.abs(tank.getY() - y) < length
-                    && Math.abs(tank.getX() - x) < length) { // 如果在远离，此时他想逃出重叠，所以就设b为false，让它能够动
+                    && Math.abs(tank.getX() - x) < length) {
                 b = true;
                 tank.setY(tank.getY() + tank.getSpeed());
             } else {
@@ -43,7 +43,7 @@ public class TankEventService {
             }
         }
         if (tank.getDirect() == DirectionEnum.SOUTH) {
-            tank.setY(tank.getY() + tank.getSpeed()); // 先假设该坦克往前移动一步
+            tank.setY(tank.getY() + tank.getSpeed());
             if (Math.abs(tank.getY() - y) < length
                     && Math.abs(tank.getX() - x) < length) {
                 b = true;
@@ -76,39 +76,39 @@ public class TankEventService {
      * @return 是否重叠
      */
     public boolean isMyTankOverlap(MyTank tank, Vector<EnemyTank> enemies) {
-        for (int i = 0; i < enemies.size(); i++) { // 依次取出每个敌人坦克
-            if (isTankOverlap(tank, enemies.get(i), 40))// 如果这两辆坦克重叠
-                return true; // 则返回真
+        for (int i = 0; i < enemies.size(); i++) {
+            if (isTankOverlap(tank, enemies.get(i), 40))
+                return true;
         }
-        return false; // 不重叠返回假
+        return false;
     }
 
     /**
      * 判断自己跟别的坦克是否重叠
      *
-     * @param enemies  敌人坦克容量
+     * @param enemies 敌人坦克容量
      * @param myTanks 我的坦克容量
      * @return 是否重叠
      */
     public boolean isEnemyTankOverlap(EnemyTank enemy, Vector<EnemyTank> enemies, Vector<MyTank> myTanks) {
-        for (int i = 0; i < enemies.size(); i++) { // 依次取出每一个敌人坦克
+        for (int i = 0; i < enemies.size(); i++) {
             if (enemy != enemies.get(i)) {
-                if (isTankOverlap(enemy, enemies.get(i), 40)) { // 判断这两辆坦克是否重叠
+                if (isTankOverlap(enemy, enemies.get(i), 40)) {
                     enemy.setOverlapNo(true);
-                    return true; // 一旦有重叠则返回真
+                    return true;
                 }
             }
         }
-        for (int j = 0; j < myTanks.size(); j++) { // 依次取出每个我的坦克
-            if (isTankOverlap(enemy, myTanks.get(j), 40)) { // 判断这两辆坦克是否重叠
-                enemy.setOverlapYes(true); // 面对我的坦克，敌人坦克开炮过去
-                return true; // 一旦有重叠则返回真
+        for (int j = 0; j < myTanks.size(); j++) {
+            if (isTankOverlap(enemy, myTanks.get(j), 40)) {
+                enemy.setOverlapYes(true);
+                return true;
             }
         }
-        // 如果前面没有返回的话，说明没重叠，返回假
+
         enemy.setOverlapNo(false);
         enemy.setOverlapYes(false);
-        return false; // 没有重叠现象则返回假
+        return false;
     }
 
     /**
@@ -117,11 +117,11 @@ public class TankEventService {
     public void enemyGoWest(EnemyTank enemy) {
         for (; ; ) {
             GameTimeUnit.sleepMillis(36);
-            if (enemy.isOverlapNo() == false && enemy.isOverlapYes() == false) { // 不重叠的话
+            if (enemy.isOverlapNo() == false && enemy.isOverlapYes() == false) {
                 enemy.goWest();
             }
-            if (enemy.getMyTankLocation() != DirectionEnum.WEST) { // 我的坦克不在正西方的时候
-                enemy.setDirect(enemy.getMyTankDirect()); // 让敌人坦克与我的坦克方向一致
+            if (enemy.getMyTankLocation() != DirectionEnum.WEST) {
+                enemy.setDirect(enemy.getMyTankDirect());
                 break;
             }
         }
@@ -211,22 +211,22 @@ public class TankEventService {
         int myY = myTank.getY();
         int enX = enemy.getX();
         int enY = enemy.getY();
-        if (Math.abs(myX - enX) < 20 && myY <= 580) { // 如果我的坦克在敌人坦克的正北方或正南方
-            if (enY < myY) { // 我的坦克在正南方
+        if (Math.abs(myX - enX) < 20 && myY <= 580) {
+            if (enY < myY) {
                 int s = 0;
                 for (int t = 0; t < map.getIrons().size(); t++) {
                     Iron iron = map.getIrons().get(t);
                     if (Math.abs(enX - iron.getX()) <= 10 && iron.getY() > enY
                             && iron.getY() < myY) {
-                        s = 1; // 只要出现一个铁块能挡住子弹，就让s变为1，跳出判断
+                        s = 1;
                         break;
                     }
                 }
-                if (s == 0) { // 如果s==1说明没有铁块挡住子弹，可以发射
+                if (s == 0) {
                     enemy.setShot(true);
                     enemy.setMyTankLocation(DirectionEnum.SOUTH);
                 }
-            } else { // 我的坦克在正北方
+            } else {
                 int s = 0;
                 for (int t = 0; t < map.getIrons().size(); t++) {
                     Iron iron = map.getIrons().get(t);
@@ -241,12 +241,11 @@ public class TankEventService {
                     enemy.setMyTankLocation(DirectionEnum.NORTH);
                 }
             }
-        } else if (Math.abs(myY - enY) < 20 && myY <= 580) { // 如果我的坦克在敌人坦克的正西方或正东方
-            if (enX > myX) { // 我的坦克在正西方
+        } else if (Math.abs(myY - enY) < 20 && myY <= 580) {
+            if (enX > myX) {
                 int s = 0;
                 for (int t = 0; t < map.getIrons().size(); t++) {
                     Iron iron = map.getIrons().get(t);
-                    // 铁块能挡住子弹，而且在我的坦克和敌人坦克之间
                     if (Math.abs(enY - iron.getY()) <= 10 && iron.getX() < enX
                             && iron.getX() > myX) {
                         s = 1;
@@ -257,7 +256,7 @@ public class TankEventService {
                     enemy.setShot(true);
                     enemy.setMyTankLocation(DirectionEnum.WEST);
                 }
-            } else { // 我的坦克在正东方
+            } else {
                 int s = 0;
                 for (int t = 0; t < map.getIrons().size(); t++) {
                     Iron iron = map.getIrons().get(t);
@@ -272,7 +271,7 @@ public class TankEventService {
                     enemy.setMyTankLocation(DirectionEnum.EAST);
                 }
             }
-        } else { // 其他情况敌人坦克不能判断我的坦克位置，要完善的话，还可以继续加进去
+        } else {
             enemy.setShot(false);
             enemy.setMyTankLocation(DirectionEnum.INVALID);
         }

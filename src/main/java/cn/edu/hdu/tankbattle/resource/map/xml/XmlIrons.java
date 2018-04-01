@@ -24,6 +24,7 @@ public class XmlIrons {
     public void addIron(XmlIron iron) {
         this.irons.add(iron);
     }
+
     public Vector<XmlIron> getIrons() {
         return irons;
     }
