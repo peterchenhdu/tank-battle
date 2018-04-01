@@ -12,6 +12,7 @@ import cn.edu.hdu.tankbattle.resource.map.xml.XmlMap;
 import org.apache.commons.digester3.Digester;
 import org.apache.commons.digester3.annotations.FromAnnotationsRuleModule;
 import org.apache.commons.digester3.binder.DigesterLoader;
+import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -22,6 +23,8 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Vector;
 
 public class MapParser {
@@ -45,7 +48,7 @@ public class MapParser {
         return null;
     }
 
-    public static void generateXmlFromMap(Map map) throws ParserConfigurationException, TransformerException {
+    public static void generateXmlFromMap(Map map) throws ParserConfigurationException, TransformerException, IOException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = factory.newDocumentBuilder();
         Document document = db.newDocument();
@@ -96,9 +99,11 @@ public class MapParser {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         Source xmlSource = new DOMSource(document);
-        System.out.println(xmlSource);
-        Result outputTarget = new StreamResult(new File("map.xml"));
+        OutputStream file = FileUtils.openOutputStream(new File(System.getProperty("user.home") + File.separator +
+                ".tankBattle" + File.separator + "map.xml"));
+        Result outputTarget = new StreamResult(file);
         transformer.transform(xmlSource, outputTarget);
     }
+
 
 }
