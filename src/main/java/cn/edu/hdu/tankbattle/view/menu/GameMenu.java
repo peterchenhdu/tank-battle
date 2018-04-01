@@ -15,9 +15,7 @@ import java.awt.event.ActionListener;
  */
 public class GameMenu extends JMenu {
     public GameMenu(ActionListener listener) {
-        //一级菜单，游戏
         super("游戏/Game");
-        //二级菜单，开始
         JMenuItem gameStart = new JMenuItem("开始游戏");
         JMenuItem startAgain = new JMenuItem("重新开始");
         JMenuItem gameStop = new JMenuItem("暂停/恢复");
@@ -28,7 +26,6 @@ public class GameMenu extends JMenu {
         gameStop.setActionCommand("stop");
         gameExit.setActionCommand("exit");
 
-        // 添加一系列的listener
         gameStart.addActionListener(listener);
         startAgain.addActionListener(listener);
         gameExit.addActionListener(listener);

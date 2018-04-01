@@ -7,6 +7,7 @@ package cn.edu.hdu.tankbattle.view.menubar;
 import cn.edu.hdu.tankbattle.view.menu.GameMenu;
 import cn.edu.hdu.tankbattle.view.menu.HelpMenu;
 import cn.edu.hdu.tankbattle.view.menu.LevelMenu;
+import cn.edu.hdu.tankbattle.view.menu.MapMenu;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -23,6 +24,7 @@ public class TankBattleMenuBar extends JMenuBar {
     private GameMenu gameMenu;
     private LevelMenu levelMenu;
     private HelpMenu helpMenu;
+    private MapMenu mapMenu;
 
     public TankBattleMenuBar(ActionListener listener) {
         super();
@@ -30,12 +32,12 @@ public class TankBattleMenuBar extends JMenuBar {
         gameMenu = new GameMenu(listener);
         levelMenu = new LevelMenu(listener);
         helpMenu = new HelpMenu(listener);
-        // --游戏/Game--菜单
+        mapMenu = new MapMenu(listener);
+
         this.add(gameMenu);
-        // --选择关卡--菜单
         this.add(levelMenu);
-        // --游戏帮助--菜单
         this.add(helpMenu);
+        this.add(mapMenu);
     }
 
     public GameMenu getGameMenu() {

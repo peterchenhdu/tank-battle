@@ -152,4 +152,12 @@ public class CommandService {
                 "JAVA坦克大战CP版1.0\n作者:hdu-chenpi\n", "关于游戏",
                 JOptionPane.INFORMATION_MESSAGE);
     }
+
+    public void createMap(){
+
+    }
+
+    public void saveMap(){
+
+    }
 }
