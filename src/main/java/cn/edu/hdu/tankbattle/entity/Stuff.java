@@ -14,7 +14,7 @@ import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
  * @author chenpi
  * @since 2011-02-10 19:29
  */
-public abstract class Stuff {
+public class Stuff {
     /**
      * x坐标
      */
