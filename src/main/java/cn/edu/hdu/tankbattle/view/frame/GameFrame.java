@@ -4,6 +4,7 @@
 
 package cn.edu.hdu.tankbattle.view.frame;
 
+import cn.edu.hdu.tankbattle.resource.TankGameImages;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 import cn.edu.hdu.tankbattle.view.menubar.TankBattleMenuBar;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +33,10 @@ public class GameFrame extends JFrame {
 
 
         this.setSize(800, 700);
-        this.setTitle("MyTankGame");
+        this.setTitle("JavaTankBattle");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
-
+        this.setIconImage(TankGameImages.myTankImg[0]);
 
         // 显示器屏幕大小
         Dimension screenSizeInfo = Toolkit.getDefaultToolkit().getScreenSize();

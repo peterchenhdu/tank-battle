@@ -6,6 +6,7 @@ package cn.edu.hdu.tankbattle.context;
 
 import cn.edu.hdu.tankbattle.constant.GameConstants;
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
+import cn.edu.hdu.tankbattle.listener.MainFrameMouseListener;
 import cn.edu.hdu.tankbattle.resource.map.Map;
 import cn.edu.hdu.tankbattle.resource.map.xml.parse.MapParser;
 import cn.edu.hdu.tankbattle.service.GameEventService;
@@ -62,6 +63,8 @@ public class GameContext {
     @Autowired
     private MenuActionListener menuActionListener;
     @Autowired
+    private MainFrameMouseListener mainFrameMouseListener;
+    @Autowired
     private GameEventService control;
 
     @Autowired
@@ -91,6 +94,8 @@ public class GameContext {
         this.gameFrame.add(this.gamePanel);
         //设置Frame的KeyListener
         this.gameFrame.addKeyListener(mainFrameKeyListener);
+        this.gamePanel.addMouseListener(mainFrameMouseListener);
+
         //设置Frame为可见
         this.gameFrame.setVisible(true);
 

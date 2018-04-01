@@ -48,7 +48,8 @@ public class MapParser {
         return null;
     }
 
-    public static void generateXmlFromMap(Map map) throws ParserConfigurationException, TransformerException, IOException {
+    public static void generateXmlFromMap(Map map, String mapName) throws ParserConfigurationException, TransformerException,
+            IOException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = factory.newDocumentBuilder();
         Document document = db.newDocument();
@@ -100,7 +101,7 @@ public class MapParser {
         Transformer transformer = transformerFactory.newTransformer();
         Source xmlSource = new DOMSource(document);
         OutputStream file = FileUtils.openOutputStream(new File(System.getProperty("user.home") + File.separator +
-                ".tankBattle" + File.separator + "map.xml"));
+                ".tankBattle" + File.separator + "custom" + File.separator + mapName + ".xml"));
         Result outputTarget = new StreamResult(file);
         transformer.transform(xmlSource, outputTarget);
     }

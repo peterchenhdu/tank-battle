@@ -14,6 +14,8 @@ import java.awt.event.ActionListener;
  * @since 2018/3/19 19:36
  */
 public class GameMenu extends JMenu {
+    private static final long serialVersionUID = -3078540026626514620L;
+
     public GameMenu(ActionListener listener) {
         super("游戏/Game");
         JMenuItem gameStart = new JMenuItem("开始游戏");

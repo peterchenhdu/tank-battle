@@ -7,6 +7,7 @@ package cn.edu.hdu.tankbattle.dto;
 import cn.edu.hdu.tankbattle.entity.Bomb;
 import cn.edu.hdu.tankbattle.entity.EnemyTank;
 import cn.edu.hdu.tankbattle.entity.MyTank;
+import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
 import cn.edu.hdu.tankbattle.resource.map.Map;
 
 import java.util.Vector;
@@ -30,6 +31,10 @@ public class RealTimeGameData {
      * 炸弹容量
      */
     private Vector<Bomb> bombs = new Vector<>();
+
+    private Boolean mapMakingFlag = Boolean.FALSE;
+    private StuffTypeEnum currentStiff = StuffTypeEnum.BRICK;
+
     /**
      * 坦克游戏地图对象
      */
@@ -285,5 +290,19 @@ public class RealTimeGameData {
                 '}';
     }
 
+    public StuffTypeEnum getCurrentStiff() {
+        return currentStiff;
+    }
 
+    public void setCurrentStiff(StuffTypeEnum currentStiff) {
+        this.currentStiff = currentStiff;
+    }
+
+    public Boolean getMapMakingFlag() {
+        return mapMakingFlag;
+    }
+
+    public void setMapMakingFlag(Boolean mapMakingFlag) {
+        this.mapMakingFlag = mapMakingFlag;
+    }
 }

@@ -6,6 +6,7 @@ package cn.edu.hdu.tankbattle.listener;
 
 import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
+import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
 import cn.edu.hdu.tankbattle.service.GameEventService;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 
@@ -24,16 +25,29 @@ import java.awt.event.KeyListener;
 @Component
 public class MainFrameKeyListener implements KeyListener {
     @Autowired
-    private GameEventService control;
+    private GameEventService gameEventService;
 
     @Autowired
-    private GameContext context;
+    private GameContext gameContext;
 
     @Override
     public void keyPressed(KeyEvent e) {
-        RealTimeGameData data = context.getGameData();
+        RealTimeGameData data = gameContext.getGameData();
+
+        if(Boolean.TRUE.equals(data.getMapMakingFlag()) && e.getKeyCode() == KeyEvent.VK_C){
+            if(data.getCurrentStiff()== StuffTypeEnum.BRICK){
+                data.setCurrentStiff(StuffTypeEnum.IRON);
+            } else if(data.getCurrentStiff()== StuffTypeEnum.IRON){
+                data.setCurrentStiff(StuffTypeEnum.WATER);
+            } else {
+                data.setCurrentStiff(StuffTypeEnum.BRICK);
+            }
+
+        }
+
+
         if (e.getKeyCode() == KeyEvent.VK_P) { // 暂停
-            control.gameEventStop(data);
+            gameEventService.gameEventStop(data);
         }
 
         data.getMyTanks().forEach(myTank -> {
@@ -60,7 +74,7 @@ public class MainFrameKeyListener implements KeyListener {
                 if (e.getKeyCode() == KeyEvent.VK_X && myTank.getY() <= 580) {
                     if (myTank.getBullets().size() <= 1 && data.getMyBulletNum() > 0) {
                         data.setMyBulletNum(data.getMyBulletNum() - 1);
-                        control.shot(myTank);
+                        gameEventService.shot(myTank);
                     }
                 }
             }
@@ -70,7 +84,7 @@ public class MainFrameKeyListener implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        RealTimeGameData data = context.getGameData();
+        RealTimeGameData data = gameContext.getGameData();
         if (e.getKeyCode() == KeyEvent.VK_UP) {
             data.setUp(false);
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {

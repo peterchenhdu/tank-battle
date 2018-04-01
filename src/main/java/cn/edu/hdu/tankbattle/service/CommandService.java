@@ -6,11 +6,16 @@ package cn.edu.hdu.tankbattle.service;
 
 import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
+import cn.edu.hdu.tankbattle.resource.map.Map;
+import cn.edu.hdu.tankbattle.resource.map.xml.parse.MapParser;
 import cn.edu.hdu.tankbattle.util.RefUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import java.io.IOException;
 
 /**
  * Class Description...
@@ -21,46 +26,46 @@ import javax.swing.*;
 @Service
 public class CommandService {
     @Autowired
-    private GameEventService commond;
+    private GameEventService gameEventService;
 
     @Autowired
-    private GameContext context;
+    private GameContext gameContext;
 
     public void executeByCmd(String cmd) {
         RefUtils.executeByMethodName(this, cmd, null, null);
     }
 
     public void stop() {
-        RealTimeGameData gameData = context.getGameData();
-        commond.gameEventStop(gameData);
+        RealTimeGameData gameData = gameContext.getGameData();
+        gameEventService.gameEventStop(gameData);
     }
 
     public void start() {
-        RealTimeGameData gameData = context.getGameData();
+        RealTimeGameData gameData = gameContext.getGameData();
         if (!gameData.isStart()) { // 还没开始
-            context.startGame();// 已经开始了
+            gameContext.startGame();// 已经开始了
             //this.setVisible(true);
         } else if (!gameData.isStop()
                 && gameData.getMyTankNum() != 0) {
             // 暂停
-            commond.gameEventStop(gameData);
+            gameEventService.gameEventStop(gameData);
             JOptionPane.showMessageDialog(null, "游戏已经开始", "提示",
                     JOptionPane.INFORMATION_MESSAGE);
             // 恢复游戏
-            commond.gameEventStop(gameData);
+            gameEventService.gameEventStop(gameData);
         } else if (gameData.isStop()) {
             JOptionPane.showMessageDialog(null, "游戏已经开始", "提示",
                     JOptionPane.INFORMATION_MESSAGE);
         } else if (!gameData.isStop()
                 && (gameData.getMyTankNum() == 0)) {
-            context.startGame();
+            gameContext.startGame();
         }
     }
 
     public void exit() {
-        RealTimeGameData gameData = context.getGameData();
+        RealTimeGameData gameData = gameContext.getGameData();
         // 暂停游戏
-        commond.gameEventStop(gameData);
+        gameEventService.gameEventStop(gameData);
         int select = JOptionPane.showConfirmDialog(null, "退出游戏吗？", "退出确认",
                 JOptionPane.YES_NO_OPTION);
         if (select == JOptionPane.OK_OPTION) {
@@ -68,16 +73,16 @@ public class CommandService {
             System.exit(0);
         } else {
             // 恢复游戏
-            commond.gameEventStop(gameData);
+            gameEventService.gameEventStop(gameData);
         }
     }
 
     public void again() {
-        RealTimeGameData gameData = context.getGameData();
+        RealTimeGameData gameData = gameContext.getGameData();
         if (gameData.isStart()) {
             if (gameData.isStop()) {
                 // 先恢复
-                commond.gameEventStop(gameData);
+                gameEventService.gameEventStop(gameData);
             }
 
             int select = JOptionPane.showConfirmDialog(null,
@@ -86,9 +91,9 @@ public class CommandService {
             if (select == JOptionPane.OK_OPTION) {
                 if (gameData.isStart()) {
                     // 恢复游戏
-                    commond.gameEventStop(gameData);
+                    gameEventService.gameEventStop(gameData);
                 }
-                context.startLevel(gameData.getLevel());
+                gameContext.startLevel(gameData.getLevel());
             }
         }
     }
@@ -114,10 +119,10 @@ public class CommandService {
     }
 
     public void selectLevel(int level) {
-        RealTimeGameData gameData = context.getGameData();
+        RealTimeGameData gameData = gameContext.getGameData();
         if (gameData.isStart()) {
             if (!gameData.isStop()) {// 暂停游戏
-                commond.gameEventStop(gameData);
+                gameEventService.gameEventStop(gameData);
             }
             int select = JOptionPane.showConfirmDialog(null,
                     "您选择的是第" + level + "关，点击确定开始游戏", "选择确认",
@@ -125,13 +130,13 @@ public class CommandService {
             if (select == JOptionPane.OK_OPTION) {
                 if (gameData.isStart()) {
                     // 恢复游戏
-                    commond.gameEventStop(gameData);
+                    gameEventService.gameEventStop(gameData);
                 }
-                context.startLevel(level);
+                gameContext.startLevel(level);
             } else {
                 if (gameData.isStart()) {
                     // 恢复游戏
-                    commond.gameEventStop(gameData);
+                    gameEventService.gameEventStop(gameData);
                 }
             }
         } else {
@@ -153,11 +158,25 @@ public class CommandService {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void createMap(){
-
+    public void createMap() {
+        RealTimeGameData gameData = gameContext.getGameData();
+        gameData.setMapMakingFlag(Boolean.TRUE);
+        gameData.getEnemies().forEach(t -> t.setLive(Boolean.FALSE));
+        gameData.getMyTanks().forEach(t -> t.setLive(Boolean.FALSE));
+        gameData.getMyTanks().clear();
+        gameData.getEnemies().clear();
+        gameData.setMap(new Map());
+        gameData.setStart(Boolean.TRUE);
     }
 
-    public void saveMap(){
-
+    public void saveMap() {
+        RealTimeGameData gameData = gameContext.getGameData();
+        String inputValue = JOptionPane.showInputDialog("请输入自定义地图名称");
+        System.out.println(inputValue);
+        try {
+            MapParser.generateXmlFromMap(gameData.getMap(), inputValue);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
