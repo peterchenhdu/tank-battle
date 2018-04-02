@@ -117,7 +117,7 @@ public class TankEventService {
     public void enemyGoWest(EnemyTank enemy) {
         for (; ; ) {
             GameTimeUnit.sleepMillis(36);
-            if (enemy.isOverlapNo() == false && enemy.isOverlapYes() == false) {
+            if (!enemy.isOverlapNo()&& !enemy.isOverlapYes()) {
                 enemy.goWest();
             }
             if (enemy.getMyTankLocation() != DirectionEnum.WEST) {
@@ -149,7 +149,7 @@ public class TankEventService {
     public void enemyGoNorth(EnemyTank enemy) {
         for (; ; ) {
             GameTimeUnit.sleepMillis(36);
-            if (enemy.isOverlapNo() == false && enemy.isOverlapYes() == false) {
+            if (!enemy.isOverlapNo() && !enemy.isOverlapYes()) {
                 enemy.goNorth();
             }
             if (enemy.getMyTankLocation() != DirectionEnum.NORTH) {
@@ -165,7 +165,7 @@ public class TankEventService {
     public void enemyGoSouth(EnemyTank enemy) {
         for (; ; ) {
             GameTimeUnit.sleepMillis(36);
-            if (enemy.isOverlapNo() == false && enemy.isOverlapYes() == false) {
+            if (!enemy.isOverlapNo() && !enemy.isOverlapYes()) {
                 enemy.goSouth();
             }
             if (enemy.getMyTankLocation() != DirectionEnum.SOUTH) {
