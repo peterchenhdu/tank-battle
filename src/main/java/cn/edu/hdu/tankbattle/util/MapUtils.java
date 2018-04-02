@@ -6,8 +6,13 @@ package cn.edu.hdu.tankbattle.util;
 
 import cn.edu.hdu.tankbattle.entity.Stuff;
 import cn.edu.hdu.tankbattle.exception.TankBattleGameException;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.DirectoryFileFilter;
+import org.apache.commons.io.filefilter.FileFilterUtils;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -35,5 +40,21 @@ public class MapUtils {
             }
         }
         throw new TankBattleGameException("...");
+    }
+
+    public static List<String> getCustomFileList() {
+        Collection<File> listFiles = FileUtils.listFiles(new File(System.getProperty("user.home") + File.separator +
+                ".tankBattle" + File.separator + "custom"), FileFilterUtils.suffixFileFilter("xml"), DirectoryFileFilter
+                .INSTANCE);
+        List<String> list = new ArrayList<>();
+        for (File file : listFiles) {
+            list.add(file.getName().substring(0, file.getName().lastIndexOf(".")));
+            System.out.println(file.getName());
+        }
+        return list;
+    }
+
+    public static void main(String[] args) {
+        getCustomFileList();
     }
 }

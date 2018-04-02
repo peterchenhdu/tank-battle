@@ -4,6 +4,8 @@
 
 package cn.edu.hdu.tankbattle.view.menu;
 
+import cn.edu.hdu.tankbattle.util.MapUtils;
+
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
@@ -16,12 +18,12 @@ import java.awt.event.ActionListener;
 public class CustomMapMenu extends JMenu {
     public CustomMapMenu(ActionListener listener) {
         super("自定义地图");
-        JMenuItem test = new JMenuItem("地图编辑");
+        MapUtils.getCustomFileList().forEach(s->{
+            JMenuItem test = new JMenuItem(s);
+            test.setActionCommand("customMap");
+            test.addActionListener(listener);
+            this.add(test);
+        });
 
-        test.setActionCommand("customMap");
-
-        test.addActionListener(listener);
-
-        this.add(test);
     }
 }
