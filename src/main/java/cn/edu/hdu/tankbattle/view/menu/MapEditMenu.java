@@ -13,10 +13,10 @@ import java.awt.event.ActionListener;
  * @author chenpi
  * @since 2018/4/1 9:57
  */
-public class MapMenu extends JMenu {
-    public MapMenu(ActionListener listener) {
-        super("自定义地图");
-        JMenuItem createMap = new JMenuItem("地图制作");
+public class MapEditMenu extends JMenu {
+    public MapEditMenu(ActionListener listener) {
+        super("地图编辑");
+        JMenuItem createMap = new JMenuItem("地图编辑");
         JMenuItem saveMap = new JMenuItem("地图保存");
 
         createMap.setActionCommand("createMap");

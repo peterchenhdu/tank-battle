@@ -13,10 +13,10 @@ import java.awt.event.ActionListener;
  * @author chenpi
  * @since 2018/3/19 19:36
  */
-public class LevelMenu extends JMenu {
+public class SysMapMenu extends JMenu {
 
-    public LevelMenu(ActionListener listener) {
-        super("选择关卡");
+    public SysMapMenu(ActionListener listener) {
+        super("系统地图");
         JMenuItem firstLevel = new JMenuItem("第一关");
         JMenuItem secondLevel = new JMenuItem("第二关");
         JMenuItem thirdLevel = new JMenuItem("第三关");

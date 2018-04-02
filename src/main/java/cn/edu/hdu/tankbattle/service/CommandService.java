@@ -35,6 +35,14 @@ public class CommandService {
         RefUtils.executeByMethodName(this, cmd, null, null);
     }
 
+    public void executeCustomMapMenu(String para) {
+        RefUtils.executeByMethodName(this, "loadCustomMap", new Class[]{String.class}, new String[]{para});
+    }
+
+    public void loadCustomMap(String mapName){
+        System.out.println(mapName);
+    }
+
     public void stop() {
         RealTimeGameData gameData = gameContext.getGameData();
         gameEventService.gameEventStop(gameData);
