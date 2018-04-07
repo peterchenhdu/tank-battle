@@ -22,13 +22,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Vector;
 
 public class MapParser {
-    public static XmlMap getMapFromXml(Integer level) {
+    public static XmlMap getMapFromXml(String name) {
         try {
 
             DigesterLoader loader = DigesterLoader.newLoader(new FromAnnotationsRuleModule() {
@@ -40,7 +38,10 @@ public class MapParser {
             });
 
             Digester digester = loader.newDigester();
-            return digester.parse(MapParser.class.getResource("/static/xml/map" + level + ".xml"));
+            return digester.parse(new FileInputStream(new File(System.getProperty("user" +
+                    ".home") + File
+                    .separator +
+                    ".tankBattle" + File.separator + "custom" + File.separator + name + ".xml")));
 
         } catch (Exception e) {
             e.printStackTrace();

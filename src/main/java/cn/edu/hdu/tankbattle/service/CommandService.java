@@ -41,6 +41,8 @@ public class CommandService {
 
     public void loadCustomMap(String mapName){
         System.out.println(mapName);
+        gameContext.getGameData().setMap(new Map(MapParser.getMapFromXml(mapName)));
+        gameContext.startGame();
     }
 
     public void stop() {
