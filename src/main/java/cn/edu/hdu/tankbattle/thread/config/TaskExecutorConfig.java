@@ -6,6 +6,7 @@ package cn.edu.hdu.tankbattle.thread.config;
 
 import java.lang.reflect.Method;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,16 @@ public class TaskExecutorConfig implements AsyncConfigurer {
         taskExecutor.setCorePoolSize(30);
         taskExecutor.setMaxPoolSize(100);
         taskExecutor.setQueueCapacity(50);
+        taskExecutor.setRejectedExecutionHandler((Runnable r, ThreadPoolExecutor executor) -> {
+            if (!executor.isShutdown()) {
+                try {
+                    executor.getQueue().put(r);
+                } catch (InterruptedException e) {
+                    logger.error(e.toString(), e);
+                }
+            }
+
+        });
         taskExecutor.initialize();
         return taskExecutor;
     }

@@ -36,8 +36,8 @@ public class TankBattleMenuBar extends JMenuBar {
         this.add(gameMenu);
         this.add(sysMapMenu);
         this.add(mapEditMenu);
-        this.add(helpMenu);
         this.add(customMapMenu);
+        this.add(helpMenu);
     }
 
     public GameMenu getGameMenu() {
