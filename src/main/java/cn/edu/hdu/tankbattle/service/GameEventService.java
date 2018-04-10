@@ -362,6 +362,7 @@ public class GameEventService {
             myTank.setX(300);
             myTank.setY(620);
         }
+        threadTaskExecutor.startEnemyTankThreads();
     }
 
 
