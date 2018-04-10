@@ -129,7 +129,6 @@ public class GameContext {
 
 
     public void reset(int level) {
-        gameData = new RealTimeGameData();
         gameData.reset();
 
         for (int i = 0; i < GameConstants.INIT_ENEMY_TANK_IN_MAP_NUM; i++) {

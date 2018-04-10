@@ -34,6 +34,8 @@ public class MainFrameKeyListener implements KeyListener {
     public void keyPressed(KeyEvent e) {
         RealTimeGameData data = gameContext.getGameData();
 
+
+
         if (Boolean.TRUE.equals(data.getMapMakingFlag()) && e.getKeyCode() == KeyEvent.VK_C) {
             if (data.getCurrentStuff() == StuffTypeEnum.BRICK) {
                 data.setCurrentStuff(StuffTypeEnum.IRON);

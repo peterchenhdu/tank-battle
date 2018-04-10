@@ -89,23 +89,17 @@ public class CommandService {
 
     public void again() {
         RealTimeGameData gameData = gameContext.getGameData();
-        if (gameData.isStart()) {
-            if (gameData.isStop()) {
-                // 先恢复
+        if (!gameData.isStop()) {
+            gameEventService.gameEventStop(gameData);
+        }
+            int select = JOptionPane.showConfirmDialog(null, "确认重来", "选择确认", JOptionPane.OK_CANCEL_OPTION);
+            if (select == JOptionPane.OK_OPTION) {
+                gameEventService.gameEventStop(gameData);
+                gameContext.startLevel(gameData.getLevel());
+            } else {
                 gameEventService.gameEventStop(gameData);
             }
 
-            int select = JOptionPane.showConfirmDialog(null,
-                    "确认重来", "选择确认",
-                    JOptionPane.OK_CANCEL_OPTION);
-            if (select == JOptionPane.OK_OPTION) {
-                if (gameData.isStart()) {
-                    // 恢复游戏
-                    gameEventService.gameEventStop(gameData);
-                }
-                gameContext.startLevel(gameData.getLevel());
-            }
-        }
     }
 
     public void first() {

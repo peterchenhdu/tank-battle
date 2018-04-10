@@ -35,6 +35,10 @@ public class MainFrameMouseListener implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         System.out.println(e.getX() + "," + e.getY());
         RealTimeGameData gameData = gameContext.getGameData();
+        if(gameData.getMapMakingFlag().equals(Boolean.FALSE)){
+            return;
+        }
+
         Map map = gameData.getMap();
         Vector<Brick> bricks = map.getBricks();
         Vector<Iron> irons = map.getIrons();

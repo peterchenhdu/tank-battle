@@ -72,6 +72,7 @@ public class RealTimeGameData {
     }
 
     public void reset() {
+        enemies.forEach(e->e.setLive(Boolean.FALSE));
         myTanks.clear();
         enemies.clear();
         bombs.clear();
