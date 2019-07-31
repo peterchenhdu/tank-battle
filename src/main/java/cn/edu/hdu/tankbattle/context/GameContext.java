@@ -80,7 +80,6 @@ public class GameContext {
 
         initGameData(1);
 
-
         this.gameFrame = new GameFrame();
         this.tankBattleMenuBar = new TankBattleMenuBar(menuActionListener);
         this.gamePanel = new GamePanel(paintService);
@@ -94,9 +93,7 @@ public class GameContext {
 
         logger.info("execute UpdateTask...");
         taskExecutor.execute(new GameUpdateTask(this));
-
         logger.info("game start success...");
-
     }
 
 
@@ -130,27 +127,7 @@ public class GameContext {
 
     public void reset(int level) {
         gameData.reset();
-
-        for (int i = 0; i < GameConstants.INIT_ENEMY_TANK_IN_MAP_NUM; i++) {
-            EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, DirectionEnum.SOUTH);
-            enemy.setLocation(i);
-            gameData.getEnemies().add(enemy);
-        }
-        for (int i = 0; i < 1; i++) {
-            MyTank myTank = new MyTank(300, 620, DirectionEnum.NORTH);
-            gameData.getMyTanks().add(myTank);
-        }
-
-        gameData.setMap(LevelEnum.getByLevel(level).getMap());
-
-
-        gameData.setEnemyTankNum(GameConstants.INIT_ENEMY_TANK_NUM);
-        gameData.setMyTankNum(GameConstants.INIT_MY_TANK_NUM);
-        gameData.setMyBulletNum(GameConstants.MY_TANK_INIT_BULLET_NUM);
-        gameData.setBeKilled(0);
-        gameData.setDy(600);
-        gameData.setLevel(level);
-        threadTaskExecutor.startEnemyTankThreads();
+        initGameData(level);
         logger.info("init Game Data...");
     }
 
