@@ -445,7 +445,7 @@ public class PaintService {
 
     public void rePaintPanel(GamePanel panel, Graphics g) {
 
-        RealTimeGameData data = context.getGameData();
+        RealTimeGameData data = context.getRealTimeGameData();
         if (data.isStart()) {
             g.setColor(Color.black);
             g.fillRect(0, 0, GameConstants.GAME_PANEL_WIDTH, GameConstants.GAME_PANEL_HEIGHT);

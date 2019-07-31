@@ -13,9 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-import java.io.IOException;
 
 /**
  * Class Description...
@@ -41,17 +38,17 @@ public class CommandService {
 
     public void loadCustomMap(String mapName){
         System.out.println(mapName);
-        gameContext.getGameData().setMap(new Map(MapParser.getMapFromXml(mapName)));
+        gameContext.getRealTimeGameData().setMap(new Map(MapParser.getMapFromXml(mapName)));
         gameContext.startGame();
     }
 
     public void stop() {
-        RealTimeGameData gameData = gameContext.getGameData();
+        RealTimeGameData gameData = gameContext.getRealTimeGameData();
         gameEventService.gameEventStop(gameData);
     }
 
     public void start() {
-        RealTimeGameData gameData = gameContext.getGameData();
+        RealTimeGameData gameData = gameContext.getRealTimeGameData();
         if (!gameData.isStart()) { // 还没开始
             gameContext.startGame();// 已经开始了
             //this.setVisible(true);
@@ -73,7 +70,7 @@ public class CommandService {
     }
 
     public void exit() {
-        RealTimeGameData gameData = gameContext.getGameData();
+        RealTimeGameData gameData = gameContext.getRealTimeGameData();
         // 暂停游戏
         gameEventService.gameEventStop(gameData);
         int select = JOptionPane.showConfirmDialog(null, "退出游戏吗？", "退出确认",
@@ -88,7 +85,7 @@ public class CommandService {
     }
 
     public void again() {
-        RealTimeGameData gameData = gameContext.getGameData();
+        RealTimeGameData gameData = gameContext.getRealTimeGameData();
         if (!gameData.isStop()) {
             gameEventService.gameEventStop(gameData);
         }
@@ -123,7 +120,7 @@ public class CommandService {
     }
 
     public void selectLevel(int level) {
-        RealTimeGameData gameData = gameContext.getGameData();
+        RealTimeGameData gameData = gameContext.getRealTimeGameData();
         if (gameData.isStart()) {
             if (!gameData.isStop()) {// 暂停游戏
                 gameEventService.gameEventStop(gameData);
@@ -163,7 +160,7 @@ public class CommandService {
     }
 
     public void createMap() {
-        RealTimeGameData gameData = gameContext.getGameData();
+        RealTimeGameData gameData = gameContext.getRealTimeGameData();
         gameData.setMapMakingFlag(Boolean.TRUE);
         gameData.getEnemies().forEach(t -> t.setLive(Boolean.FALSE));
         gameData.getMyTanks().forEach(t -> t.setLive(Boolean.FALSE));
@@ -174,7 +171,7 @@ public class CommandService {
     }
 
     public void saveMap() {
-        RealTimeGameData gameData = gameContext.getGameData();
+        RealTimeGameData gameData = gameContext.getRealTimeGameData();
         String inputValue = JOptionPane.showInputDialog("请输入自定义地图名称");
         System.out.println(inputValue);
         try {

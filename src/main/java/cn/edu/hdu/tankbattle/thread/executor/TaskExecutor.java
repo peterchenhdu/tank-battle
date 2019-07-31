@@ -34,7 +34,7 @@ public class TaskExecutor {
     private GameEventService gameEventService;
 
     public void startEnemyTankThreads() {
-        Vector<EnemyTank> enemies = gameContext.getGameData().getEnemies();
+        Vector<EnemyTank> enemies = gameContext.getRealTimeGameData().getEnemies();
         enemies.forEach(e -> {
             taskExecutor.execute(new EnemyTankMoveTask(e, enemyTankEventService));
             e.getTimer().schedule(new EnemyTankAutoShotTask(e, gameEventService), 0, 500);

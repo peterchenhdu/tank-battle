@@ -27,8 +27,8 @@ public class RealTimeGameData {
     private Vector<Bomb> bombs = new Vector<>();
 
     private Boolean mapMakingFlag = Boolean.FALSE;
-    private StuffTypeEnum currentStuff = StuffTypeEnum.BRICK;
 
+    private StuffTypeEnum currentStuff = StuffTypeEnum.BRICK;
 
     private Map map;
 
@@ -54,7 +54,6 @@ public class RealTimeGameData {
 
     private int level = 1;
 
-
     private boolean iconSmile;
 
     private int dy = 600;
@@ -62,7 +61,6 @@ public class RealTimeGameData {
     private int ky = 600;
 
     private int kx = 0;
-
 
     public void keyPressedDirect(Boolean up, Boolean down, Boolean left, Boolean right) {
         this.up = up;

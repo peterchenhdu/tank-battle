@@ -60,7 +60,7 @@ public class GameEventService {
 
 
     public void refreshState() {
-        RealTimeGameData resource = context.getGameData();
+        RealTimeGameData resource = context.getRealTimeGameData();
         Vector<EnemyTank> enemies = resource.getEnemies();
         Vector<MyTank> myTanks = resource.getMyTanks();
 
@@ -77,7 +77,7 @@ public class GameEventService {
      * Bullets Event...
      */
     public void doBulletEvent() {
-        RealTimeGameData resource = context.getGameData();
+        RealTimeGameData resource = context.getRealTimeGameData();
 
         Vector<MyTank> myTanks = resource.getMyTanks();
         Vector<EnemyTank> enemies = resource.getEnemies();
@@ -136,7 +136,7 @@ public class GameEventService {
      * doOverlapJudge
      */
     public void doOverlapJudge() {
-        RealTimeGameData resource = context.getGameData();
+        RealTimeGameData resource = context.getRealTimeGameData();
         Vector<MyTank> myTanks = resource.getMyTanks();
         Vector<EnemyTank> enemies = resource.getEnemies();
         Map map = resource.getMap();
@@ -211,7 +211,7 @@ public class GameEventService {
      * cleanAndCreate
      */
     public void cleanAndCreate() {
-        RealTimeGameData data = context.getGameData();
+        RealTimeGameData data = context.getRealTimeGameData();
 
         Vector<MyTank> myTanks = data.getMyTanks();
         Vector<EnemyTank> enemies = data.getEnemies();
@@ -326,7 +326,7 @@ public class GameEventService {
      * @param resource .getMyTanks() 我的坦克容量
      */
     public void myTankEvent(RealTimeGameData resource) {
-        RealTimeGameData data = context.getGameData();
+        RealTimeGameData data = context.getRealTimeGameData();
         for (int i = 0; i < resource.getMyTanks().size(); i++) {
             MyTank myTank = resource.getMyTanks().get(i);
             if (data.isUp() && !myTank.isOverlapNo() && !myTank.isOverlapYes()) {
@@ -345,7 +345,7 @@ public class GameEventService {
      * 下一关
      */
     public void nextGame(RealTimeGameData resource) {
-        RealTimeGameData data = context.getGameData();
+        RealTimeGameData data = context.getRealTimeGameData();
 
         resource.setMap(LevelEnum.getByLevel(data.getLevel()).getMap());
 
@@ -372,7 +372,7 @@ public class GameEventService {
      * @param resource .getEnemies() 敌人坦克容量
      */
     public void gameEventStop(RealTimeGameData resource) {
-        RealTimeGameData data = context.getGameData();
+        RealTimeGameData data = context.getRealTimeGameData();
 
         for (int i = 0; i < resource.getMyTanks().size(); i++) {
             MyTank myTank = resource.getMyTanks().get(i);
@@ -443,7 +443,7 @@ public class GameEventService {
      * 游戏没开始时的欢迎图片上的字体移动
      */
     public void fontMove(GamePanel panel) {
-        RealTimeGameData data = context.getGameData();
+        RealTimeGameData data = context.getRealTimeGameData();
         int ky = data.getKy();
         if (ky > 0 && ky != 21)
             ky = ky - 8; // 当字体刚出来时，向上移动

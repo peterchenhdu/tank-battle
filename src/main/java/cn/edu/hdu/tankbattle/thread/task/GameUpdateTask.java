@@ -31,7 +31,7 @@ public class GameUpdateTask implements Runnable {
     @Override
     public void run() {
         GamePanel panel = gameContext.getGamePanel();
-        RealTimeGameData gameData = gameContext.getGameData();
+        RealTimeGameData gameData = gameContext.getRealTimeGameData();
         GameEventService control = gameContext.getControl();
         // 每隔30毫秒重画
         while (true) {

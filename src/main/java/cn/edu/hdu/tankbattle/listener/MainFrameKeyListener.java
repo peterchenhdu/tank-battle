@@ -32,7 +32,7 @@ public class MainFrameKeyListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        RealTimeGameData data = gameContext.getGameData();
+        RealTimeGameData data = gameContext.getRealTimeGameData();
 
 
 
@@ -88,7 +88,7 @@ public class MainFrameKeyListener implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        RealTimeGameData data = gameContext.getGameData();
+        RealTimeGameData data = gameContext.getRealTimeGameData();
         if (e.getKeyCode() == KeyEvent.VK_UP) {
             data.setUp(false);
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {

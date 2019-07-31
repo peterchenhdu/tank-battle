@@ -34,7 +34,7 @@ public class MainFrameMouseListener implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         System.out.println(e.getX() + "," + e.getY());
-        RealTimeGameData gameData = gameContext.getGameData();
+        RealTimeGameData gameData = gameContext.getRealTimeGameData();
         if(gameData.getMapMakingFlag().equals(Boolean.FALSE)){
             return;
         }
