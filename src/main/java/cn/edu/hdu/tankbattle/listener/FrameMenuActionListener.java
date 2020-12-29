@@ -19,7 +19,7 @@ import java.awt.event.ActionListener;
  * @since 2018/3/19 20:18
  */
 @Component
-public class MenuActionListener implements ActionListener {
+public class FrameMenuActionListener implements ActionListener {
     @Autowired
     private CommandService commandService;
 

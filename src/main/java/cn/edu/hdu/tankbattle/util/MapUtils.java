@@ -22,6 +22,11 @@ import java.util.List;
  * @since 2018/4/1 20:09
  */
 public class MapUtils {
+    /**
+     * 获取地图中所有可以存放物体的坐标集合
+     *
+     * @return 坐标集合
+     */
     public static List<Stuff> getFullMapStuff() {
         List<Stuff> list = new ArrayList<>();
         for (int i = 0; i < 30; i++) {
@@ -32,6 +37,13 @@ public class MapUtils {
         return list;
     }
 
+    /**
+     * 获取离x,y坐标最近的一个物体坐标
+     *
+     * @param x 坐标
+     * @param y 坐标
+     * @return 最近的一个物体坐标
+     */
     public static Stuff getNearestStuff(int x, int y) {
         List<Stuff> list = getFullMapStuff();
         for (Stuff s : list) {
@@ -39,13 +51,23 @@ public class MapUtils {
                 return s;
             }
         }
-        throw new TankBattleGameException("...");
+        throw new TankBattleGameException("get Nearest Stuff error");
     }
 
+    /**
+     * 获取自定义地图列表
+     *
+     * @return List
+     */
     public static List<String> getCustomFileList() {
-        Collection<File> listFiles = FileUtils.listFiles(new File(System.getProperty("user.home") + File.separator +
-                ".tankBattle" + File.separator + "custom"), FileFilterUtils.suffixFileFilter("xml"), DirectoryFileFilter
-                .INSTANCE);
+        File customFile = new File(System.getProperty("user.home") + File.separator + ".tankBattle" + File.separator + "custom");
+        if (!customFile.exists()) {
+            if (!customFile.mkdirs()) {
+                throw new TankBattleGameException("create custom file error...");
+            }
+        }
+
+        Collection<File> listFiles = FileUtils.listFiles(customFile, FileFilterUtils.suffixFileFilter("xml"), DirectoryFileFilter.INSTANCE);
         List<String> list = new ArrayList<>();
         for (File file : listFiles) {
             list.add(file.getName().substring(0, file.getName().lastIndexOf(".")));
@@ -54,7 +76,4 @@ public class MapUtils {
         return list;
     }
 
-    public static void main(String[] args) {
-        getCustomFileList();
-    }
 }

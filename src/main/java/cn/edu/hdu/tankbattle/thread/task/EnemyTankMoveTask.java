@@ -7,8 +7,8 @@ package cn.edu.hdu.tankbattle.thread.task;
 import cn.edu.hdu.tankbattle.constant.GameConstants;
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 import cn.edu.hdu.tankbattle.entity.EnemyTank;
-import cn.edu.hdu.tankbattle.service.TankEventService;
-import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
+import cn.edu.hdu.tankbattle.service.TankControlService;
+import cn.edu.hdu.tankbattle.util.GameTimeUnit;
 
 /**
  * Class Description...
@@ -18,11 +18,11 @@ import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
  */
 public class EnemyTankMoveTask implements Runnable {
     EnemyTank tank;
-    TankEventService enemyTankEventService;
+    TankControlService enemyTankControlService;
 
-    public EnemyTankMoveTask(EnemyTank tank, TankEventService enemyTankEventService) {
+    public EnemyTankMoveTask(EnemyTank tank, TankControlService enemyTankControlService) {
         this.tank = tank;
-        this.enemyTankEventService = enemyTankEventService;
+        this.enemyTankControlService = enemyTankControlService;
     }
 
     @Override
@@ -36,25 +36,25 @@ public class EnemyTankMoveTask implements Runnable {
                         // 如果我的坦克在敌人坦克的正西方
                         if (DirectionEnum.WEST.equals(tank.getMyTankLocation())) {
                             tank.setDirect(DirectionEnum.WEST);
-                            enemyTankEventService.enemyGoWest(tank);
+                            enemyTankControlService.enemyGoWest(tank);
                         }
                         // 如果我的坦克在敌人坦克的正东方
                         if (DirectionEnum.EAST.equals(tank.getMyTankLocation())) {
                             tank.setDirect(DirectionEnum.EAST);
-                            enemyTankEventService.enemyGoEast(tank);
+                            enemyTankControlService.enemyGoEast(tank);
                         }
                         // 如果我的坦克在敌人坦克的正南方
                         if (tank.getMyTankLocation() == DirectionEnum.SOUTH) {
                             tank.setDirect(DirectionEnum.SOUTH);
-                            enemyTankEventService.enemyGoSouth(tank);
+                            enemyTankControlService.enemyGoSouth(tank);
                         }
                         // 如果我的坦克在敌人坦克的正北方
                         if (tank.getMyTankLocation() == DirectionEnum.NORTH) {
-                            enemyTankEventService.enemyGoNorth(tank);
+                            enemyTankControlService.enemyGoNorth(tank);
                         }
                         // 如果出界或者重叠的话 选择其他方向 跳出
                         if (tank.getY() <= 20 || tank.isOverlapNo() == true) {
-                            tank.setDirect(enemyTankEventService.enemyGetRandomDirect(DirectionEnum.SOUTH,
+                            tank.setDirect(enemyTankControlService.enemyGetRandomDirect(DirectionEnum.SOUTH,
                                     DirectionEnum.WEST, DirectionEnum.EAST));
                             break;
                         }
@@ -71,22 +71,22 @@ public class EnemyTankMoveTask implements Runnable {
                         GameTimeUnit.sleepMillis(36);
                         if (tank.getMyTankLocation() == DirectionEnum.WEST) {
                             tank.setDirect(DirectionEnum.WEST);
-                            enemyTankEventService.enemyGoWest(tank);
+                            enemyTankControlService.enemyGoWest(tank);
                         }
                         if (tank.getMyTankLocation() == DirectionEnum.EAST) {
                             tank.setDirect(DirectionEnum.EAST);
-                            enemyTankEventService.enemyGoEast(tank);
+                            enemyTankControlService.enemyGoEast(tank);
                         }
                         if (tank.getMyTankLocation() == DirectionEnum.NORTH) {
                             tank.setDirect(DirectionEnum.NORTH);
-                            enemyTankEventService.enemyGoNorth(tank);
+                            enemyTankControlService.enemyGoNorth(tank);
                         }
                         if (tank.getMyTankLocation() == DirectionEnum.SOUTH) {
-                            enemyTankEventService.enemyGoSouth(tank);
+                            enemyTankControlService.enemyGoSouth(tank);
                         }
                         if (tank.getY() >= GameConstants.GAME_PANEL_HEIGHT - 20
                                 || tank.isOverlapNo()) {
-                            tank.setDirect(enemyTankEventService.enemyGetRandomDirect(DirectionEnum.NORTH,
+                            tank.setDirect(enemyTankControlService.enemyGetRandomDirect(DirectionEnum.NORTH,
                                     DirectionEnum.WEST, DirectionEnum.EAST));
                             break;
                         }
@@ -101,22 +101,22 @@ public class EnemyTankMoveTask implements Runnable {
                         GameTimeUnit.sleepMillis(36);
                         if (tank.getMyTankLocation() == DirectionEnum.NORTH) {
                             tank.setDirect(DirectionEnum.NORTH);
-                            enemyTankEventService.enemyGoNorth(tank);
+                            enemyTankControlService.enemyGoNorth(tank);
                         }
                         if (tank.getMyTankLocation() == DirectionEnum.EAST) {
                             tank.setDirect(DirectionEnum.EAST);
-                            enemyTankEventService.enemyGoEast(tank);
+                            enemyTankControlService.enemyGoEast(tank);
                         }
                         if (tank.getMyTankLocation() == DirectionEnum.SOUTH) {
                             tank.setDirect(DirectionEnum.SOUTH);
-                            enemyTankEventService.enemyGoSouth(tank);
+                            enemyTankControlService.enemyGoSouth(tank);
                         }
                         if (tank.getMyTankLocation() == DirectionEnum.WEST) {
-                            enemyTankEventService.enemyGoWest(tank);
+                            enemyTankControlService.enemyGoWest(tank);
                         }
                         if (tank.getX() <= 20 || tank.getY() <= 20
                                 || tank.isOverlapNo()) {
-                            tank.setDirect(enemyTankEventService.enemyGetRandomDirect(DirectionEnum.NORTH,
+                            tank.setDirect(enemyTankControlService.enemyGetRandomDirect(DirectionEnum.NORTH,
                                     DirectionEnum.SOUTH, DirectionEnum.EAST));
                             break;
                         }
@@ -131,22 +131,22 @@ public class EnemyTankMoveTask implements Runnable {
                         GameTimeUnit.sleepMillis(36);
                         if (tank.getMyTankLocation() == DirectionEnum.WEST) {
                             tank.setDirect(DirectionEnum.WEST);
-                            enemyTankEventService.enemyGoWest(tank);
+                            enemyTankControlService.enemyGoWest(tank);
                         }
                         if (tank.getMyTankLocation() == DirectionEnum.NORTH) {
                             tank.setDirect(DirectionEnum.NORTH);
-                            enemyTankEventService.enemyGoNorth(tank);
+                            enemyTankControlService.enemyGoNorth(tank);
                         }
                         if (tank.getMyTankLocation() == DirectionEnum.SOUTH) {
                             tank.setDirect(DirectionEnum.SOUTH);
-                            enemyTankEventService.enemyGoSouth(tank);
+                            enemyTankControlService.enemyGoSouth(tank);
                         }
                         if (tank.getMyTankLocation() == DirectionEnum.EAST) {
-                            enemyTankEventService.enemyGoEast(tank);
+                            enemyTankControlService.enemyGoEast(tank);
                         }
                         if (tank.getX() >= GameConstants.GAME_PANEL_WIDTH - 20
                                 || tank.getY() <= 20 || tank.isOverlapNo()) {
-                            tank.setDirect(enemyTankEventService.enemyGetRandomDirect(DirectionEnum.NORTH,
+                            tank.setDirect(enemyTankControlService.enemyGetRandomDirect(DirectionEnum.NORTH,
                                     DirectionEnum.SOUTH, DirectionEnum.WEST));
                             break;
                         }

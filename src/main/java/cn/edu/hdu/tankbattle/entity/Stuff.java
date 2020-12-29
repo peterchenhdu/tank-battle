@@ -9,7 +9,7 @@ import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
 
 
 /**
- * Stuff...
+ * 物体...
  *
  * @author chenpi
  * @since 2011-02-10 19:29
@@ -32,7 +32,7 @@ public class Stuff {
      */
     private Integer height;
     /**
-     * 东西第一个类型属性
+     * 物体类型属性
      */
     private StuffTypeEnum type;
 

@@ -8,7 +8,7 @@ package cn.edu.hdu.tankbattle.entity;
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 
 /**
- * Bullet...
+ * 子弹...
  *
  * @author chenpi
  * @since 2011-02-10 19:29

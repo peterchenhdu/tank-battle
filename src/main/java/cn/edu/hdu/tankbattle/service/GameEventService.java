@@ -4,30 +4,22 @@
 
 package cn.edu.hdu.tankbattle.service;
 
-import java.util.Vector;
-
 import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
+import cn.edu.hdu.tankbattle.entity.*;
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
-import cn.edu.hdu.tankbattle.enums.LevelEnum;
 import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
-import cn.edu.hdu.tankbattle.entity.Bomb;
-import cn.edu.hdu.tankbattle.entity.Brick;
-import cn.edu.hdu.tankbattle.entity.Bullet;
-import cn.edu.hdu.tankbattle.entity.EnemyTank;
-import cn.edu.hdu.tankbattle.entity.Iron;
-import cn.edu.hdu.tankbattle.entity.MyTank;
-import cn.edu.hdu.tankbattle.entity.Stuff;
-import cn.edu.hdu.tankbattle.entity.Tank;
-import cn.edu.hdu.tankbattle.entity.Water;
 import cn.edu.hdu.tankbattle.resource.map.Map;
-import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
-import cn.edu.hdu.tankbattle.thread.executor.TaskExecutor;
+import cn.edu.hdu.tankbattle.thread.executor.EnemyTankThreadController;
 import cn.edu.hdu.tankbattle.thread.task.BulletMoveTask;
+import cn.edu.hdu.tankbattle.util.GameTimeUnit;
+import cn.edu.hdu.tankbattle.util.GameUtils;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
+
+import java.util.Vector;
 
 /**
  * Control...
@@ -41,23 +33,11 @@ public class GameEventService {
     @Autowired
     private GameContext context;
     @Autowired
-    private TaskExecutor threadTaskExecutor;
+    private EnemyTankThreadController threadEnemyTankThreadController;
     @Autowired
     private ThreadPoolTaskExecutor taskExecutor;
     @Autowired
-    private TankEventService tankEventService;
-
-
-    private Boolean isHitting(Bullet bullet, Stuff stuff) {
-        return (Math.abs(bullet.getX() - stuff.getX()) <= (stuff.getWidth() + bullet.getWidth()) / 2 &&
-                Math.abs(bullet.getY() - stuff.getY()) <= (stuff.getWidth() + bullet.getHeight()) / 2);
-    }
-
-    private Boolean isHitting(Bullet bullet1, Bullet bullet2) {
-        return (Math.abs(bullet1.getX() - bullet2.getX()) <= bullet1.getWidth() &&
-                Math.abs(bullet1.getY() - bullet2.getY()) <= bullet1.getHeight());
-    }
-
+    private TankControlService tankControlService;
 
     public void refreshState() {
         RealTimeGameData resource = context.getRealTimeGameData();
@@ -91,22 +71,22 @@ public class GameEventService {
         myTanks.forEach(myTank ->
                 enemies.forEach(enemyTank -> {
 
-                    tankEventService.enemyFindAndKill(enemyTank, myTank, map);
+                    tankControlService.enemyFindAndKill(enemyTank, myTank, map);
 
                     enemyTank.getBullets().forEach(eb -> {
-                        if (isHitting(eb, myTank)) {
-                            this.afterShotTank(eb, myTank, bombs);
+                        if (GameUtils.isHitting(eb, myTank)) {
+                            GameUtils.afterShotTank(eb, myTank, bombs);
                         }
 
-                        map.getBricks().stream().filter(brick -> isHitting(eb, brick))
-                                .forEach(brick -> afterShotStuff(eb, brick, bombs, enemyTank));
+                        map.getBricks().stream().filter(brick -> GameUtils.isHitting(eb, brick))
+                                .forEach(brick -> GameUtils.afterShotStuff(eb, brick, bombs));
 
-                        map.getIrons().stream().filter(iron -> isHitting(eb, iron))
-                                .forEach(iron -> afterShotStuff(eb, iron, bombs, enemyTank));
+                        map.getIrons().stream().filter(iron -> GameUtils.isHitting(eb, iron))
+                                .forEach(iron -> GameUtils.afterShotStuff(eb, iron, bombs));
                     });
 
                     myTank.getBullets().forEach(mb -> {
-                        enemyTank.getBullets().stream().filter(eb -> isHitting(mb, eb))
+                        enemyTank.getBullets().stream().filter(eb -> GameUtils.isHitting(mb, eb))
                                 .forEach(eb -> {
                                     mb.setLive(false);
                                     eb.setLive(false);
@@ -116,15 +96,15 @@ public class GameEventService {
                                 });
 
 
-                        if (isHitting(mb, enemyTank)) {
-                            this.afterShotTank(mb, enemyTank, bombs);
+                        if (GameUtils.isHitting(mb, enemyTank)) {
+                            GameUtils.afterShotTank(mb, enemyTank, bombs);
                         }
 
-                        map.getBricks().stream().filter(brick -> isHitting(mb, brick))
-                                .forEach(brick -> afterShotStuff(mb, brick, bombs, myTank));
+                        map.getBricks().stream().filter(brick -> GameUtils.isHitting(mb, brick))
+                                .forEach(brick -> GameUtils.afterShotStuff(mb, brick, bombs));
 
-                        map.getIrons().stream().filter(iron -> isHitting(mb, iron))
-                                .forEach(iron -> afterShotStuff(mb, iron, bombs, myTank));
+                        map.getIrons().stream().filter(iron -> GameUtils.isHitting(mb, iron))
+                                .forEach(iron -> GameUtils.afterShotStuff(mb, iron, bombs));
                     });
 
 
@@ -148,17 +128,17 @@ public class GameEventService {
             myTank.setOverlapNo(false);
             myTank.setOverlapYes(false);
 
-            if (tankEventService.isMyTankOverlap(myTank, enemies)) {
+            if (tankControlService.isMyTankOverlap(myTank, enemies)) {
                 myTank.setOverlapYes(true);
             }
 
-            bricks.stream().filter(brick -> tankEventService.isTankOverlap(myTank, brick, 20 + 10))
+            bricks.stream().filter(brick -> tankControlService.isTankOverlap(myTank, brick, 20 + 10))
                     .forEach(brick -> myTank.setOverlapYes(true));
 
-            irons.stream().filter(iron -> tankEventService.isTankOverlap(myTank, iron, 20 + 10))
+            irons.stream().filter(iron -> tankControlService.isTankOverlap(myTank, iron, 20 + 10))
                     .forEach(iron -> myTank.setOverlapNo(true));
 
-            waters.stream().filter(water -> tankEventService.isTankOverlap(myTank, water, 20 + 10))
+            waters.stream().filter(water -> tankControlService.isTankOverlap(myTank, water, 20 + 10))
                     .forEach(water -> myTank.setOverlapNo(true));
         });
 
@@ -167,12 +147,12 @@ public class GameEventService {
             enemyTank.setOverlapYes(false);
             enemyTank.setFrontStuff(StuffTypeEnum.INVALID);
 
-            if (tankEventService.isEnemyTankOverlap(enemyTank, enemies, myTanks)) {
+            if (tankControlService.isEnemyTankOverlap(enemyTank, enemies, myTanks)) {
                 enemyTank.setOverlapYes(true);
             }
 
 
-            bricks.stream().filter(brick -> tankEventService.isTankOverlap(enemyTank, brick, 20 + 10))
+            bricks.stream().filter(brick -> tankControlService.isTankOverlap(enemyTank, brick, 20 + 10))
                     .forEach(brick -> {
                         if ((Math.abs(brick.getX() - enemyTank.getX()) <= 10 && (enemyTank
                                 .getDirect() == DirectionEnum.SOUTH || enemyTank
@@ -190,13 +170,13 @@ public class GameEventService {
 
                     });
 
-            irons.stream().filter(iron -> tankEventService.isTankOverlap(enemyTank, iron, 20 + 10))
+            irons.stream().filter(iron -> tankControlService.isTankOverlap(enemyTank, iron, 20 + 10))
                     .forEach(iron -> {
                         enemyTank.setFrontStuff(StuffTypeEnum.IRON);
                         enemyTank.setOverlapNo(true);
                     });
 
-            waters.stream().filter(water -> tankEventService.isTankOverlap(enemyTank, water, 20 + 10))
+            waters.stream().filter(water -> tankControlService.isTankOverlap(enemyTank, water, 20 + 10))
                     .forEach(water -> {
                         enemyTank.setOverlapNo(true);
                         enemyTank.setOverlapNo(true);
@@ -255,7 +235,7 @@ public class GameEventService {
                             -20, DirectionEnum.SOUTH);
                     enemyTank.setLocation(r);
                     enemyTank.setActivate(Boolean.TRUE);
-                    threadTaskExecutor.startSingleEnemyTankTask(enemyTank);
+                    threadEnemyTankThreadController.enableEnemyTank(enemyTank);
                     enemies.add(enemyTank);
                 }
                 break;
@@ -268,56 +248,6 @@ public class GameEventService {
 
         map.getBricks().removeIf(brick -> !brick.getLive());
 
-    }
-
-    /**
-     * 击中坦克以后
-     *
-     * @param bullet 击中别人的子弹
-     * @param tank   被击中的坦克
-     * @param bombs  炸弹容量
-     */
-    public void afterShotTank(Bullet bullet, Tank tank, Vector<Bomb> bombs) {
-        bullet.setLive(false);
-        Bomb bomb;
-        if (tank.getBlood() == 1) {
-            tank.setLive(false);
-            bomb = new Bomb(tank.getX(), tank.getY());
-            tank.setBlood(tank.getBlood() - 1);
-            bomb.setL(120);
-            bombs.add(bomb);
-        } else {
-            bomb = new Bomb(bullet.getX(), bullet.getY());
-            tank.setBlood(tank.getBlood() - 1);
-            bomb.setL(40);
-            bombs.add(bomb);
-        }
-    }
-
-    /**
-     * 击中东西以后
-     *
-     * @param bullet 集中别人的子弹
-     * @param stuff  被击中的东西
-     * @param bombs  炸弹容量
-     */
-    public void afterShotStuff(Bullet bullet, Stuff stuff, Vector<Bomb> bombs,
-                               Tank tank) {
-        Bomb bomb;
-        switch (stuff.getType()) {
-            case BRICK: // 砖块
-                bullet.setLive(false);
-                stuff.setLive(false);
-                bomb = new Bomb(stuff.getX(), stuff.getY());
-                bomb.setL(40);
-                bombs.add(bomb);
-                break;
-            case IRON: // 铁块
-                bomb = new Bomb(bullet.getX(), bullet.getY());
-                bullet.setLive(false);
-                bomb.setL(20);
-                bombs.add(bomb);
-        }
     }
 
     /**
@@ -347,7 +277,7 @@ public class GameEventService {
     public void nextGame(RealTimeGameData resource) {
         RealTimeGameData data = context.getRealTimeGameData();
 
-        resource.setMap(LevelEnum.getByLevel(data.getLevel()).getMap());
+        resource.setMap(data.getLevel().getMap());
 
         for (int i = 0; i < 5; i++) {
             EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, DirectionEnum.SOUTH);
@@ -362,7 +292,7 @@ public class GameEventService {
             myTank.setX(300);
             myTank.setY(620);
         }
-        threadTaskExecutor.startEnemyTankThreads();
+        threadEnemyTankThreadController.enableEnemyTanks();
     }
 
 

@@ -6,7 +6,7 @@ package cn.edu.hdu.tankbattle.thread.executor;
 
 import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.entity.EnemyTank;
-import cn.edu.hdu.tankbattle.service.TankEventService;
+import cn.edu.hdu.tankbattle.service.TankControlService;
 import cn.edu.hdu.tankbattle.service.GameEventService;
 import cn.edu.hdu.tankbattle.thread.task.EnemyTankAutoShotTask;
 import cn.edu.hdu.tankbattle.thread.task.EnemyTankMoveTask;
@@ -17,32 +17,33 @@ import org.springframework.stereotype.Component;
 import java.util.Vector;
 
 /**
- * Class Description...
+ * 敌人坦克线程控制器...
  *
  * @author chenpi
  * @since 2018/3/24 19:12
  */
 @Component
-public class TaskExecutor {
+public class EnemyTankThreadController {
     @Autowired
     private ThreadPoolTaskExecutor taskExecutor;
     @Autowired
     private GameContext gameContext;
+
     @Autowired
-    private TankEventService enemyTankEventService;
+    private TankControlService enemyTankControlService;
     @Autowired
     private GameEventService gameEventService;
 
-    public void startEnemyTankThreads() {
-        Vector<EnemyTank> enemies = gameContext.getRealTimeGameData().getEnemies();
-        enemies.forEach(e -> {
-            taskExecutor.execute(new EnemyTankMoveTask(e, enemyTankEventService));
-            e.getTimer().schedule(new EnemyTankAutoShotTask(e, gameEventService), 0, 500);
+    public void enableEnemyTanks() {
+        Vector<EnemyTank> enemyTanks = gameContext.getRealTimeGameData().getEnemies();
+        enemyTanks.forEach(enemyTank -> {
+            taskExecutor.execute(new EnemyTankMoveTask(enemyTank, enemyTankControlService));
+            enemyTank.getTimer().schedule(new EnemyTankAutoShotTask(enemyTank, gameEventService), 0, 500);
         });
     }
 
-    public void startSingleEnemyTankTask(EnemyTank tank) {
-        taskExecutor.execute(new EnemyTankMoveTask(tank, enemyTankEventService));
+    public void enableEnemyTank(EnemyTank tank) {
+        taskExecutor.execute(new EnemyTankMoveTask(tank, enemyTankControlService));
         tank.getTimer().schedule(new EnemyTankAutoShotTask(tank, gameEventService), 0, 500);
     }
 }

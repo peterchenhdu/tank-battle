@@ -4,11 +4,11 @@
 
 package cn.edu.hdu.tankbattle.entity;
 
-import java.awt.Color;
-import java.util.Timer;
-
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 import cn.edu.hdu.tankbattle.enums.TankTypeEnum;
+
+import java.awt.*;
+import java.util.Timer;
 
 /**
  * EnemyTank...
@@ -18,7 +18,7 @@ import cn.edu.hdu.tankbattle.enums.TankTypeEnum;
  */
 public class EnemyTank extends Tank {
     /**
-     * 敌人坦克刚出现时的位置，5个固定地方
+     * 敌人坦克刚出现时从左到右排列的5个固定地方
      */
     private int location;
     /**

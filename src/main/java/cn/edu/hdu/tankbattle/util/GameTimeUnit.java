@@ -2,7 +2,7 @@
  * Copyright (c) 2011-2025 PiChen.
  */
 
-package cn.edu.hdu.tankbattle.thread;
+package cn.edu.hdu.tankbattle.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

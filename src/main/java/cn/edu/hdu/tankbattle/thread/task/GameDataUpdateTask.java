@@ -5,26 +5,27 @@
 package cn.edu.hdu.tankbattle.thread.task;
 
 import cn.edu.hdu.tankbattle.context.GameContext;
+import cn.edu.hdu.tankbattle.enums.LevelEnum;
 import cn.edu.hdu.tankbattle.service.GameEventService;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
-import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
+import cn.edu.hdu.tankbattle.util.GameTimeUnit;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * UpdateThread...
+ * 游戏数据更新线程...
  *
  * @author chenpi
  * @since 2011-02-10 19:29
  */
-public class GameUpdateTask implements Runnable {
+public class GameDataUpdateTask implements Runnable {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private GameContext gameContext;
 
 
-    public GameUpdateTask(GameContext gameContext) {
+    public GameDataUpdateTask(GameContext gameContext) {
         this.gameContext = gameContext;
     }
 
@@ -32,7 +33,7 @@ public class GameUpdateTask implements Runnable {
     public void run() {
         GamePanel panel = gameContext.getGamePanel();
         RealTimeGameData gameData = gameContext.getRealTimeGameData();
-        GameEventService control = gameContext.getControl();
+        GameEventService control = gameContext.getGameEventService();
         // 每隔30毫秒重画
         while (true) {
             GameTimeUnit.sleepMillis(30);
@@ -44,11 +45,9 @@ public class GameUpdateTask implements Runnable {
                 if (gameData.getDy() == 250) {
                     panel.repaint();
                     GameTimeUnit.sleepMillis(4000);
-                    if (gameData.getLevel() == 5) {
-                        gameData.setLevel(0);
-                    }
-                    if (gameData.getMyTankNum() >= 1 && gameData.getLevel() <= 4) {
-                        gameData.setLevel(gameData.getLevel() + 1);
+
+                    if (gameData.getMyTankNum() >= 1) {
+                        gameData.setLevel(LevelEnum.nextLevel(gameData.getLevel()));
                         gameData.setDy(600);
                         control.nextGame(gameData);
                     }

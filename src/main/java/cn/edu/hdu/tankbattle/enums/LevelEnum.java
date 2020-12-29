@@ -20,31 +20,37 @@ public enum LevelEnum {
     FOUR_LEVEL(4, "第四关", new Map4()),
     FIVE_LEVEL(5, "第五关", new Map5());
 
-    private Integer level;
+    private Integer value;
     private String name;
     private Map map;
 
-    LevelEnum(Integer level, String name, Map map) {
-        this.level = level;
+    LevelEnum(Integer value, String name, Map map) {
+        this.value = value;
         this.name = name;
         this.map = map;
     }
 
     public static LevelEnum getByLevel(Integer level) {
         for (LevelEnum levelEnum : LevelEnum.values()) {
-            if (levelEnum.getLevel().equals(level)) {
+            if (levelEnum.getValue().equals(level)) {
                 return levelEnum;
             }
         }
         return INVALID_LEVEL;
     }
 
-    public Integer getLevel() {
-        return level;
+    public Integer getValue() {
+        return value;
     }
 
     public String getName() {
         return name;
+    }
+
+    public static LevelEnum nextLevel(LevelEnum level) {
+        int nextValue = level.getValue() + 1;
+        LevelEnum nextLevel = getByLevel(nextValue);
+        return nextLevel == INVALID_LEVEL ? FIRST_LEVEL : nextLevel;
     }
 
     public Map getMap() {

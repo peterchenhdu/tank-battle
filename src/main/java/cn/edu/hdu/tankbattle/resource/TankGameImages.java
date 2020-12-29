@@ -15,20 +15,20 @@ import java.awt.Toolkit;
  */
 public class TankGameImages {
 
-    public static Image myTankImg[] = {
+    public static Image[] myTankImg = {
             Toolkit.getDefaultToolkit().getImage(TankGameImages.class.getResource("/static/img/UTank_.gif")),
             Toolkit.getDefaultToolkit().getImage(TankGameImages.class.getResource("/static/img/DTank_.gif")),
             Toolkit.getDefaultToolkit().getImage(TankGameImages.class.getResource("/static/img/LTank_.gif")),
             Toolkit.getDefaultToolkit().getImage(TankGameImages.class.getResource("/static/img/RTank_.gif"))
     };
 
-    public static Image enemyTankImg[] = {
+    public static Image[] enemyTankImg = {
             Toolkit.getDefaultToolkit().getImage(TankGameImages.class.getResource("/static/img/UTank.gif")),
             Toolkit.getDefaultToolkit().getImage(TankGameImages.class.getResource("/static/img/DTank.gif")),
             Toolkit.getDefaultToolkit().getImage(TankGameImages.class.getResource("/static/img/LTank.gif")),
             Toolkit.getDefaultToolkit().getImage(TankGameImages.class.getResource("/static/img/RTank.gif"))};
 
-    public static Image stuffImg[] = {
+    public static Image[] stuffImg = {
             Toolkit.getDefaultToolkit().getImage(TankGameImages.class.getResource("/static/img/brick.gif")),
             Toolkit.getDefaultToolkit().getImage(TankGameImages.class.getResource("/static/img/iron.gif")),
             Toolkit.getDefaultToolkit().getImage(TankGameImages.class.getResource("/static/img/water.gif"))};
@@ -39,7 +39,7 @@ public class TankGameImages {
     public static Image bullet = Toolkit.getDefaultToolkit()
             .getImage(TankGameImages.class.getResource("/static/img/bullet.gif"));
 
-    public static Image bomb[] = {
+    public static Image[] bomb = {
             Toolkit.getDefaultToolkit().getImage(TankGameImages.class.getResource("/static/img/bomb_1.png")),
             Toolkit.getDefaultToolkit().getImage(TankGameImages.class.getResource("/static/img/bomb_2.png")),
             Toolkit.getDefaultToolkit().getImage(TankGameImages.class.getResource("/static/img/bomb_3.png")),

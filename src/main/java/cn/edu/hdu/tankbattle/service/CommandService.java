@@ -6,6 +6,7 @@ package cn.edu.hdu.tankbattle.service;
 
 import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
+import cn.edu.hdu.tankbattle.enums.LevelEnum;
 import cn.edu.hdu.tankbattle.resource.map.Map;
 import cn.edu.hdu.tankbattle.resource.map.xml.parse.MapParser;
 import cn.edu.hdu.tankbattle.util.RefUtils;
@@ -100,26 +101,26 @@ public class CommandService {
     }
 
     public void first() {
-        selectLevel(1);
+        selectLevel(LevelEnum.FIRST_LEVEL);
     }
 
     public void second() {
-        selectLevel(2);
+        selectLevel(LevelEnum.SECOND_LEVEL);
     }
 
     public void third() {
-        selectLevel(3);
+        selectLevel(LevelEnum.THIRD_LEVEL);
     }
 
     public void fourth() {
-        selectLevel(4);
+        selectLevel(LevelEnum.FOUR_LEVEL);
     }
 
     public void fifth() {
-        selectLevel(5);
+        selectLevel(LevelEnum.FIVE_LEVEL);
     }
 
-    public void selectLevel(int level) {
+    public void selectLevel(LevelEnum level) {
         RealTimeGameData gameData = gameContext.getRealTimeGameData();
         if (gameData.isStart()) {
             if (!gameData.isStop()) {// 暂停游戏
@@ -161,7 +162,7 @@ public class CommandService {
 
     public void createMap() {
         RealTimeGameData gameData = gameContext.getRealTimeGameData();
-        gameData.setMapMakingFlag(Boolean.TRUE);
+        gameData.setMapMakingMode(Boolean.TRUE);
         gameData.getEnemies().forEach(t -> t.setLive(Boolean.FALSE));
         gameData.getMyTanks().forEach(t -> t.setLive(Boolean.FALSE));
         gameData.getMyTanks().clear();

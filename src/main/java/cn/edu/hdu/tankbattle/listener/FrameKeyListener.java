@@ -17,36 +17,44 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /**
- * Class Description...
+ * 按键监听...
  *
  * @author chenpi
  * @since 2018/3/19 20:13
  */
 @Component
-public class MainFrameKeyListener implements KeyListener {
+public class FrameKeyListener implements KeyListener {
     @Autowired
     private GameEventService gameEventService;
 
     @Autowired
     private GameContext gameContext;
 
+    /**
+     * 按键按下操作
+     * @param e 事件
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         RealTimeGameData data = gameContext.getRealTimeGameData();
 
-
-
-        if (Boolean.TRUE.equals(data.getMapMakingFlag()) && e.getKeyCode() == KeyEvent.VK_C) {
-            if (data.getCurrentStuff() == StuffTypeEnum.BRICK) {
-                data.setCurrentStuff(StuffTypeEnum.IRON);
-            } else if (data.getCurrentStuff() == StuffTypeEnum.IRON) {
-                data.setCurrentStuff(StuffTypeEnum.WATER);
-            } else if (data.getCurrentStuff() == StuffTypeEnum.WATER) {
-                data.setCurrentStuff(StuffTypeEnum.INVALID);
-            } else {
-                data.setCurrentStuff(StuffTypeEnum.BRICK);
+        //地图编辑模式，按键C操作
+        if (data.getMapMakingMode() && e.getKeyCode() == KeyEvent.VK_C) {
+            switch (data.getCurrentSelectedStuff()) {
+                case BRICK:
+                    data.setCurrentSelectedStuff(StuffTypeEnum.IRON);
+                    break;
+                case IRON:
+                    data.setCurrentSelectedStuff(StuffTypeEnum.WATER);
+                    break;
+                case WATER:
+                    data.setCurrentSelectedStuff(StuffTypeEnum.INVALID);
+                    break;
+                default:
+                    data.setCurrentSelectedStuff(StuffTypeEnum.BRICK);
+                    break;
             }
-
+            return;
         }
 
 
@@ -86,17 +94,29 @@ public class MainFrameKeyListener implements KeyListener {
 
     }
 
+    /**
+     * 释放按键操作
+     *
+     * @param e 按键事件
+     */
     @Override
     public void keyReleased(KeyEvent e) {
         RealTimeGameData data = gameContext.getRealTimeGameData();
-        if (e.getKeyCode() == KeyEvent.VK_UP) {
-            data.setUp(false);
-        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            data.setDown(false);
-        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            data.setLeft(false);
-        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            data.setRight(false);
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_UP:
+                data.setUp(false);
+                break;
+            case KeyEvent.VK_DOWN:
+                data.setDown(false);
+                break;
+            case KeyEvent.VK_LEFT:
+                data.setLeft(false);
+                break;
+            case KeyEvent.VK_RIGHT:
+                data.setRight(false);
+                break;
+            default:
+                break;
         }
     }
 

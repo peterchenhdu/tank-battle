@@ -7,59 +7,105 @@ package cn.edu.hdu.tankbattle.dto;
 import cn.edu.hdu.tankbattle.entity.Bomb;
 import cn.edu.hdu.tankbattle.entity.EnemyTank;
 import cn.edu.hdu.tankbattle.entity.MyTank;
+import cn.edu.hdu.tankbattle.enums.LevelEnum;
 import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
 import cn.edu.hdu.tankbattle.resource.map.Map;
 
 import java.util.Vector;
 
 /**
- * Class Description...
+ * 实时游戏数据...
  *
  * @author chenpi
  * @since 2018/3/20 23:01
  */
 public class RealTimeGameData {
 
+    /**
+     * 我方坦克
+     */
     private Vector<MyTank> myTanks = new Vector<>();
-
+    /**
+     * 敌方坦克
+     */
     private Vector<EnemyTank> enemies = new Vector<>();
-
+    /**
+     * 炸弹
+     */
     private Vector<Bomb> bombs = new Vector<>();
 
-    private Boolean mapMakingFlag = Boolean.FALSE;
+    /**
+     * 当前游戏模式：是否是地图编辑模式
+     */
+    private Boolean mapMakingMode = Boolean.FALSE;
+    /**
+     * 地图编辑模式时，当前选中的物体
+     */
+    private StuffTypeEnum currentSelectedStuff = StuffTypeEnum.BRICK;
 
-    private StuffTypeEnum currentStuff = StuffTypeEnum.BRICK;
-
+    /**
+     * 当前游戏实时地图数据
+     */
     private Map map;
 
+    /**
+     * 敌方坦克数量
+     */
     private int enemyTankNum;
-
+    /**
+     * 我方坦克数量
+     */
     private int myTankNum;
-
+    /**
+     * 我的坦克死亡总数量
+     */
     private int beKilled;
 
+    /**
+     * 我方坦克当前剩余子弹数量
+     */
     private int myBulletNum;
 
+    /**
+     * 游戏开始标志
+     */
     private boolean isStart = false;
 
+    /**
+     * 游戏暂停标志
+     */
     private boolean isStop = false;
 
+    /**
+     * 当前上下左右按键状态
+     */
     private boolean up = false;
-
     private boolean down = false;
-
     private boolean left = false;
-
     private boolean right = false;
 
-    private int level = 1;
+    /**
+     * 当前关卡
+     */
+    private LevelEnum level = LevelEnum.FIRST_LEVEL;
 
+    /**
+     * 是否要画图标标志
+     */
     private boolean iconSmile;
 
+    /**
+     * 游戏失败或成功图标y坐标（起始位置），动态的
+     */
     private int dy = 600;
 
+    /**
+     * 游戏启动画面："java坦克大战文字" y坐标（起始位置），动态的
+     */
     private int ky = 600;
-
+    /**
+     * 游戏启动画面：笑脸x坐标（起始位置），动态的
+     */
     private int kx = 0;
 
     public void keyPressedDirect(Boolean up, Boolean down, Boolean left, Boolean right) {
@@ -69,8 +115,11 @@ public class RealTimeGameData {
         this.right = right;
     }
 
-    public void reset() {
-        enemies.forEach(e->e.setLive(Boolean.FALSE));
+    /**
+     * 清空数据，释放资源
+     */
+    public void clear() {
+        enemies.forEach(e -> e.setLive(Boolean.FALSE));
         myTanks.clear();
         enemies.clear();
         bombs.clear();
@@ -157,11 +206,11 @@ public class RealTimeGameData {
         this.right = right;
     }
 
-    public int getLevel() {
+    public LevelEnum getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(LevelEnum level) {
         this.level = level;
     }
 
@@ -250,19 +299,19 @@ public class RealTimeGameData {
                 '}';
     }
 
-    public StuffTypeEnum getCurrentStuff() {
-        return currentStuff;
+    public StuffTypeEnum getCurrentSelectedStuff() {
+        return currentSelectedStuff;
     }
 
-    public void setCurrentStuff(StuffTypeEnum currentStuff) {
-        this.currentStuff = currentStuff;
+    public void setCurrentSelectedStuff(StuffTypeEnum currentSelectedStuff) {
+        this.currentSelectedStuff = currentSelectedStuff;
     }
 
-    public Boolean getMapMakingFlag() {
-        return mapMakingFlag;
+    public Boolean getMapMakingMode() {
+        return mapMakingMode;
     }
 
-    public void setMapMakingFlag(Boolean mapMakingFlag) {
-        this.mapMakingFlag = mapMakingFlag;
+    public void setMapMakingMode(Boolean mapMakingMode) {
+        this.mapMakingMode = mapMakingMode;
     }
 }

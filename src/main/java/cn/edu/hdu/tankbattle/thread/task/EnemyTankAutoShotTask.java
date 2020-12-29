@@ -16,18 +16,18 @@ import java.util.TimerTask;
  * @since 2011-02-10 19:29
  */
 public class EnemyTankAutoShotTask extends TimerTask {
-    EnemyTank tank;
+    EnemyTank enemyTank;
     GameEventService gameEventService;
 
-    public EnemyTankAutoShotTask(EnemyTank tank, GameEventService gameEventService) {
-        this.tank = tank;
+    public EnemyTankAutoShotTask(EnemyTank enemyTank, GameEventService gameEventService) {
+        this.enemyTank = enemyTank;
         this.gameEventService = gameEventService;
     }
 
     @Override
     public void run() {
-        if (tank.getSpeedVector() == 0 && tank.isShot() && tank.activate()) {
-            gameEventService.shot(tank);
+        if (enemyTank.getSpeedVector() == 0 && enemyTank.isShot() && enemyTank.activate()) {
+            gameEventService.shot(enemyTank);
         }
 
     }

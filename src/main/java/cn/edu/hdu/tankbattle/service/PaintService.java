@@ -4,33 +4,22 @@
 
 package cn.edu.hdu.tankbattle.service;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.util.Vector;
-
-import javax.swing.JPanel;
-
 import cn.edu.hdu.tankbattle.constant.GameConstants;
 import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
+import cn.edu.hdu.tankbattle.entity.*;
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
 import cn.edu.hdu.tankbattle.enums.TankTypeEnum;
-import cn.edu.hdu.tankbattle.entity.Bomb;
-import cn.edu.hdu.tankbattle.entity.Brick;
-import cn.edu.hdu.tankbattle.entity.Bullet;
-import cn.edu.hdu.tankbattle.entity.EnemyTank;
-import cn.edu.hdu.tankbattle.entity.Iron;
-import cn.edu.hdu.tankbattle.entity.MyTank;
-import cn.edu.hdu.tankbattle.entity.Stuff;
-import cn.edu.hdu.tankbattle.entity.Tank;
 import cn.edu.hdu.tankbattle.resource.TankGameImages;
-import cn.edu.hdu.tankbattle.entity.Water;
 import cn.edu.hdu.tankbattle.resource.map.Map;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Vector;
 
 /**
  * Draw...
@@ -411,13 +400,13 @@ public class PaintService {
      * @param tgp 游戏主要面板对象
      */
     public void drawRight(Graphics g, GamePanel tgp, RealTimeGameData data) {
-        if (data.getMapMakingFlag().equals(Boolean.TRUE)) {
+        if (data.getMapMakingMode().equals(Boolean.TRUE)) {
             g.drawString("当前选中画笔（可按C键切换）", 620, 20);
-            if (data.getCurrentStuff() == StuffTypeEnum.IRON) {
+            if (data.getCurrentSelectedStuff() == StuffTypeEnum.IRON) {
                 drawStuff(g, rightIron, tgp);
-            } else if (data.getCurrentStuff() == StuffTypeEnum.BRICK) {
+            } else if (data.getCurrentSelectedStuff() == StuffTypeEnum.BRICK) {
                 drawStuff(g, rightBrick, tgp);
-            } else if (data.getCurrentStuff() == StuffTypeEnum.WATER) {
+            } else if (data.getCurrentSelectedStuff() == StuffTypeEnum.WATER) {
                 drawStuff(g, rightWater, tgp);
             } else {
                 g.drawString("橡皮擦", 680, 50);
@@ -493,12 +482,10 @@ public class PaintService {
             g.drawImage(TankGameImages.startImage, 0, 0, 800, 700, panel);
             g.drawImage(TankGameImages.font, 0, data.getKy(), panel);
             if (data.isIconSmile()) {
-                g.drawImage(TankGameImages.yctSmile1, data.getKx(), 45,
-                        panel);
+                g.drawImage(TankGameImages.yctSmile1, data.getKx(), 45, panel);
                 data.setIconSmile(false);
             } else {
-                g.drawImage(TankGameImages.yctSmile2, data.getKx(), 45,
-                        panel);
+                g.drawImage(TankGameImages.yctSmile2, data.getKx(), 45, panel);
                 data.setIconSmile(true);
             }
         }

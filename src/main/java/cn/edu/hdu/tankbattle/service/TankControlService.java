@@ -7,19 +7,19 @@ package cn.edu.hdu.tankbattle.service;
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 import cn.edu.hdu.tankbattle.entity.*;
 import cn.edu.hdu.tankbattle.resource.map.Map;
-import cn.edu.hdu.tankbattle.thread.GameTimeUnit;
+import cn.edu.hdu.tankbattle.util.GameTimeUnit;
 import org.springframework.stereotype.Service;
 
 import java.util.Vector;
 
 /**
- * Class Description...
+ * 坦克控制服务...
  *
  * @author chenpi
  * @since 2018/3/24 19:52
  */
 @Service
-public class TankEventService {
+public class TankControlService {
 
     /**
      * 判断坦克是否与另一个事物重叠
@@ -117,7 +117,7 @@ public class TankEventService {
     public void enemyGoWest(EnemyTank enemy) {
         for (; ; ) {
             GameTimeUnit.sleepMillis(36);
-            if (!enemy.isOverlapNo()&& !enemy.isOverlapYes()) {
+            if (!enemy.isOverlapNo() && !enemy.isOverlapYes()) {
                 enemy.goWest();
             }
             if (enemy.getMyTankLocation() != DirectionEnum.WEST) {

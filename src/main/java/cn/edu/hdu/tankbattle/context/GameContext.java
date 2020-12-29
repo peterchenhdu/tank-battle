@@ -5,19 +5,18 @@
 package cn.edu.hdu.tankbattle.context;
 
 import cn.edu.hdu.tankbattle.constant.GameConstants;
-import cn.edu.hdu.tankbattle.enums.DirectionEnum;
-import cn.edu.hdu.tankbattle.listener.MainFrameMouseListener;
-import cn.edu.hdu.tankbattle.service.GameEventService;
-import cn.edu.hdu.tankbattle.service.PaintService;
 import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
-import cn.edu.hdu.tankbattle.enums.LevelEnum;
 import cn.edu.hdu.tankbattle.entity.EnemyTank;
 import cn.edu.hdu.tankbattle.entity.MyTank;
-import cn.edu.hdu.tankbattle.thread.executor.TaskExecutor;
-import cn.edu.hdu.tankbattle.thread.task.GameUpdateTask;
-import cn.edu.hdu.tankbattle.listener.MainFrameKeyListener;
-import cn.edu.hdu.tankbattle.listener.MenuActionListener;
-import cn.edu.hdu.tankbattle.util.LogUtils;
+import cn.edu.hdu.tankbattle.enums.DirectionEnum;
+import cn.edu.hdu.tankbattle.enums.LevelEnum;
+import cn.edu.hdu.tankbattle.listener.FrameKeyListener;
+import cn.edu.hdu.tankbattle.listener.PanelMouseListener;
+import cn.edu.hdu.tankbattle.listener.FrameMenuActionListener;
+import cn.edu.hdu.tankbattle.service.GameEventService;
+import cn.edu.hdu.tankbattle.service.PaintService;
+import cn.edu.hdu.tankbattle.thread.executor.EnemyTankThreadController;
+import cn.edu.hdu.tankbattle.thread.task.GameDataUpdateTask;
 import cn.edu.hdu.tankbattle.view.frame.GameFrame;
 import cn.edu.hdu.tankbattle.view.menubar.TankBattleMenuBar;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
@@ -30,66 +29,62 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 /**
- * Class Description...
+ * 游戏上下文环境...
  *
  * @author chenpi
  * @since 2018/3/19 20:32
  */
 @Component
 public class GameContext {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(GameContext.class);
     /**
-     * Frame
+     * 游戏Frame
      */
     private GameFrame gameFrame;
     /**
-     * 菜单条
-     */
-    private TankBattleMenuBar tankBattleMenuBar;
-    /**
-     * Panel
+     * 游戏画板
      */
     private GamePanel gamePanel;
     /**
-     * RealTimeGameData
+     * 游戏实时数据
      */
     private RealTimeGameData realTimeGameData;
 
     @Autowired
-    private MainFrameKeyListener mainFrameKeyListener;
+    private FrameKeyListener frameKeyListener;
     @Autowired
-    private MenuActionListener menuActionListener;
+    private FrameMenuActionListener frameMenuActionListener;
     @Autowired
-    private MainFrameMouseListener mainFrameMouseListener;
+    private PanelMouseListener panelMouseListener;
+
+
     @Autowired
-    private GameEventService control;
+    private GameEventService gameEventService;
     @Autowired
     private PaintService paintService;
     @Autowired
     private ThreadPoolTaskExecutor taskExecutor;
     @Autowired
-    private TaskExecutor threadTaskExecutor;
+    private EnemyTankThreadController threadEnemyTankThreadController;
 
     @EventListener
-    public void init(ApplicationReadyEvent applicationStartedEvent) {
-        LogUtils.info("Application Started... applicationStartedEvent={}", applicationStartedEvent);
+    public void init(ApplicationReadyEvent applicationReadyEvent) {
+        logger.info("Application Started..., applicationReadyEvent = {}", applicationReadyEvent);
 
         //初始化第一关
-        initGameData(1);
+        initLevelData(LevelEnum.FIRST_LEVEL);
+
+        this.gamePanel = new GamePanel(paintService, panelMouseListener);
 
         this.gameFrame = new GameFrame();
-        this.tankBattleMenuBar = new TankBattleMenuBar(menuActionListener);
-        this.gamePanel = new GamePanel(paintService);
-
-        this.gameFrame.setJMenuBar(this.tankBattleMenuBar);
+        this.gameFrame.setJMenuBar(new TankBattleMenuBar(frameMenuActionListener));
         this.gameFrame.add(this.gamePanel);
-        this.gameFrame.addKeyListener(mainFrameKeyListener);
-        this.gamePanel.addMouseListener(mainFrameMouseListener);
-
+        this.gameFrame.addKeyListener(frameKeyListener);
         this.gameFrame.setVisible(true);
 
+
         logger.info("execute UpdateTask...");
-        taskExecutor.execute(new GameUpdateTask(this));
+        taskExecutor.execute(new GameDataUpdateTask(this));
         logger.info("game start success...");
     }
 
@@ -99,57 +94,55 @@ public class GameContext {
      *
      * @param level 关卡
      */
-    private void initGameData(int level) {
+    private void initLevelData(LevelEnum level) {
+        logger.info("init Game Data start...");
+        //初始化实时数据
         realTimeGameData = new RealTimeGameData();
 
+        //初始化敌方坦克
+        int xStepLength = (GameConstants.GAME_PANEL_WIDTH - GameConstants.TANK_WIDTH) / (GameConstants.INIT_ENEMY_TANK_IN_MAP_NUM - 1);
         for (int i = 0; i < GameConstants.INIT_ENEMY_TANK_IN_MAP_NUM; i++) {
-            EnemyTank enemy = new EnemyTank((i) * 140 + 20, -20, DirectionEnum.SOUTH);
+            EnemyTank enemy = new EnemyTank(i * xStepLength + GameConstants.TANK_WIDTH / 2, -GameConstants.TANK_HEIGHT / 2, DirectionEnum.SOUTH);
             enemy.setLocation(i);
             realTimeGameData.getEnemies().add(enemy);
         }
-        for (int i = 0; i < 1; i++) {
-            MyTank myTank = new MyTank(300, 620, DirectionEnum.NORTH);
+
+        //初始化我方坦克
+        for (int i = 0; i < GameConstants.INIT_MY_TANK_IN_MAP_NUM; i++) {
+            MyTank myTank = new MyTank(GameConstants.GAME_PANEL_WIDTH / 2, GameConstants.GAME_PANEL_HEIGHT + GameConstants.TANK_HEIGHT / 2, DirectionEnum.NORTH);
             realTimeGameData.getMyTanks().add(myTank);
         }
 
-        realTimeGameData.setMap(LevelEnum.getByLevel(level).getMap());
+        realTimeGameData.setMap(level.getMap());
         //realTimeGameData.setMap(new Map(MapParser.getMapFromXml()));
         realTimeGameData.setEnemyTankNum(GameConstants.INIT_ENEMY_TANK_NUM);
         realTimeGameData.setMyTankNum(GameConstants.INIT_MY_TANK_NUM);
         realTimeGameData.setMyBulletNum(GameConstants.MY_TANK_INIT_BULLET_NUM);
         realTimeGameData.setBeKilled(0);
-        realTimeGameData.setDy(600);
         realTimeGameData.setLevel(level);
-        threadTaskExecutor.startEnemyTankThreads();
         logger.info("init Game Data end...");
     }
 
-
-    private void reset(int level) {
-        realTimeGameData.reset();
-        initGameData(level);
-        logger.info("init Game Data...");
-    }
-
-
+    /**
+     * 开始游戏
+     */
     public void startGame() {
         realTimeGameData.setStart(Boolean.TRUE);
         realTimeGameData.getEnemies().forEach(t -> t.setActivate(Boolean.TRUE));
         realTimeGameData.getMyTanks().forEach(t -> t.setActivate(Boolean.TRUE));
+        threadEnemyTankThreadController.enableEnemyTanks();
     }
 
-    public void startLevel(int level) {
-        reset(level);
-        this.startGame();
+    /**
+     * 从某个关卡开始游戏
+     * @param level 关卡
+     */
+    public void startLevel(LevelEnum level) {
+        realTimeGameData.clear();
+        initLevelData(level);
+        startGame();
     }
 
-    public GameFrame getGameFrame() {
-        return gameFrame;
-    }
-
-    public TankBattleMenuBar getTankBattleMenuBar() {
-        return tankBattleMenuBar;
-    }
 
     public GamePanel getGamePanel() {
         return gamePanel;
@@ -159,8 +152,8 @@ public class GameContext {
         return realTimeGameData;
     }
 
-    public GameEventService getControl() {
-        return control;
+    public GameEventService getGameEventService() {
+        return gameEventService;
     }
 
 }
