@@ -11,7 +11,7 @@ import java.awt.*;
 import java.util.Timer;
 
 /**
- * EnemyTank...
+ * 敌方坦克...
  *
  * @author chenpi
  * @since 2011-02-10 19:29

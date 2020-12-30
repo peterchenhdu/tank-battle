@@ -2,14 +2,15 @@
  * Copyright (c) 2011-2025 PiChen.
  */
 
-package cn.edu.hdu.tankbattle.resource.map;
+package cn.edu.hdu.tankbattle.resource.map.level;
+
+import cn.edu.hdu.tankbattle.entity.Iron;
+import cn.edu.hdu.tankbattle.resource.map.Map;
 
 import java.util.Vector;
 
-import cn.edu.hdu.tankbattle.entity.Iron;
-
 /**
- * map...
+ * 游戏地图默认关卡2...
  *
  * @author chenpi
  * @since 2011-02-10 19:29
@@ -20,7 +21,7 @@ public class Map2 extends Map {
         for (int i = 0; i < 25; i++) {
             if (i % 2 == 0)
                 continue;
-            if (i == 11 || i == 12 || i == 13)
+            if (i == 11 || i == 13)
                 continue;
             Iron iron = new Iron(20 * i + 60, 60);
             irons.add(iron);
@@ -34,7 +35,7 @@ public class Map2 extends Map {
         for (int i = 0; i < 25; i++) {
             if (i % 2 == 0)
                 continue;
-            if (i == 11 || i == 12 || i == 13)
+            if (i == 11 || i == 13)
                 continue;
             Iron iron = new Iron(60, 20 * i + 60);
             irons.add(iron);
@@ -42,7 +43,7 @@ public class Map2 extends Map {
         for (int i = 0; i < 25; i++) {
             if (i % 2 == 0)
                 continue;
-            if (i == 11 || i == 12 || i == 13)
+            if (i == 11 || i == 13)
                 continue;
             Iron iron = new Iron(540, 20 * i + 60);
             irons.add(iron);

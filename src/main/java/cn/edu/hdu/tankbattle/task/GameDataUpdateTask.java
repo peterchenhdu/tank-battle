@@ -2,12 +2,13 @@
  * Copyright (c) 2011-2025 PiChen.
  */
 
-package cn.edu.hdu.tankbattle.thread.task;
+package cn.edu.hdu.tankbattle.task;
 
 import cn.edu.hdu.tankbattle.context.GameContext;
+import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.enums.LevelEnum;
 import cn.edu.hdu.tankbattle.service.GameEventService;
-import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
+import cn.edu.hdu.tankbattle.service.StateFlushService;
 import cn.edu.hdu.tankbattle.util.GameTimeUnit;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 import org.slf4j.Logger;
@@ -34,8 +35,9 @@ public class GameDataUpdateTask implements Runnable {
         GamePanel panel = gameContext.getGamePanel();
         RealTimeGameData gameData = gameContext.getRealTimeGameData();
         GameEventService control = gameContext.getGameEventService();
+        StateFlushService stateFlushService = gameContext.getStateFlushService();
         // 每隔30毫秒重画
-        while (true) {
+        while (!gameContext.getRealTimeGameData().isExit()) {
             GameTimeUnit.sleepMillis(30);
             if (gameData.isStart()) {
                 if ((gameData.getMyTankNum() == 0 || gameData.getEnemyTankNum() == 0)
@@ -53,18 +55,18 @@ public class GameDataUpdateTask implements Runnable {
                     }
                 }
                 if (!gameData.isStop() && gameData.getDy() == 600) {
-                    control.cleanAndCreate(); // 从容器中移除死亡的对象
-                    control.refreshState();
-                    control.doBulletEvent();
-                    control.doOverlapJudge(); // 判断坦克间是否出现重叠
-                    control.myTankEvent(gameData);
+                    stateFlushService.cleanAndCreate(); // 从容器中移除死亡的对象
+                    stateFlushService.refreshEnemyTankState();
+                    stateFlushService.refreshBulletState();
+                    stateFlushService.refreshOverlapState(); // 判断坦克间是否出现重叠
+                    stateFlushService.refreshMyTankState(gameData);
 
                 }
             } else {
                 if (gameData.getKy() == 21 && gameData.getKx() <= 654) {
                     gameData.setKx(gameData.getKx() + 2);
                 }
-                control.fontMove(panel);
+                control.fontDynamicMove(panel);
                 GameTimeUnit.sleepMillis(100);
 
             }

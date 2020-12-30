@@ -4,16 +4,16 @@
 
 package cn.edu.hdu.tankbattle.entity;
 
-import java.awt.Color;
-import java.util.Vector;
-
 import cn.edu.hdu.tankbattle.constant.GameConstants;
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
 import cn.edu.hdu.tankbattle.enums.TankTypeEnum;
 
+import java.awt.*;
+import java.util.Vector;
+
 /**
- * Tank...
+ * 坦克...
  *
  * @author chenpi
  * @since 2011-02-10 19:29
@@ -38,13 +38,13 @@ public class Tank extends Stuff {
     /**
      * 坦克是否重叠属性,前面的障碍物不可过去
      */
-    private boolean isOverlapNo = false;
+    private boolean isOverlapAndCanShot = false;
     /**
      * 坦克是否重叠，前面的障碍物可以过去，用子弹可以打掉
      */
-    private boolean isOverlapYes = false;
+    private boolean isOverlapCanNotShot = false;
     /**
-     * 游戏暂停时存储速度
+     * 游戏暂停时存储TANK移动速度
      */
     private int speedVector;
 
@@ -200,20 +200,20 @@ public class Tank extends Stuff {
         return speedVector;
     }
 
-    public boolean isOverlapNo() {
-        return isOverlapNo;
+    public boolean isOverlapAndCanShot() {
+        return isOverlapAndCanShot;
     }
 
-    public void setOverlapNo(boolean isOverlapNo) {
-        this.isOverlapNo = isOverlapNo;
+    public void setOverlapAndCanShot(boolean isOverlapNo) {
+        this.isOverlapAndCanShot = isOverlapNo;
     }
 
-    public boolean isOverlapYes() {
-        return isOverlapYes;
+    public boolean isOverlapCanNotShot() {
+        return isOverlapCanNotShot;
     }
 
-    public void setOverlapYes(boolean isOverlapYes) {
-        this.isOverlapYes = isOverlapYes;
+    public void setOverlapCanNotShot(boolean isOverlapYes) {
+        this.isOverlapCanNotShot = isOverlapYes;
     }
 
     public StuffTypeEnum getFrontStuff() {

@@ -4,10 +4,16 @@
 
 package cn.edu.hdu.tankbattle.service;
 
-import cn.edu.hdu.tankbattle.enums.DirectionEnum;
+import cn.edu.hdu.tankbattle.context.GameContext;
 import cn.edu.hdu.tankbattle.entity.*;
+import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 import cn.edu.hdu.tankbattle.resource.map.Map;
+import cn.edu.hdu.tankbattle.task.BulletMoveTask;
+import cn.edu.hdu.tankbattle.task.EnemyTankAutoShotTask;
+import cn.edu.hdu.tankbattle.task.EnemyTankMoveTask;
 import cn.edu.hdu.tankbattle.util.GameTimeUnit;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.Vector;
@@ -21,95 +27,36 @@ import java.util.Vector;
 @Service
 public class TankControlService {
 
+    @Autowired
+    private ThreadPoolTaskExecutor taskExecutor;
+    @Autowired
+    private GameContext gameContext;
+    @Autowired
+    private ComputingService computingService;
+    @Autowired
+    private TankControlService tankControlService;
+
     /**
-     * 判断坦克是否与另一个事物重叠
-     *
-     * @param stuff  东西对象
-     * @param length 两者之间的最短距离
-     * @return 是否重叠
+     * 激活敌方坦克线程
      */
-    public boolean isTankOverlap(Tank tank, Stuff stuff, int length) {
-        boolean b = false;
-        int x = stuff.getX();
-        int y = stuff.getY();
-        if (tank.getDirect() == DirectionEnum.NORTH) {
-            tank.setY(tank.getY() - tank.getSpeed());
-            if (Math.abs(tank.getY() - y) < length
-                    && Math.abs(tank.getX() - x) < length) {
-                b = true;
-                tank.setY(tank.getY() + tank.getSpeed());
-            } else {
-                tank.setY(tank.getY() + tank.getSpeed());
-            }
-        }
-        if (tank.getDirect() == DirectionEnum.SOUTH) {
-            tank.setY(tank.getY() + tank.getSpeed());
-            if (Math.abs(tank.getY() - y) < length
-                    && Math.abs(tank.getX() - x) < length) {
-                b = true;
-            }
-            tank.setY(tank.getY() - tank.getSpeed());
-        }
-        if (tank.getDirect() == DirectionEnum.EAST) {
-            tank.setX(tank.getX() + tank.getSpeed());
-            if (Math.abs(tank.getY() - y) < length
-                    && Math.abs(tank.getX() - x) < length) {
-                b = true;
-            }
-            tank.setX(tank.getX() - tank.getSpeed());
-        }
-        if (tank.getDirect() == DirectionEnum.WEST) {
-            tank.setX(tank.getX() - tank.getSpeed());
-            if (Math.abs(tank.getY() - y) < length
-                    && Math.abs(tank.getX() - x) < length) {
-                b = true;
-            }
-            tank.setX(tank.getX() + tank.getSpeed());
-        }
-        return b;
+    public void enableEnemyTanks() {
+        Vector<EnemyTank> enemyTanks = gameContext.getRealTimeGameData().getEnemies();
+        enemyTanks.forEach(enemyTank -> {
+            taskExecutor.execute(new EnemyTankMoveTask(enemyTank, gameContext));
+            enemyTank.getTimer().schedule(new EnemyTankAutoShotTask(enemyTank, tankControlService), 0, 500);
+        });
     }
 
     /**
-     * 判断是否重叠
-     *
-     * @param enemies 敌人坦克容量
-     * @return 是否重叠
+     * 激活敌方坦克线程
      */
-    public boolean isMyTankOverlap(MyTank tank, Vector<EnemyTank> enemies) {
-        for (int i = 0; i < enemies.size(); i++) {
-            if (isTankOverlap(tank, enemies.get(i), 40))
-                return true;
-        }
-        return false;
+    public void enableEnemyTank(EnemyTank tank) {
+        taskExecutor.execute(new EnemyTankMoveTask(tank, gameContext));
+        tank.getTimer().schedule(new EnemyTankAutoShotTask(tank, tankControlService), 0, 500);
     }
 
-    /**
-     * 判断自己跟别的坦克是否重叠
-     *
-     * @param enemies 敌人坦克容量
-     * @param myTanks 我的坦克容量
-     * @return 是否重叠
-     */
-    public boolean isEnemyTankOverlap(EnemyTank enemy, Vector<EnemyTank> enemies, Vector<MyTank> myTanks) {
-        for (int i = 0; i < enemies.size(); i++) {
-            if (enemy != enemies.get(i)) {
-                if (isTankOverlap(enemy, enemies.get(i), 40)) {
-                    enemy.setOverlapNo(true);
-                    return true;
-                }
-            }
-        }
-        for (int j = 0; j < myTanks.size(); j++) {
-            if (isTankOverlap(enemy, myTanks.get(j), 40)) {
-                enemy.setOverlapYes(true);
-                return true;
-            }
-        }
 
-        enemy.setOverlapNo(false);
-        enemy.setOverlapYes(false);
-        return false;
-    }
+
 
     /**
      * 每隔36毫秒 一直向西走
@@ -117,7 +64,7 @@ public class TankControlService {
     public void enemyGoWest(EnemyTank enemy) {
         for (; ; ) {
             GameTimeUnit.sleepMillis(36);
-            if (!enemy.isOverlapNo() && !enemy.isOverlapYes()) {
+            if (!enemy.isOverlapAndCanShot() && !enemy.isOverlapCanNotShot()) {
                 enemy.goWest();
             }
             if (enemy.getMyTankLocation() != DirectionEnum.WEST) {
@@ -133,7 +80,7 @@ public class TankControlService {
     public void enemyGoEast(EnemyTank enemy) {
         for (; ; ) {
             GameTimeUnit.sleepMillis(36);
-            if (!enemy.isOverlapNo() && !enemy.isOverlapYes()) {
+            if (!enemy.isOverlapAndCanShot() && !enemy.isOverlapCanNotShot()) {
                 enemy.goEast();
             }
             if (enemy.getMyTankLocation() != DirectionEnum.EAST) {
@@ -149,7 +96,7 @@ public class TankControlService {
     public void enemyGoNorth(EnemyTank enemy) {
         for (; ; ) {
             GameTimeUnit.sleepMillis(36);
-            if (!enemy.isOverlapNo() && !enemy.isOverlapYes()) {
+            if (!enemy.isOverlapAndCanShot() && !enemy.isOverlapCanNotShot()) {
                 enemy.goNorth();
             }
             if (enemy.getMyTankLocation() != DirectionEnum.NORTH) {
@@ -165,7 +112,7 @@ public class TankControlService {
     public void enemyGoSouth(EnemyTank enemy) {
         for (; ; ) {
             GameTimeUnit.sleepMillis(36);
-            if (!enemy.isOverlapNo() && !enemy.isOverlapYes()) {
+            if (!enemy.isOverlapAndCanShot() && !enemy.isOverlapCanNotShot()) {
                 enemy.goSouth();
             }
             if (enemy.getMyTankLocation() != DirectionEnum.SOUTH) {
@@ -173,31 +120,6 @@ public class TankControlService {
                 break;
             }
         }
-    }
-
-    /**
-     * 从指定的三个方向中随机选择一个
-     *
-     * @param direct1 方向1
-     * @param direct2 方向2
-     * @param direct3 方向3
-     */
-    public DirectionEnum enemyGetRandomDirect(DirectionEnum direct1, DirectionEnum direct2, DirectionEnum direct3) {
-        int random = (int) (Math.random() * 3);
-
-        DirectionEnum returnDirect = DirectionEnum.INVALID;
-        switch (random) {
-            case 0:
-                returnDirect = direct1;
-                break;
-            case 1:
-                returnDirect = direct2;
-                break;
-            case 2:
-                returnDirect = direct3;
-                break;
-        }
-        return returnDirect;
     }
 
     /**
@@ -275,5 +197,29 @@ public class TankControlService {
             enemy.setShot(false);
             enemy.setMyTankLocation(DirectionEnum.INVALID);
         }
+    }
+    /**
+     * 射击，发射一颗子弹
+     *
+     * @param tank 坦克对象，注意，是自己，不是敌人，呵呵
+     */
+    public void shot(Tank tank) {
+        Bullet bullet = null;
+        switch (tank.getDirect()) {
+            case NORTH:
+                bullet = new Bullet(tank.getX(), tank.getY() - 20, DirectionEnum.NORTH);
+                break;
+            case SOUTH:
+                bullet = new Bullet(tank.getX(), tank.getY() + 20, DirectionEnum.SOUTH);
+                break;
+            case WEST:
+                bullet = new Bullet(tank.getX() - 20, tank.getY(), DirectionEnum.WEST);
+                break;
+            case EAST:
+                bullet = new Bullet(tank.getX() + 20, tank.getY(), DirectionEnum.EAST);
+                break;
+        }
+        tank.getBullets().add(bullet);
+        taskExecutor.execute(new BulletMoveTask(bullet));
     }
 }

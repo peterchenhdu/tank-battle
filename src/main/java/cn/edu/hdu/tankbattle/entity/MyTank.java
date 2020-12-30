@@ -10,7 +10,7 @@ import cn.edu.hdu.tankbattle.enums.TankTypeEnum;
 import java.awt.Color;
 
 /**
- * MyTank...
+ * 我方坦克...
  *
  * @author chenpi
  * @since 2011-02-10 19:29

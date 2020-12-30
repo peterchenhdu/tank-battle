@@ -7,7 +7,7 @@ package cn.edu.hdu.tankbattle.entity;
 import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
 
 /**
- * Iron...
+ * 铁块...
  *
  * @author chenpi
  * @since 2011-02-10 19:29

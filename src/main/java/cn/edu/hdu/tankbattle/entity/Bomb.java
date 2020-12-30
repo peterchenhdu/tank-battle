@@ -5,7 +5,7 @@
 package cn.edu.hdu.tankbattle.entity;
 
 /**
- * Bomb...
+ * 炸弹...
  *
  * @author chenpi
  * @since 2011-02-10 19:29

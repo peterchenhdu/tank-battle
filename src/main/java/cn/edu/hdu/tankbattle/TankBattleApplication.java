@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
 /**
- * TankBattleApplication...
+ * 坦克大战游戏Application...
  *
  * @author chenpi
  * @since 2018/3/19 19:36
@@ -21,6 +21,6 @@ public class TankBattleApplication {
         new SpringApplicationBuilder(TankBattleApplication.class)
                 .web(WebApplicationType.NONE)
                 .run(args);
-        System.out.println("started...");
+        System.out.println("TankBattleApplication started...");
     }
 }

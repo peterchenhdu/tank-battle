@@ -11,7 +11,7 @@ import cn.edu.hdu.tankbattle.entity.Iron;
 import cn.edu.hdu.tankbattle.entity.Stuff;
 import cn.edu.hdu.tankbattle.entity.Water;
 import cn.edu.hdu.tankbattle.resource.map.Map;
-import cn.edu.hdu.tankbattle.util.GameUtils;
+import cn.edu.hdu.tankbattle.service.ComputingService;
 import cn.edu.hdu.tankbattle.util.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,17 +23,18 @@ import java.awt.event.MouseListener;
 import java.util.Vector;
 
 /**
- * Class Description...
+ * 鼠标点击事件...
  *
  * @author chenpi
  * @since 2018/4/1 10:41
  */
 @Component
-public class PanelMouseListener implements MouseListener {
-    private Logger logger = LoggerFactory.getLogger(PanelMouseListener.class);
+public class MouseEventListener implements MouseListener {
+    private Logger logger = LoggerFactory.getLogger(MouseEventListener.class);
     @Autowired
     private GameContext gameContext;
-
+    @Autowired
+    private ComputingService computingService;
     @Override
     public void mouseClicked(MouseEvent e) {
         logger.info("Mouse Coordinate:" + e.getX() + "," + e.getY());
@@ -43,6 +44,7 @@ public class PanelMouseListener implements MouseListener {
             return;
         }
 
+        //以下针对地图编辑模式操作...
         Map map = gameData.getMap();
         Vector<Brick> bricks = map.getBricks();
         Vector<Iron> irons = map.getIrons();
@@ -60,9 +62,9 @@ public class PanelMouseListener implements MouseListener {
                 waters.add(new Water(s.getX(), s.getY()));
                 break;
             case INVALID: //橡皮擦
-                bricks.stream().filter(b -> GameUtils.equals(b, s)).forEach(bricks::remove);
-                irons.stream().filter(i -> GameUtils.equals(i, s)).forEach(irons::remove);
-                waters.stream().filter(w -> GameUtils.equals(w, s)).forEach(waters::remove);
+                bricks.stream().filter(b -> computingService.equals(b, s)).forEach(bricks::remove);
+                irons.stream().filter(i -> computingService.equals(i, s)).forEach(irons::remove);
+                waters.stream().filter(w -> computingService.equals(w, s)).forEach(waters::remove);
                 break;
             default:
                 break;

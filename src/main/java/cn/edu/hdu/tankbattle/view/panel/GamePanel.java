@@ -4,7 +4,7 @@
 
 package cn.edu.hdu.tankbattle.view.panel;
 
-import cn.edu.hdu.tankbattle.listener.PanelMouseListener;
+import cn.edu.hdu.tankbattle.listener.MouseEventListener;
 import cn.edu.hdu.tankbattle.service.PaintService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +24,10 @@ public class GamePanel extends JPanel {
     private static final long serialVersionUID = 2933760710140135907L;
     private PaintService paintService;
 
-    public GamePanel(PaintService paintService, PanelMouseListener panelMouseListener) {
+    public GamePanel(PaintService paintService, MouseEventListener mouseEventListener) {
         super();
         this.paintService = paintService;
-        this.addMouseListener(panelMouseListener);
+        this.addMouseListener(mouseEventListener);
     }
 
     /*

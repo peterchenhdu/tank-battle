@@ -10,13 +10,11 @@ import cn.edu.hdu.tankbattle.entity.EnemyTank;
 import cn.edu.hdu.tankbattle.entity.MyTank;
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 import cn.edu.hdu.tankbattle.enums.LevelEnum;
-import cn.edu.hdu.tankbattle.listener.FrameKeyListener;
-import cn.edu.hdu.tankbattle.listener.PanelMouseListener;
-import cn.edu.hdu.tankbattle.listener.FrameMenuActionListener;
-import cn.edu.hdu.tankbattle.service.GameEventService;
-import cn.edu.hdu.tankbattle.service.PaintService;
-import cn.edu.hdu.tankbattle.thread.executor.EnemyTankThreadController;
-import cn.edu.hdu.tankbattle.thread.task.GameDataUpdateTask;
+import cn.edu.hdu.tankbattle.listener.KeyEventListener;
+import cn.edu.hdu.tankbattle.listener.MenuActionEventListener;
+import cn.edu.hdu.tankbattle.listener.MouseEventListener;
+import cn.edu.hdu.tankbattle.service.*;
+import cn.edu.hdu.tankbattle.task.GameDataUpdateTask;
 import cn.edu.hdu.tankbattle.view.frame.GameFrame;
 import cn.edu.hdu.tankbattle.view.menubar.TankBattleMenuBar;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
@@ -51,11 +49,11 @@ public class GameContext {
     private RealTimeGameData realTimeGameData;
 
     @Autowired
-    private FrameKeyListener frameKeyListener;
+    private KeyEventListener keyEventListener;
     @Autowired
-    private FrameMenuActionListener frameMenuActionListener;
+    private MenuActionEventListener menuActionEventListener;
     @Autowired
-    private PanelMouseListener panelMouseListener;
+    private MouseEventListener mouseEventListener;
 
 
     @Autowired
@@ -65,8 +63,11 @@ public class GameContext {
     @Autowired
     private ThreadPoolTaskExecutor taskExecutor;
     @Autowired
-    private EnemyTankThreadController threadEnemyTankThreadController;
-
+    private TankControlService tankControlService;
+    @Autowired
+    private StateFlushService stateFlushService;
+    @Autowired
+    private ComputingService computingService;
     @EventListener
     public void init(ApplicationReadyEvent applicationReadyEvent) {
         logger.info("Application Started..., applicationReadyEvent = {}", applicationReadyEvent);
@@ -74,12 +75,12 @@ public class GameContext {
         //初始化第一关
         initLevelData(LevelEnum.FIRST_LEVEL);
 
-        this.gamePanel = new GamePanel(paintService, panelMouseListener);
+        this.gamePanel = new GamePanel(paintService, mouseEventListener);
 
         this.gameFrame = new GameFrame();
-        this.gameFrame.setJMenuBar(new TankBattleMenuBar(frameMenuActionListener));
+        this.gameFrame.setJMenuBar(new TankBattleMenuBar(menuActionEventListener));
         this.gameFrame.add(this.gamePanel);
-        this.gameFrame.addKeyListener(frameKeyListener);
+        this.gameFrame.addKeyListener(keyEventListener);
         this.gameFrame.setVisible(true);
 
 
@@ -130,7 +131,7 @@ public class GameContext {
         realTimeGameData.setStart(Boolean.TRUE);
         realTimeGameData.getEnemies().forEach(t -> t.setActivate(Boolean.TRUE));
         realTimeGameData.getMyTanks().forEach(t -> t.setActivate(Boolean.TRUE));
-        threadEnemyTankThreadController.enableEnemyTanks();
+        tankControlService.enableEnemyTanks();
     }
 
     /**
@@ -156,4 +157,15 @@ public class GameContext {
         return gameEventService;
     }
 
+    public StateFlushService getStateFlushService() {
+        return stateFlushService;
+    }
+
+    public TankControlService getTankControlService() {
+        return tankControlService;
+    }
+
+    public ComputingService getComputingService() {
+        return computingService;
+    }
 }

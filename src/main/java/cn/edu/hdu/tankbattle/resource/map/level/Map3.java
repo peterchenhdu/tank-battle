@@ -2,14 +2,15 @@
  * Copyright (c) 2011-2025 PiChen.
  */
 
-package cn.edu.hdu.tankbattle.resource.map;
+package cn.edu.hdu.tankbattle.resource.map.level;
+
+import cn.edu.hdu.tankbattle.entity.Brick;
+import cn.edu.hdu.tankbattle.resource.map.Map;
 
 import java.util.Vector;
 
-import cn.edu.hdu.tankbattle.entity.Brick;
-
 /**
- * map...
+ * 游戏地图默认关卡3...
  *
  * @author chenpi
  * @since 2011-02-10 19:29

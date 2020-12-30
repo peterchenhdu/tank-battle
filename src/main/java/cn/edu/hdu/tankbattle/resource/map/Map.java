@@ -4,15 +4,15 @@
 
 package cn.edu.hdu.tankbattle.resource.map;
 
-import java.util.Vector;
-
 import cn.edu.hdu.tankbattle.entity.Brick;
 import cn.edu.hdu.tankbattle.entity.Iron;
 import cn.edu.hdu.tankbattle.entity.Water;
-import cn.edu.hdu.tankbattle.resource.map.xml.XmlMap;
+import cn.edu.hdu.tankbattle.resource.map.xmlparse.dto.XmlMap;
+
+import java.util.Vector;
 
 /**
- * map...
+ * 地图...
  *
  * @author chenpi
  * @since 2011-02-10 19:29
@@ -27,7 +27,6 @@ public class Map {
 
 
     public Map() {
-        // TODO Auto-generated constructor stub
         bricks = new Vector<>();
         irons = new Vector<>();
         waters = new Vector<>();

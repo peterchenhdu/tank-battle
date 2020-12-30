@@ -2,16 +2,17 @@
  * Copyright (c) 2011-2025 PiChen.
  */
 
-package cn.edu.hdu.tankbattle.resource.map;
-
-import java.util.Vector;
+package cn.edu.hdu.tankbattle.resource.map.level;
 
 import cn.edu.hdu.tankbattle.entity.Brick;
 import cn.edu.hdu.tankbattle.entity.Iron;
 import cn.edu.hdu.tankbattle.entity.Water;
+import cn.edu.hdu.tankbattle.resource.map.Map;
+
+import java.util.Vector;
 
 /**
- * map...
+ * 游戏地图默认关卡1...
  *
  * @author chenpi
  * @since 2011-02-10 19:29
@@ -21,7 +22,6 @@ public class Map1 extends Map {
      * 构造方法
      */
     public Map1() {
-        // TODO Auto-generated constructor stub
         Vector<Brick> bricks = this.getBricks();
         Vector<Iron> irons = this.getIrons();
         Vector<Water> waters = this.getWaters();

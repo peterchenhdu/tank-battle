@@ -5,7 +5,7 @@
 package cn.edu.hdu.tankbattle.enums;
 
 /**
- * Class Description...
+ * 方向枚举...
  *
  * @author chenpi
  * @since 2018/3/24 21:18

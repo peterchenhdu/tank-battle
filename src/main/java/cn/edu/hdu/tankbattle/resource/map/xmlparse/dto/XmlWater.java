@@ -2,22 +2,22 @@
  * Copyright (c) 2011-2025 PiChen.
  */
 
-package cn.edu.hdu.tankbattle.resource.map.xml;
+package cn.edu.hdu.tankbattle.resource.map.xmlparse.dto;
 
 import org.apache.commons.digester3.annotations.rules.BeanPropertySetter;
 import org.apache.commons.digester3.annotations.rules.ObjectCreate;
 
 /**
- * Class Description...
+ * XmlWater...
  *
  * @author chenpi
  * @since 2018/3/31 9:10
  */
-@ObjectCreate(pattern = "map/irons/iron")
-public class XmlIron {
-    @BeanPropertySetter(pattern = "map/irons/iron/x")
+@ObjectCreate(pattern = "map/waters/water")
+public class XmlWater {
+    @BeanPropertySetter(pattern = "map/waters/water/x")
     private Integer x;
-    @BeanPropertySetter(pattern = "map/irons/iron/y")
+    @BeanPropertySetter(pattern = "map/waters/water/y")
     private Integer y;
 
     public Integer getX() {

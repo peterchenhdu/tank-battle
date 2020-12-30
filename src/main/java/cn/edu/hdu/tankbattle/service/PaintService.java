@@ -11,7 +11,7 @@ import cn.edu.hdu.tankbattle.entity.*;
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 import cn.edu.hdu.tankbattle.enums.StuffTypeEnum;
 import cn.edu.hdu.tankbattle.enums.TankTypeEnum;
-import cn.edu.hdu.tankbattle.resource.TankGameImages;
+import cn.edu.hdu.tankbattle.resource.image.Images;
 import cn.edu.hdu.tankbattle.resource.map.Map;
 import cn.edu.hdu.tankbattle.view.panel.GamePanel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import java.awt.*;
 import java.util.Vector;
 
 /**
- * Draw...
+ * 画图服务...
  *
  * @author chenpi
  * @since 2011-02-10 19:29
@@ -63,29 +63,23 @@ public class PaintService {
                 }
                 break;
             case BRICK:
-
 //                g.setColor(new Color(216, 90, 49));
 //                g.fill3DRect(stuff.getX() - 20, stuff.getY() - 20, 40, 40, false);
-
-                g.drawImage(TankGameImages.stuffImg[StuffTypeEnum.BRICK.getKey()],
+                g.drawImage(Images.stuffImg[StuffTypeEnum.BRICK.getKey()],
                         stuff.getX() - 10, stuff.getY() - 10, 20, 20, panel);
                 break;
             case IRON:
 
 //                g.setColor(new Color(225, 225, 225));
-//                g.fill3DRect(stuff.getX() - 20,
-//                        stuff.getY() - 20, 40, 40, false);
-
-                g.drawImage(TankGameImages.stuffImg[StuffTypeEnum.IRON.getKey()], stuff.getX() - 10,
+//                g.fill3DRect(stuff.getX() - 20, stuff.getY() - 20, 40, 40, false);
+                g.drawImage(Images.stuffImg[StuffTypeEnum.IRON.getKey()], stuff.getX() - 10,
                         stuff.getY() - 10, 20, 20, panel);
                 break;
             case WATER:
 
 //                g.setColor(new Color(65, 64, 253));
-//                g.fillRect(stuff.getX() - 20,
-//                        stuff.getY() - 20, 40, 40);
-
-                g.drawImage(TankGameImages.stuffImg[StuffTypeEnum.WATER.getKey()],
+//                g.fillRect(stuff.getX() - 20, stuff.getY() - 20, 40, 40);
+                g.drawImage(Images.stuffImg[StuffTypeEnum.WATER.getKey()],
                         stuff.getX() - 10, stuff.getY() - 10, 20, 20, panel);
                 break;
         }
@@ -100,72 +94,50 @@ public class PaintService {
      * @param panel 被画的那个面板
      */
     public void drawBomb(Graphics g, Vector<Bomb> bombs, JPanel panel) {
-        for (int i = 0; i < bombs.size(); i++) {
-            int l = bombs.get(i).getL();
-            Bomb b = bombs.get(i); // 从炸弹容器中取出一颗炸弹
-            if (b.getLifeTime() > 24) { // 生命值21-25
-                g.drawImage(TankGameImages.bomb[0], b.getX() - l / 2, b.getY()
-                        - l / 2, l, l, panel);
-            } else if (b.getLifeTime() > 18) { // 生命值16-20
-                g.drawImage(TankGameImages.bomb[1], b.getX() - l / 2, b.getY()
-                        - l / 2, l, l, panel);
-            } else if (b.getLifeTime() > 12) { // 生命值11-15
-                g.drawImage(TankGameImages.bomb[2], b.getX() - l / 2, b.getY()
-                        - l / 2, l, l, panel);
-            } else if (b.getLifeTime() > 6) { // 生命值6-10
-                g.drawImage(TankGameImages.bomb[3], b.getX() - l / 2, b.getY()
-                        - l / 2, l, l, panel);
-            } else { // 生命值低于6
-                g.drawImage(TankGameImages.bomb[4], b.getX() - l / 2, b.getY()
-                        - l / 2, l, l, panel);
+        for (Bomb bomb : bombs) {
+            int l = bomb.getL();
+            if (bomb.getLifeTime() > 24) {
+                // 生命值21-25
+                g.drawImage(Images.bomb[0], bomb.getX() - l / 2, bomb.getY() - l / 2, l, l, panel);
+            } else if (bomb.getLifeTime() > 18) {
+                // 生命值16-20
+                g.drawImage(Images.bomb[1], bomb.getX() - l / 2, bomb.getY() - l / 2, l, l, panel);
+            } else if (bomb.getLifeTime() > 12) {
+                // 生命值11-15
+                g.drawImage(Images.bomb[2], bomb.getX() - l / 2, bomb.getY() - l / 2, l, l, panel);
+            } else if (bomb.getLifeTime() > 6) {
+                // 生命值6-10
+                g.drawImage(Images.bomb[3], bomb.getX() - l / 2, bomb.getY() - l / 2, l, l, panel);
+            } else {
+                // 生命值低于6
+                g.drawImage(Images.bomb[4], bomb.getX() - l / 2, bomb.getY() - l / 2, l, l, panel);
             }
-            b.lifeDown(); // 生命随时间衰减
-            if (b.getLifeTime() == 0) { // 该炸弹死亡
-                b.setLive(false);
-            }
-        }
-    }
-
-    /**
-     * 画出敌人坦克和子弹
-     *
-     * @param g       Graphics
-     * @param enemies 敌人坦克容量
-     * @param panel   被画的面板
-     */
-    public void drawEnemyTank(Graphics g, Vector<EnemyTank> enemies, JPanel panel) {
-        for (int i = 0; i < enemies.size(); i++) {
-            this.drawStuff(g, enemies.get(i), panel); // 画出敌人的坦克
-            for (int j = 0; j < enemies.get(i).getBullets().size(); j++) {
-                if (enemies.get(i).getBullets().get(j) != null) {
-                    Bullet eb = enemies.get(i).getBullets().get(j);
-                    g.drawImage(TankGameImages.bullet, eb.getX() - 2,
-                            eb.getY() - 2, 4, 4, panel);
-                }
+            bomb.lifeDown(); // 生命随时间衰减
+            if (bomb.getLifeTime() == 0) { // 该炸弹死亡
+                bomb.setLive(false);
             }
         }
     }
 
+
     /**
-     * 画出我的坦克和子弹
+     * 画出坦克和子弹
      *
-     * @param g       Graphics
-     * @param myTanks 我的坦克容量
-     * @param panel   被画的那个面板
+     * @param g     Graphics
+     * @param tank  坦克容量
+     * @param panel 被画的那个面板
      */
-    public void drawMyTank(Graphics g, Vector<MyTank> myTanks, JPanel panel) {
-        for (int m = 0; m < myTanks.size(); m++) {
-            MyTank myTank = myTanks.get(m); // 取出我的坦克
-            this.drawStuff(g, myTank, panel); // 画出我的坦克
-            for (int i = 0; i < myTank.getBullets().size(); i++) {
-                if (myTank.getBullets().get(i) != null) {
-                    Bullet b = myTank.getBullets().get(i);
-                    g.drawImage(TankGameImages.bullet, b.getX() - 2,
-                            b.getY() - 2, 4, 4, panel);
-                }
+    public void drawTank(Graphics g, Tank tank, JPanel panel) {
+        this.drawStuff(g, tank, panel); // 画出敌人的坦克
+        for (int j = 0; j < tank.getBullets().size(); j++) {
+            if (tank.getBullets().get(j) != null) {
+                Bullet eb = tank.getBullets().get(j);
+                g.drawImage(Images.bullet, eb.getX() - 2, eb.getY() - 2, 4, 4, panel);
             }
+
         }
     }
+
 
     /**
      * 画出地图
@@ -178,14 +150,14 @@ public class PaintService {
         Vector<Brick> bricks = map.getBricks();
         Vector<Iron> irons = map.getIrons();
         Vector<Water> waters = map.getWaters();
-        for (int i = 0; i < bricks.size(); i++) {
-            this.drawStuff(g, bricks.get(i), panel);
+        for (Brick brick : bricks) {
+            this.drawStuff(g, brick, panel);
         }
-        for (int i = 0; i < irons.size(); i++) {
-            this.drawStuff(g, irons.get(i), panel);
+        for (Iron iron : irons) {
+            this.drawStuff(g, iron, panel);
         }
-        for (int i = 0; i < waters.size(); i++) {
-            this.drawStuff(g, waters.get(i), panel);
+        for (Water water : waters) {
+            this.drawStuff(g, water, panel);
         }
     }
 
@@ -233,9 +205,9 @@ public class PaintService {
         Image image;
         if (tank.getTankType() == TankTypeEnum.MY) {
             g.setColor(Color.green);
-            image = TankGameImages.myTankImg[DirectionEnum.NORTH.getKey()];// 初始化图片
+            image = Images.myTankImg[DirectionEnum.NORTH.getKey()];// 初始化图片
         } else {
-            image = TankGameImages.enemyTankImg[DirectionEnum.NORTH.getKey()];
+            image = Images.enemyTankImg[DirectionEnum.NORTH.getKey()];
             g.setColor(Color.gray);
         }
         g.drawImage(image, tank.getX() - 20, tank.getY() - 20, 40, 40, panel);
@@ -284,9 +256,9 @@ public class PaintService {
         Image image;
         if (tank.getTankType() == TankTypeEnum.MY) {
             g.setColor(Color.green);
-            image = TankGameImages.myTankImg[DirectionEnum.SOUTH.getKey()];// 初始化图片
+            image = Images.myTankImg[DirectionEnum.SOUTH.getKey()];// 初始化图片
         } else {
-            image = TankGameImages.enemyTankImg[DirectionEnum.SOUTH.getKey()];
+            image = Images.enemyTankImg[DirectionEnum.SOUTH.getKey()];
             g.setColor(Color.gray);
         }
         g.drawImage(image, tank.getX() - 20, tank.getY() - 20, 40, 40, panel);
@@ -333,10 +305,10 @@ public class PaintService {
 
         Image image;
         if (tank.getTankType() == TankTypeEnum.MY) {
-            image = TankGameImages.myTankImg[DirectionEnum.WEST.getKey()];// 初始化图片
+            image = Images.myTankImg[DirectionEnum.WEST.getKey()];// 初始化图片
             g.setColor(Color.green);
         } else {
-            image = TankGameImages.enemyTankImg[DirectionEnum.WEST.getKey()];
+            image = Images.enemyTankImg[DirectionEnum.WEST.getKey()];
             g.setColor(Color.gray);
         }
         g.drawImage(image, tank.getX() - 20, tank.getY() - 20, 40, 40, panel);
@@ -383,10 +355,10 @@ public class PaintService {
 
         Image image;
         if (tank.getTankType() == TankTypeEnum.MY) {
-            image = TankGameImages.myTankImg[DirectionEnum.EAST.getKey()];// 初始化图片
+            image = Images.myTankImg[DirectionEnum.EAST.getKey()];// 初始化图片
             g.setColor(Color.green);
         } else {
-            image = TankGameImages.enemyTankImg[DirectionEnum.EAST.getKey()];
+            image = Images.enemyTankImg[DirectionEnum.EAST.getKey()];
             g.setColor(Color.gray);
         }
         g.drawImage(image, tank.getX() - 20, tank.getY() - 20, 40, 40, panel);
@@ -415,16 +387,13 @@ public class PaintService {
         } else {
             for (int i = 0; i < data.getEnemyTankNum(); i++) {
                 if (i >= 4) {
-                    g.drawImage(TankGameImages.enemyTankImg[DirectionEnum.NORTH.getKey()],
-                            402 + 50 * i, 100, 40, 40, tgp);
+                    g.drawImage(Images.enemyTankImg[DirectionEnum.NORTH.getKey()], 402 + 50 * i, 100, 40, 40, tgp);
                 } else {
-                    g.drawImage(TankGameImages.enemyTankImg[DirectionEnum.NORTH.getKey()],
-                            602 + 50 * i, 20, 40, 40, tgp);
+                    g.drawImage(Images.enemyTankImg[DirectionEnum.NORTH.getKey()], 602 + 50 * i, 20, 40, 40, tgp);
                 }
             }
             for (int j = 0; j < data.getMyTankNum(); j++) {
-                g.drawImage(TankGameImages.myTankImg[DirectionEnum.NORTH.getKey()], 602 + 50 * j,
-                        400, 40, 40, tgp);
+                g.drawImage(Images.myTankImg[DirectionEnum.NORTH.getKey()], 602 + 50 * j, 400, 40, 40, tgp);
             }
             g.drawString("我的坦克子弹数目:" + data.getMyBulletNum(), 620, 500);
         }
@@ -432,6 +401,11 @@ public class PaintService {
     }
 
 
+    /**
+     * 重绘面板
+     * @param panel GamePanel
+     * @param g Graphics
+     */
     public void rePaintPanel(GamePanel panel, Graphics g) {
 
         RealTimeGameData data = context.getRealTimeGameData();
@@ -440,19 +414,17 @@ public class PaintService {
             g.fillRect(0, 0, GameConstants.GAME_PANEL_WIDTH, GameConstants.GAME_PANEL_HEIGHT);
             g.fillRect(280, 600, 40, 40);
             this.drawMap(g, data.getMap(), panel);
-            this.drawMyTank(g, data.getMyTanks(), panel); // 画出我的坦克（包括子弹）
-            this.drawEnemyTank(g, data.getEnemies(), panel); // 画出敌人坦克（包括子弹）
+            data.getMyTanks().forEach(tank -> drawTank(g, tank, panel));// 画出我的坦克（包括子弹）
+            data.getEnemies().forEach(tank -> drawTank(g, tank, panel));// 画出敌人坦克（包括子弹）
             this.drawBomb(g, data.getBombs(), panel); // 画出爆炸
             this.drawRight(g, panel, data);
 
             if (data.getMyTankNum() == 0) { // 如果我的坦克数量为0
-                g.drawImage(TankGameImages.gameOver, 250, data.getDy(), 100,
-                        100, panel);
+                g.drawImage(Images.gameOver, 250, data.getDy(), 100, 100, panel);
             }
 
             if (data.getEnemyTankNum() == 0) { // 如果敌人坦克的数量为0
-                g.drawImage(TankGameImages.gameWin, 250, data.getDy(), 100,
-                        100, panel);
+                g.drawImage(Images.gameWin, 250, data.getDy(), 100, 100, panel);
             }
             if (data.getDy() == 250) {
                 g.fillRect(0, 0, 800, 600);
@@ -462,30 +434,21 @@ public class PaintService {
                 } else {
                     g.drawString("挑战成功，请稍等...", 300, 220);
                 }
-                g.drawString(
-                        ("敌人坦克死亡数量:" + (8 - data.getEnemyTankNum())),
-                        300, 260);
-                g.drawString("我的坦克死亡总数量:" + data.getBeKilled(), 300,
-                        280);
-                g.drawString(
-                        "我的炮弹消耗总数量:"
-                                + (GameConstants.MY_TANK_INIT_BULLET_NUM - data
-                                .getMyBulletNum()), 300, 300);
-                g.drawString("敌人坦克剩余数量:" + data.getEnemyTankNum(), 300,
-                        320);
-                g.drawString("我的坦克剩余总数量:" + data.getMyTankNum(), 300,
-                        340);
-                g.drawString("我的炮弹剩余总数量:" + data.getMyBulletNum(), 300,
-                        360);
+                g.drawString(("敌人坦克死亡数量:" + (8 - data.getEnemyTankNum())), 300, 260);
+                g.drawString("我的坦克死亡总数量:" + data.getBeKilled(), 300, 280);
+                g.drawString("我的炮弹消耗总数量:" + (GameConstants.MY_TANK_INIT_BULLET_NUM - data.getMyBulletNum()), 300, 300);
+                g.drawString("敌人坦克剩余数量:" + data.getEnemyTankNum(), 300, 320);
+                g.drawString("我的坦克剩余总数量:" + data.getMyTankNum(), 300, 340);
+                g.drawString("我的炮弹剩余总数量:" + data.getMyBulletNum(), 300, 360);
             }
         } else {
-            g.drawImage(TankGameImages.startImage, 0, 0, 800, 700, panel);
-            g.drawImage(TankGameImages.font, 0, data.getKy(), panel);
+            g.drawImage(Images.startImage, 0, 0, 800, 700, panel);
+            g.drawImage(Images.font, 0, data.getKy(), panel);
             if (data.isIconSmile()) {
-                g.drawImage(TankGameImages.yctSmile1, data.getKx(), 45, panel);
+                g.drawImage(Images.yctSmile1, data.getKx(), 45, panel);
                 data.setIconSmile(false);
             } else {
-                g.drawImage(TankGameImages.yctSmile2, data.getKx(), 45, panel);
+                g.drawImage(Images.yctSmile2, data.getKx(), 45, panel);
                 data.setIconSmile(true);
             }
         }

@@ -47,4 +47,8 @@ public class GameConstants {
      * 我方坦克总数
      */
     public final static int INIT_MY_TANK_NUM = 4;
+    /**
+     * 我方坦克子弹同时存在地图中的数目
+     */
+    public final static int MY_TANK_BULLET_LIVE_NUM = 2;
 }

@@ -2,7 +2,7 @@
  * Copyright (c) 2011-2025 PiChen.
  */
 
-package cn.edu.hdu.tankbattle.thread.config;
+package cn.edu.hdu.tankbattle.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * Class Description...
+ * 线程池配置...
  *
  * @author chenpi
  * @since 2018/3/20 19:27

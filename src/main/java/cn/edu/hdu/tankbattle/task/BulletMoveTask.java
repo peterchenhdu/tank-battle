@@ -2,7 +2,7 @@
  * Copyright (c) 2011-2025 PiChen.
  */
 
-package cn.edu.hdu.tankbattle.thread.task;
+package cn.edu.hdu.tankbattle.task;
 
 
 import cn.edu.hdu.tankbattle.constant.GameConstants;

@@ -2,10 +2,10 @@
  * Copyright (c) 2011-2025 PiChen.
  */
 
-package cn.edu.hdu.tankbattle.thread.task;
+package cn.edu.hdu.tankbattle.task;
 
 import cn.edu.hdu.tankbattle.entity.EnemyTank;
-import cn.edu.hdu.tankbattle.service.GameEventService;
+import cn.edu.hdu.tankbattle.service.TankControlService;
 
 import java.util.TimerTask;
 
@@ -17,17 +17,17 @@ import java.util.TimerTask;
  */
 public class EnemyTankAutoShotTask extends TimerTask {
     EnemyTank enemyTank;
-    GameEventService gameEventService;
+    TankControlService tankControlService;
 
-    public EnemyTankAutoShotTask(EnemyTank enemyTank, GameEventService gameEventService) {
+    public EnemyTankAutoShotTask(EnemyTank enemyTank, TankControlService tankControlService) {
         this.enemyTank = enemyTank;
-        this.gameEventService = gameEventService;
+        this.tankControlService = tankControlService;
     }
 
     @Override
     public void run() {
         if (enemyTank.getSpeedVector() == 0 && enemyTank.isShot() && enemyTank.activate()) {
-            gameEventService.shot(enemyTank);
+            tankControlService.shot(enemyTank);
         }
 
     }

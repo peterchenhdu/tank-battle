@@ -75,6 +75,10 @@ public class RealTimeGameData {
      * 游戏暂停标志
      */
     private boolean isStop = false;
+    /**
+     * 游戏退出标志
+     */
+    private boolean isExit = false;
 
     /**
      * 当前上下左右按键状态
@@ -276,6 +280,14 @@ public class RealTimeGameData {
 
     public void setMap(Map map) {
         this.map = map;
+    }
+
+    public boolean isExit() {
+        return isExit;
+    }
+
+    public void setExit(boolean exit) {
+        isExit = exit;
     }
 
     @Override
