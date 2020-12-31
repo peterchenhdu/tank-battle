@@ -39,55 +39,6 @@ public class ComputingService {
                 Math.abs(bullet1.getY() - bullet2.getY()) <= bullet1.getHeight());
     }
 
-    /**
-     * 击中东西以后
-     *
-     * @param bullet 集中别人的子弹
-     * @param stuff  被击中的东西
-     * @param bombs  炸弹容量
-     */
-    public void afterShotStuff(Bullet bullet, Stuff stuff, Vector<Bomb> bombs) {
-        Bomb bomb;
-        switch (stuff.getType()) {
-            case BRICK: // 砖块
-                bullet.setLive(false);
-                stuff.setLive(false);
-                bomb = new Bomb(stuff.getX(), stuff.getY());
-                bomb.setL(40);
-                bombs.add(bomb);
-                break;
-            case IRON: // 铁块
-                bomb = new Bomb(bullet.getX(), bullet.getY());
-                bullet.setLive(false);
-                bomb.setL(20);
-                bombs.add(bomb);
-                break;
-        }
-    }
-
-    /**
-     * 击中坦克以后
-     *
-     * @param bullet 击中别人的子弹
-     * @param tank   被击中的坦克
-     * @param bombs  炸弹容量
-     */
-    public void afterShotTank(Bullet bullet, Tank tank, Vector<Bomb> bombs) {
-        bullet.setLive(false);
-        Bomb bomb;
-        if (tank.getBlood() == 1) {
-            tank.setLive(false);
-            bomb = new Bomb(tank.getX(), tank.getY());
-            tank.setBlood(tank.getBlood() - 1);
-            bomb.setL(120);
-        } else {
-            bomb = new Bomb(bullet.getX(), bullet.getY());
-            tank.setBlood(tank.getBlood() - 1);
-            bomb.setL(40);
-        }
-        bombs.add(bomb);
-    }
-
 
     /**
      * 比较两个物体坐标是否相等
@@ -126,7 +77,7 @@ public class ComputingService {
         for (EnemyTank enemyTank : enemies) {
             if (enemy != enemyTank) {
                 if (isTankOverlap(enemy, enemyTank, GameConstants.TANK_WIDTH)) {
-                    enemy.setOverlapAndCanShot(true);
+                    enemy.setOverlapAndCanNotShot(true);
                     return true;
                 }
             }
@@ -134,13 +85,13 @@ public class ComputingService {
 
         for (MyTank myTank : myTanks) {
             if (isTankOverlap(enemy, myTank, GameConstants.TANK_WIDTH)) {
-                enemy.setOverlapCanNotShot(true);
+                enemy.setOverlapCanShot(true);
                 return true;
             }
         }
 
-        enemy.setOverlapAndCanShot(false);
-        enemy.setOverlapCanNotShot(false);
+        enemy.setOverlapAndCanNotShot(false);
+        enemy.setOverlapCanShot(false);
         return false;
     }
 

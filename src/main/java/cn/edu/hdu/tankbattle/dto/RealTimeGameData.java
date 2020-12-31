@@ -123,7 +123,10 @@ public class RealTimeGameData {
      * 清空数据，释放资源
      */
     public void clear() {
-        enemies.forEach(e -> e.setLive(Boolean.FALSE));
+        enemies.forEach(e -> {
+            e.setLive(Boolean.FALSE);
+            e.getTimer().cancel();
+        });
         myTanks.clear();
         enemies.clear();
         bombs.clear();

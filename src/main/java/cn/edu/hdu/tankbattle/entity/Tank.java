@@ -38,11 +38,11 @@ public class Tank extends Stuff {
     /**
      * 坦克是否重叠属性,前面的障碍物不可过去
      */
-    private boolean isOverlapAndCanShot = false;
+    private boolean isOverlapAndCanNotShot = false;
     /**
      * 坦克是否重叠，前面的障碍物可以过去，用子弹可以打掉
      */
-    private boolean isOverlapCanNotShot = false;
+    private boolean isOverlapCanShot = false;
     /**
      * 游戏暂停时存储TANK移动速度
      */
@@ -200,20 +200,20 @@ public class Tank extends Stuff {
         return speedVector;
     }
 
-    public boolean isOverlapAndCanShot() {
-        return isOverlapAndCanShot;
+    public boolean isOverlapAndCanNotShot() {
+        return isOverlapAndCanNotShot;
     }
 
-    public void setOverlapAndCanShot(boolean isOverlapNo) {
-        this.isOverlapAndCanShot = isOverlapNo;
+    public void setOverlapAndCanNotShot(boolean isOverlapNo) {
+        this.isOverlapAndCanNotShot = isOverlapNo;
     }
 
-    public boolean isOverlapCanNotShot() {
-        return isOverlapCanNotShot;
+    public boolean isOverlapCanShot() {
+        return isOverlapCanShot;
     }
 
-    public void setOverlapCanNotShot(boolean isOverlapYes) {
-        this.isOverlapCanNotShot = isOverlapYes;
+    public void setOverlapCanShot(boolean isOverlapYes) {
+        this.isOverlapCanShot = isOverlapYes;
     }
 
     public StuffTypeEnum getFrontStuff() {

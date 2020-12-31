@@ -144,6 +144,9 @@ public class GameContext {
         startGame();
     }
 
+    public void clean() {
+        realTimeGameData.clear();
+    }
 
     public GamePanel getGamePanel() {
         return gamePanel;

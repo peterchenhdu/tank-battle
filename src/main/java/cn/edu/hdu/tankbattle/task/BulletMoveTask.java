@@ -10,7 +10,7 @@ import cn.edu.hdu.tankbattle.entity.Bullet;
 import cn.edu.hdu.tankbattle.util.GameTimeUnit;
 
 /**
- * Class Description...
+ * 子弹移动任务...
  *
  * @author chenpi
  * @since 2018/3/24 20:08
@@ -40,8 +40,8 @@ public class BulletMoveTask implements Runnable {
                     break;
             }
 
-            if (bullet.getX() < 5 || bullet.getX() > GameConstants.GAME_PANEL_WIDTH - 5 || bullet.getY() < 5
-                    || bullet.getY() > GameConstants.GAME_PANEL_HEIGHT - 5) { // 判断子弹是否碰到边界
+            // 判断子弹是否碰到边界
+            if (bullet.getX() < 5 || bullet.getX() > GameConstants.GAME_PANEL_WIDTH - 5 || bullet.getY() < 5 || bullet.getY() > GameConstants.GAME_PANEL_HEIGHT - 5) {
                 bullet.setLive(false); // 子弹死亡
             }
 

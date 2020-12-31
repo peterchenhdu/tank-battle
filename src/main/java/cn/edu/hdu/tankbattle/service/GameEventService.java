@@ -77,8 +77,7 @@ public class GameEventService {
                     gameData.getEnemies().get(j).setSpeedVector(gameData.getEnemies().get(j).getSpeed());
                     gameData.getEnemies().get(j).setSpeed(0);
                     for (int k = 0; k < gameData.getEnemies().get(j).getBullets().size(); k++) {
-                        gameData.getEnemies().get(j).getBullets().get(k).setSpeedVector(
-                                gameData.getEnemies().get(j).getBullets().get(k).getSpeed());
+                        gameData.getEnemies().get(j).getBullets().get(k).setSpeedVector(gameData.getEnemies().get(j).getBullets().get(k).getSpeed());
                         gameData.getEnemies().get(j).getBullets().get(k).setSpeed(0);
                     }
                 }

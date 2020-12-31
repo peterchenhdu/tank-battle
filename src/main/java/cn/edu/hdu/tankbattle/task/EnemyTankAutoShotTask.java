@@ -10,7 +10,7 @@ import cn.edu.hdu.tankbattle.service.TankControlService;
 import java.util.TimerTask;
 
 /**
- * MyTimerTask...
+ * 敌方坦克自动射击任务...
  *
  * @author chenpi
  * @since 2011-02-10 19:29

@@ -75,6 +75,7 @@ public class MenuActionService {
         if (select == JOptionPane.OK_OPTION) {
             // 退出游戏
             gameContext.getRealTimeGameData().setExit(true);
+            gameContext.clean();
             System.exit(0);
         } else {
             // 恢复游戏

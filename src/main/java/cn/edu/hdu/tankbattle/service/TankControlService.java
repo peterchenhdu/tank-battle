@@ -32,8 +32,6 @@ public class TankControlService {
     @Autowired
     private GameContext gameContext;
     @Autowired
-    private ComputingService computingService;
-    @Autowired
     private TankControlService tankControlService;
 
     /**
@@ -64,7 +62,7 @@ public class TankControlService {
     public void enemyGoWest(EnemyTank enemy) {
         for (; ; ) {
             GameTimeUnit.sleepMillis(36);
-            if (!enemy.isOverlapAndCanShot() && !enemy.isOverlapCanNotShot()) {
+            if (!enemy.isOverlapAndCanNotShot() && !enemy.isOverlapCanShot()) {
                 enemy.goWest();
             }
             if (enemy.getMyTankLocation() != DirectionEnum.WEST) {
@@ -80,7 +78,7 @@ public class TankControlService {
     public void enemyGoEast(EnemyTank enemy) {
         for (; ; ) {
             GameTimeUnit.sleepMillis(36);
-            if (!enemy.isOverlapAndCanShot() && !enemy.isOverlapCanNotShot()) {
+            if (!enemy.isOverlapAndCanNotShot() && !enemy.isOverlapCanShot()) {
                 enemy.goEast();
             }
             if (enemy.getMyTankLocation() != DirectionEnum.EAST) {
@@ -96,7 +94,7 @@ public class TankControlService {
     public void enemyGoNorth(EnemyTank enemy) {
         for (; ; ) {
             GameTimeUnit.sleepMillis(36);
-            if (!enemy.isOverlapAndCanShot() && !enemy.isOverlapCanNotShot()) {
+            if (!enemy.isOverlapAndCanNotShot() && !enemy.isOverlapCanShot()) {
                 enemy.goNorth();
             }
             if (enemy.getMyTankLocation() != DirectionEnum.NORTH) {
@@ -112,7 +110,7 @@ public class TankControlService {
     public void enemyGoSouth(EnemyTank enemy) {
         for (; ; ) {
             GameTimeUnit.sleepMillis(36);
-            if (!enemy.isOverlapAndCanShot() && !enemy.isOverlapCanNotShot()) {
+            if (!enemy.isOverlapAndCanNotShot() && !enemy.isOverlapCanShot()) {
                 enemy.goSouth();
             }
             if (enemy.getMyTankLocation() != DirectionEnum.SOUTH) {
@@ -134,12 +132,11 @@ public class TankControlService {
         int enX = enemy.getX();
         int enY = enemy.getY();
         if (Math.abs(myX - enX) < 20 && myY <= 580) {
+            int s = 0;
             if (enY < myY) {
-                int s = 0;
                 for (int t = 0; t < map.getIrons().size(); t++) {
                     Iron iron = map.getIrons().get(t);
-                    if (Math.abs(enX - iron.getX()) <= 10 && iron.getY() > enY
-                            && iron.getY() < myY) {
+                    if (Math.abs(enX - iron.getX()) <= 10 && iron.getY() > enY && iron.getY() < myY) {
                         s = 1;
                         break;
                     }
@@ -149,11 +146,9 @@ public class TankControlService {
                     enemy.setMyTankLocation(DirectionEnum.SOUTH);
                 }
             } else {
-                int s = 0;
                 for (int t = 0; t < map.getIrons().size(); t++) {
                     Iron iron = map.getIrons().get(t);
-                    if (Math.abs(enX - iron.getX()) <= 10 && iron.getY() < enY
-                            && iron.getY() > myY) {
+                    if (Math.abs(enX - iron.getX()) <= 10 && iron.getY() < enY && iron.getY() > myY) {
                         s = 1;
                         break;
                     }
@@ -164,12 +159,11 @@ public class TankControlService {
                 }
             }
         } else if (Math.abs(myY - enY) < 20 && myY <= 580) {
+            int s = 0;
             if (enX > myX) {
-                int s = 0;
                 for (int t = 0; t < map.getIrons().size(); t++) {
                     Iron iron = map.getIrons().get(t);
-                    if (Math.abs(enY - iron.getY()) <= 10 && iron.getX() < enX
-                            && iron.getX() > myX) {
+                    if (Math.abs(enY - iron.getY()) <= 10 && iron.getX() < enX && iron.getX() > myX) {
                         s = 1;
                         break;
                     }
@@ -179,11 +173,9 @@ public class TankControlService {
                     enemy.setMyTankLocation(DirectionEnum.WEST);
                 }
             } else {
-                int s = 0;
                 for (int t = 0; t < map.getIrons().size(); t++) {
                     Iron iron = map.getIrons().get(t);
-                    if (Math.abs(enY - iron.getY()) <= 10 && iron.getX() > enX
-                            && iron.getX() < myX) {
+                    if (Math.abs(enY - iron.getY()) <= 10 && iron.getX() > enX && iron.getX() < myX) {
                         s = 1;
                         break;
                     }
