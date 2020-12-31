@@ -6,8 +6,8 @@
 [![Coverage Status](https://coveralls.io/repos/github/peterchenhdu/tankbattle/badge.svg?branch=master)](https://coveralls.io/github/peterchenhdu/tankbattle?branch=master)
 [![Dependency Status](https://www.versioneye.com/user/projects/5abdf5830fb24f4489395ea5/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5abdf5830fb24f4489395ea5)
 
-[travis-image]: https://travis-ci.org/peterchenhdu/tankbattle.svg?branch=master
-[travis-url]: https://travis-ci.org/peterchenhdu/tankbattle
+[travis-image]: https://travis-ci.org/peterchenhdu/tank-battle.svg?branch=master
+[travis-url]: https://travis-ci.org/peterchenhdu/tank-battle
 
 ## 介绍
 ###### Java坦克大战游戏，基于Spring Boot，JDK8，Swing组件开发，有一些Bug，还在持续更新完善中...
