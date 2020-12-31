@@ -74,9 +74,7 @@ public class MenuActionService {
         int select = JOptionPane.showConfirmDialog(null, "退出游戏吗？", "退出确认", JOptionPane.YES_NO_OPTION);
         if (select == JOptionPane.OK_OPTION) {
             // 退出游戏
-            gameContext.getRealTimeGameData().setExit(true);
-            gameContext.clean();
-            System.exit(0);
+            gameEventService.exitGame();
         } else {
             // 恢复游戏
             gameEventService.pauseOrResume(gameData);

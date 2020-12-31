@@ -26,6 +26,9 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 /**
  * 游戏上下文环境...
  *
@@ -68,6 +71,8 @@ public class GameContext {
     private StateFlushService stateFlushService;
     @Autowired
     private ComputingService computingService;
+    @Autowired
+    private MenuActionService menuActionService;
     @EventListener
     public void init(ApplicationReadyEvent applicationReadyEvent) {
         logger.info("Application Started..., applicationReadyEvent = {}", applicationReadyEvent);
@@ -82,7 +87,12 @@ public class GameContext {
         this.gameFrame.add(this.gamePanel);
         this.gameFrame.addKeyListener(keyEventListener);
         this.gameFrame.setVisible(true);
-
+        this.gameFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                gameEventService.exitGame();
+            }
+        });
 
         logger.info("execute UpdateTask...");
         taskExecutor.execute(new GameDataUpdateTask(this));
@@ -145,6 +155,7 @@ public class GameContext {
     }
 
     public void clean() {
+        realTimeGameData.setExit(true);
         realTimeGameData.clear();
     }
 

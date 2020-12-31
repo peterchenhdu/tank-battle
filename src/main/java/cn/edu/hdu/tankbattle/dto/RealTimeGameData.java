@@ -125,6 +125,7 @@ public class RealTimeGameData {
     public void clear() {
         enemies.forEach(e -> {
             e.setLive(Boolean.FALSE);
+            e.setActivate(Boolean.FALSE);
             e.getTimer().cancel();
         });
         myTanks.clear();

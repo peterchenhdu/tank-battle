@@ -42,4 +42,6 @@ public class GameFrame extends JFrame {
         this.setLocation(leftTopX, leftTopY);
     }
 
+
+
 }

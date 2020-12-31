@@ -54,6 +54,10 @@ public class GameEventService {
         tankControlService.enableEnemyTanks();
     }
 
+    public void exitGame() {
+        context.clean();
+        System.exit(0);
+    }
 
     /**
      * 游戏暂停或恢复

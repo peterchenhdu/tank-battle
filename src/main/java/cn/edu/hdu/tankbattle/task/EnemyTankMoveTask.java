@@ -68,7 +68,7 @@ public class EnemyTankMoveTask implements Runnable {
                     }
                     break;
                 case SOUTH:
-                    for (; ; ) {
+                    while (tank.activate()) {
                         GameTimeUnit.sleepMillis(36);
                         if (tank.getMyTankLocation() == DirectionEnum.WEST) {
                             tank.setDirect(DirectionEnum.WEST);
@@ -96,7 +96,7 @@ public class EnemyTankMoveTask implements Runnable {
                     }
                     break;
                 case WEST:
-                    for (; ; ) {
+                    while (tank.activate()) {
                         GameTimeUnit.sleepMillis(36);
                         if (tank.getMyTankLocation() == DirectionEnum.NORTH) {
                             tank.setDirect(DirectionEnum.NORTH);
@@ -124,7 +124,7 @@ public class EnemyTankMoveTask implements Runnable {
                     }
                     break;
                 case EAST:
-                    for (; ; ) {
+                    while (tank.activate()) {
                         GameTimeUnit.sleepMillis(36);
                         if (tank.getMyTankLocation() == DirectionEnum.WEST) {
                             tank.setDirect(DirectionEnum.WEST);
