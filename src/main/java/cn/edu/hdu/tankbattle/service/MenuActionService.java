@@ -9,6 +9,7 @@ import cn.edu.hdu.tankbattle.dto.RealTimeGameData;
 import cn.edu.hdu.tankbattle.enums.LevelEnum;
 import cn.edu.hdu.tankbattle.resource.map.Map;
 import cn.edu.hdu.tankbattle.resource.map.xmlparse.MapParser;
+import cn.edu.hdu.tankbattle.view.menu.CustomMapMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -167,5 +168,10 @@ public class MenuActionService {
         System.out.println(inputValue);
 
         MapParser.generateXmlFromMap(gameData.getMap(), inputValue);
+
+        JMenuItem newMapMenu = new JMenuItem(inputValue);
+        newMapMenu.setActionCommand(CustomMapMenu.CUSTOM_MAP_ACTION_COMMAND);
+        newMapMenu.addActionListener(gameContext.getMenuActionEventListener());
+        gameContext.getTankBattleMenuBar().getCustomMapMenu().add(newMapMenu);
     }
 }

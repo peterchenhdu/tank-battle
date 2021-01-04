@@ -26,6 +26,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
+import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -46,6 +47,10 @@ public class GameContext {
      * 游戏画板
      */
     private GamePanel gamePanel;
+    /**
+     * 窗口菜单
+     */
+    private TankBattleMenuBar tankBattleMenuBar;
     /**
      * 游戏实时数据
      */
@@ -71,19 +76,25 @@ public class GameContext {
     private StateFlushService stateFlushService;
     @Autowired
     private ComputingService computingService;
-    @Autowired
-    private MenuActionService menuActionService;
+
     @EventListener
     public void init(ApplicationReadyEvent applicationReadyEvent) {
         logger.info("Application Started..., applicationReadyEvent = {}", applicationReadyEvent);
+        String lookAndFeel = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
+        try {
+            UIManager.setLookAndFeel(lookAndFeel);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
 
         //初始化第一关
         initLevelData(LevelEnum.FIRST_LEVEL);
 
         this.gamePanel = new GamePanel(paintService, mouseEventListener);
+        tankBattleMenuBar = new TankBattleMenuBar(menuActionEventListener);
 
         this.gameFrame = new GameFrame();
-        this.gameFrame.setJMenuBar(new TankBattleMenuBar(menuActionEventListener));
+        this.gameFrame.setJMenuBar(tankBattleMenuBar);
         this.gameFrame.add(this.gamePanel);
         this.gameFrame.addKeyListener(keyEventListener);
         this.gameFrame.setVisible(true);
@@ -146,6 +157,7 @@ public class GameContext {
 
     /**
      * 从某个关卡开始游戏
+     *
      * @param level 关卡
      */
     public void startLevel(LevelEnum level) {
@@ -157,6 +169,14 @@ public class GameContext {
     public void clean() {
         realTimeGameData.setExit(true);
         realTimeGameData.clear();
+    }
+
+    public TankBattleMenuBar getTankBattleMenuBar() {
+        return tankBattleMenuBar;
+    }
+
+    public MenuActionEventListener getMenuActionEventListener() {
+        return menuActionEventListener;
     }
 
     public GamePanel getGamePanel() {

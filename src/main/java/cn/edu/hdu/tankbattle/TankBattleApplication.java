@@ -18,9 +18,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 public class TankBattleApplication {
     public static void main(String[] args) {
         System.setProperty("java.awt.headless", "false");
-        new SpringApplicationBuilder(TankBattleApplication.class)
-                .web(WebApplicationType.NONE)
-                .run(args);
+        new SpringApplicationBuilder(TankBattleApplication.class).web(WebApplicationType.NONE).run(args);
         System.out.println("TankBattleApplication started...");
     }
 }
