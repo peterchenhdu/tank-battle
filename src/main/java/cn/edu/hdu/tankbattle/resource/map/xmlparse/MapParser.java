@@ -24,6 +24,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 
 /**
  * 地图xml解析...
@@ -48,10 +49,10 @@ public class MapParser {
             }
         });
 
-        try {
+        String filePath = System.getProperty("user.home") + File.separator + ".tankBattle" + File.separator + "custom" + File.separator + name + ".xml";
+        try (InputStream is = new FileInputStream(new File(filePath))){
             Digester digester = loader.newDigester();
-            String filePath = System.getProperty("user.home") + File.separator + ".tankBattle" + File.separator + "custom" + File.separator + name + ".xml";
-            return digester.parse(new FileInputStream(new File(filePath)));
+            return digester.parse(is);
         } catch (Exception e) {
             logger.error(e.toString(), e);
             throw new TankBattleGameException("xml解析失败");

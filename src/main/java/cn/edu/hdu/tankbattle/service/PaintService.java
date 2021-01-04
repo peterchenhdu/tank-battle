@@ -60,6 +60,8 @@ public class PaintService {
                     case EAST:
                         this.drawEast(g, tank, panel);
                         break;
+                    default:
+                        break;
                 }
                 break;
             case BRICK:

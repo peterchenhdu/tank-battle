@@ -16,8 +16,8 @@ import java.util.TimerTask;
  * @since 2011-02-10 19:29
  */
 public class EnemyTankAutoShotTask extends TimerTask {
-    EnemyTank enemyTank;
-    TankControlService tankControlService;
+    private EnemyTank enemyTank;
+    private TankControlService tankControlService;
 
     public EnemyTankAutoShotTask(EnemyTank enemyTank, TankControlService tankControlService) {
         this.enemyTank = enemyTank;

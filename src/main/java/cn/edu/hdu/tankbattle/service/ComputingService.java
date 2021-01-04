@@ -5,6 +5,7 @@ import cn.edu.hdu.tankbattle.entity.*;
 import cn.edu.hdu.tankbattle.enums.DirectionEnum;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
 import java.util.Vector;
 
 /**
@@ -75,11 +76,9 @@ public class ComputingService {
      */
     public boolean isEnemyTankOverlap(EnemyTank enemy, Vector<EnemyTank> enemies, Vector<MyTank> myTanks) {
         for (EnemyTank enemyTank : enemies) {
-            if (enemy != enemyTank) {
-                if (isTankOverlap(enemy, enemyTank, GameConstants.TANK_WIDTH)) {
-                    enemy.setOverlapAndCanNotShot(true);
-                    return true;
-                }
+            if (enemy != enemyTank && isTankOverlap(enemy, enemyTank, GameConstants.TANK_WIDTH)) {
+                enemy.setOverlapAndCanNotShot(true);
+                return true;
             }
         }
 
@@ -136,7 +135,8 @@ public class ComputingService {
                 }
                 tank.setX(tank.getX() + tank.getSpeed());
                 break;
-
+            default:
+                break;
         }
         return b;
     }
@@ -149,10 +149,8 @@ public class ComputingService {
      * @param direct3 方向3
      */
     public DirectionEnum enemyGetRandomDirect(DirectionEnum direct1, DirectionEnum direct2, DirectionEnum direct3) {
-        int random = (int) (Math.random() * 3);
-
         DirectionEnum returnDirect = DirectionEnum.INVALID;
-        switch (random) {
+        switch (new Random().nextInt(3)) {
             case 0:
                 returnDirect = direct1;
                 break;
@@ -161,6 +159,8 @@ public class ComputingService {
                 break;
             case 2:
                 returnDirect = direct3;
+                break;
+            default:
                 break;
         }
         return returnDirect;

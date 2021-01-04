@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Vector;
 
 /**
@@ -217,7 +218,7 @@ public class StateFlushService {
                 diedEnemyTanks.add(enemy);
                 realTimeGameData.setEnemyTankNum(realTimeGameData.getEnemyTankNum() - 1);
                 if (realTimeGameData.getEnemyTankNum() >= GameConstants.INIT_ENEMY_TANK_IN_MAP_NUM) {
-                    int r = (int) (Math.random() * GameConstants.INIT_ENEMY_TANK_IN_MAP_NUM);
+                    int r = new Random().nextInt(GameConstants.INIT_ENEMY_TANK_IN_MAP_NUM);
                     int xStepLength = (GameConstants.GAME_PANEL_WIDTH - GameConstants.TANK_WIDTH) / (GameConstants.INIT_ENEMY_TANK_IN_MAP_NUM - 1);
                     EnemyTank enemyTank = new EnemyTank((r) * xStepLength + GameConstants.TANK_WIDTH / 2, -GameConstants.TANK_HEIGHT / 2, DirectionEnum.SOUTH);
                     enemyTank.setLocation(r);
@@ -284,6 +285,8 @@ public class StateFlushService {
                 bullet.setLive(false);
                 bomb.setL(20);
                 bombs.add(bomb);
+                break;
+            default:
                 break;
         }
     }

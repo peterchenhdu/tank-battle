@@ -37,17 +37,13 @@ public class EnemyTank extends Tank {
      * 是否要开火
      */
     private boolean isShot = false;
-    /**
-     * 是否在地图中
-     */
-    //private boolean isInMap = false;
 
     /**
      * 敌人坦克构造方法
      *
-     * @param x
-     * @param y
-     * @param direct
+     * @param x x
+     * @param y y
+     * @param direct direct
      */
     public EnemyTank(int x, int y, DirectionEnum direct) {
         super(x, y, direct);

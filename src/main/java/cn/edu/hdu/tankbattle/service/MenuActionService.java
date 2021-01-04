@@ -148,7 +148,7 @@ public class MenuActionService {
     }
 
     public void about() {
-        JOptionPane.showMessageDialog(null, "JAVA坦克大战CP版1.0\n作者:hdu-chenpi\n", "关于游戏", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "JAVA坦克大战CP版1.0\n作者:hdu - ChenPi\n", "关于游戏", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void createMap() {

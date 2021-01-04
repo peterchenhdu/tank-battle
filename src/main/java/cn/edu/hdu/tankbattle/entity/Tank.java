@@ -142,12 +142,18 @@ public class Tank extends Stuff {
         switch (where) {
             case NORTH:
                 this.goNorth();
+                break;
             case SOUTH:
                 this.goSouth();
+                break;
             case WEST:
                 this.goWest();
+                break;
             case EAST:
                 this.goEast();
+                break;
+            default:
+                break;
         }
     }
 
@@ -158,12 +164,18 @@ public class Tank extends Stuff {
         switch (this.getDirect()) {
             case NORTH:
                 this.goSouth();
+                break;
             case SOUTH:
                 this.goNorth();
+                break;
             case WEST:
                 this.goEast();
+                break;
             case EAST:
                 this.goWest();
+                break;
+            default:
+                break;
         }
     }
 

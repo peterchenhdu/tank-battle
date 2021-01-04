@@ -210,6 +210,8 @@ public class TankControlService {
             case EAST:
                 bullet = new Bullet(tank.getX() + 20, tank.getY(), DirectionEnum.EAST);
                 break;
+            default:
+                break;
         }
         tank.getBullets().add(bullet);
         taskExecutor.execute(new BulletMoveTask(bullet));

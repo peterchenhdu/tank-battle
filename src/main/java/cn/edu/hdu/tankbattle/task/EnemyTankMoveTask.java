@@ -17,8 +17,8 @@ import cn.edu.hdu.tankbattle.util.GameTimeUnit;
  * @since 2018/3/24 19:29
  */
 public class EnemyTankMoveTask implements Runnable {
-    EnemyTank tank;
-    GameContext gameContext;
+    private EnemyTank tank;
+    private GameContext gameContext;
 
     public EnemyTankMoveTask(EnemyTank tank, GameContext gameContext) {
         this.tank = tank;
@@ -150,6 +150,8 @@ public class EnemyTankMoveTask implements Runnable {
                         if (!tank.isOverlapCanShot())
                             tank.goEast();
                     }
+                    break;
+                default:
                     break;
             }
             GameTimeUnit.sleepMillis(216); // 改变一个方向的话，不要让他很快

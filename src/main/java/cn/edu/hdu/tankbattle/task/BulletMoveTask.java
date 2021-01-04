@@ -38,6 +38,8 @@ public class BulletMoveTask implements Runnable {
                 case EAST:
                     bullet.setX(bullet.getX() + bullet.getSpeed());
                     break;
+                default:
+                    break;
             }
 
             // 判断子弹是否碰到边界
